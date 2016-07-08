@@ -5,7 +5,7 @@ include 'jlex.php';
 /* TerminalTokens: IRIREF PNAME_NS PNAME_LN BLANK_NODE_LABEL VAR1 VAR2 LANGTAG INTEGER DECIMAL DOUBLE INTEGER_POSITIVE 
 DECIMAL POSITIVE DOUBLE_POSITIVE INTEGER_NEGATIVE DECIMAL_NEGATIVE STRING LITERAL1 STRING_LITERAL2 STRING_LITERAL_LONG1 
 STRING_LITERAL_LONG2 NIL WS ANON 
-/*need to check if unicode with more then 4 digits is allowed
+/*need to check if unicode with more then 4 digits is allowed and \x with 1 or how to fill
 /*Makros Done
 %%
 %{
@@ -31,6 +31,43 @@ PERCENT = '%'{HEX}{HEX}
 PLX = {PERCENT}|{PN_LOCAL_ESC}
 
 %%
+
+<YYINITIAL> '<'([^<>\'"'{}|^"`"\\]-[\x00-\x20])*'>' 	{ return $this->createToken(SparqlPHPParser::TK_IRIREF); }
+<YYINITIAL> {PN_PREFIX}?':' { return $this->createToken(SparqlPHPParser::TK_PNAME_NS); }
+<YYINITIAL> {PN_PREFIX}?':'{PN_LOCAL} 	{ return $this->createToken(SparqlPHPParser::TK_PNAME_LN); }
+<YYINITIAL> '_:'({PN_CHARS_U}|{D})(({PN_CHARS}|'.')*{PN_CHARS})? 	{ return $this->createToken(SparqlPHPParser::TK_BLANK_NODE_LABEL); }
+<YYINITIAL> '?'{VARNAME}  { return $this->createToken(SparqlPHPParser::TK_VAR1); }
+<YYINITIAL> '$'{VARNAME} 	{ return $this->createToken(SparqlPHPParser::TK_VAR2); }
+<YYINITIAL> '@'[a-zA-Z]+('-'[a-zA-Z0-9]+)* 	{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+<YYINITIAL> {D}+ 	{ return $this->createToken(SparqlPHPParser::TK_INTEGER); }
+<YYINITIAL> {D}*'.'{D}+ 	{ return $this->createToken(SparqlPHPParser::TK_DECIMAL); }
+<YYINITIAL> {D}+'.'{D}*{EXPONENT}|'.'({D})+{EXPONENT}|({D})+{EXPONENT} 	{ return $this->createToken(SparqlPHPParser::TK_DOUBLE); }
+<YYINITIAL> '+'{D}+ 	{ return $this->createToken(SparqlPHPParser::TK_INTEGER_POSITIVE); }
+<YYINITIAL> '+'{D}*'.'{D}+ 	{ return $this->createToken(SparqlPHPParser::TK_DECIMAL_POSITIVE); }
+<YYINITIAL> '+'{D}+'.'{D}*{EXPONENT}|'.'({D})+{EXPONENT}|({D})+{EXPONENT} 	{ return $this->createToken(SparqlPHPParser::TK_DOUBLE_POSITIVE); }
+<YYINITIAL> '-'{D}+ 	{ return $this->createToken(SparqlPHPParser::TK_INTEGER_NEGATIVE); }
+<YYINITIAL> '-'{D}*'.'{D}+ 	{ return $this->createToken(SparqlPHPParser::TK_DECIMAL_NEGATIVE); }
+<YYINITIAL> '-'{D}+'.'{D}*{EXPONENT}|'.'({D})+{EXPONENT}|({D})+{EXPONENT} 	{ return $this->createToken(SparqlPHPParser::TK_DOUBLE_NEGATIVE); }
+<YYINITIAL> "'"(([^\x27\x5C\xA\xD])|{ECHAR})*"'" 	{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL1); }
+<YYINITIAL> '"'(([^\x22\x5C\xA\xD])|{ECHAR})*'"' 	{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL2); }
+<YYINITIAL> "'''"(("'"|"''")?([^"'"\\]|{ECHAR}))*"'''" 	{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL_LONG1); }
+<YYINITIAL> '"""'(('"'|'""')?([^'"'\\]|{ECHAR}))*'"""' 	{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL_LONG2); }
+<YYINITIAL> '('(\x20|\x9|\xD|\xA)*')' 	{ return $this->createToken(SparqlPHPParser::TK_NIL); }
+<YYINITIAL> \x20|\x9|\xD|\xA 	{ return $this->createToken(SparqlPHPParser::TK_WS); }
+<YYINITIAL> '['(\x20|\x9|\xD|\xA)*']' 	{ return $this->createToken(SparqlPHPParser::TK_ANON); }
+
+<YYINITIAL> [Bb][Aa][Ss][Ee] { return $this->createToken(SparqlPHPParser::TK_BASE); }
+<YYINITIAL> [Pp][Rr][Ee][Ff][Ii][Xx] { return $this->createToken(SparqlPHPParser::TK_PREFIX); }
+<YYINITIAL> [Ss][Ee][Ll][Ee][Cc][Tt] { return $this->createToken(SparqlPHPParser::TK_SELECT); }
+<YYINITIAL> [Dd][Ii][Ss][Tt][Ii][Nn][Cc][Tt] { return $this->createToken(SparqlPHPParser::TK_BASE); }
+<YYINITIAL> [Rr][Ee][Dd][Uu][Cc][Ee][Dd] { return $this->createToken(SparqlPHPParser::TK_BASE); }
+<YYINITIAL> '(' { return $this->createToken(SparqlPHPParser::TK_LPARENTHESE); }
+<YYINITIAL> ')' { return $this->createToken(SparqlPHPParser::TK_RPARENTHESE); }
+<YYINITIAL> [Aa][Ss] { return $this->createToken(SparqlPHPParser::TK_AS); }
+<YYINITIAL> '*' { return $this->createToken(SparqlPHPParser::TK_STAR); }
+/*9*/
+
+
 <YYINITIAL> "/*"			{ 
 								$this->commentTok = $this->createToken(CParser::TK_COMMENT);
 								$this->yybegin(self::COMMENT);
