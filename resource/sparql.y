@@ -1,15 +1,80 @@
-/* This is a lemon grammar for the C language */
-%name C
+/* This is a lemon grammar for the Sparql1.1 language */
+%name SparqlPHPParser
 %token_prefix TK_
 
 /* this defines a symbol for the lexer */
 %nonassoc PRAGMA.
 
-/* the precedence of IF/ELSE solves the dangling else conflict */
-%nonassoc IF.
-%nonassoc ELSE.
+start ::= Query.
+start ::= Update.
 
-start ::= translation_unit.
+Query ::= Prologue SelectQuery ValuesClause.
+Query ::= Prologue ConstructQuery ValuesClause.
+Query ::= Prologue DescribeQuery ValuesClause.
+Query ::= Prologue AskQuery ValuesClause.
+Query ::= SelectQuery ValuesClause.
+Query ::= ConstructQuery ValuesClause.
+Query ::= DescribeQuery ValuesClause.
+Query ::= AskQuery ValuesClause.
+Query ::= Prologue SelectQuery.
+Query ::= Prologue ConstructQuery.
+Query ::= Prologue DescribeQuery.
+Query ::= Prologue AskQuery.
+Query ::= SelectQuery.
+Query ::= ConstructQuery.
+Query ::= DescribeQuery.
+Query ::= AskQuery.
+
+Prologue ::= BaseDecl.
+Prologue ::= PrefixDeclX BaseDecl.
+Prologue ::= BaseDecl PrefixDeclX.
+Prologue ::= PrefixDeclX BaseDecl PrefixDeclX.
+PrefixDeclX ::= PrefixDecl.
+PrefixDeclX ::= PrefixDecl PrefixDeclX.
+
+BaseDecl ::= BASE IRIREF.
+BaseDecl ::= BASE IRIREF DOT.
+
+PrefixDecl ::= PREFIX PNAME_NS IRIREF.
+PrefixDecl ::= PREFIX PNAME_NS IRIREF DOT.
+
+SelectQuery ::= SelectClause WhereClause
+SelectQuery ::= SelectClause WhereClause SolutionModifier
+SelectQuery ::= SelectClause DatasetClauseX WhereClause
+SelectQuery ::= SelectClause DatasetClauseX WhereClause SolutionModifier
+DatasetClauseX ::= DatasetClause
+DatasetClauseX ::= DatasetClause DatasetClauseX
+
+SubSelect ::= SelectClause WhereClause
+SubSelect ::= SelectClause WhereClause SolutionModifier
+SubSelect ::= SelectClause WhereClause ValuesClause
+SubSelect ::= SelectClause WhereClause SolutionModifier ValuesClause
+
+SelectClause ::= SELECT STAR
+SelectClause ::= SELECT DISTINCT STAR
+SelectClause ::= SELECT REDUCED STAR
+SelectClause ::= SELECT DISTINCT SelectClauseX
+SelectClause ::= SELECT REDUCED SelectClauseX
+SelectClause ::= SELECT STAR SelectClauseX
+SelectClauseX ::= BuiltInCall
+SelectClauseX ::= RDFLiteral
+SelectClauseX ::= NumericLiteral
+SelectClauseX ::= BooleanLiteral
+SelectClauseX ::= Var
+SelectClauseX ::= Aggregate
+SelectClauseX ::= FunctionCall
+SelectClauseX ::= LPARENTHESE Expression RPARENTHESE
+SelectClauseX ::= LPARENTHESE Expression AS Var RPARENTHESE
+SelectClauseX ::= BuiltInCall SelectClauseX
+SelectClauseX ::= RDFLiteral SelectClauseX
+SelectClauseX ::= NumericLiteral SelectClauseX
+SelectClauseX ::= BooleanLiteral SelectClauseX
+SelectClauseX ::= Var SelectClauseX
+SelectClauseX ::= Aggregate SelectClauseX
+SelectClauseX ::= FunctionCall SelectClauseX
+SelectClauseX ::= LPARENTHESE Expression RPARENTHESE SelectClauseX
+SelectClauseX ::= LPARENTHESE Expression AS Var RPARENTHESE SelectClauseX
+
 
 primary_expression ::= IDENTIFIER.
 primary_expression ::= CONSTANT.
