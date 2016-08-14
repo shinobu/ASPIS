@@ -5,312 +5,696 @@
 /* this defines a symbol for the lexer */
 %nonassoc PRAGMA.
 
-start ::= Query.
-start ::= Update.
+start ::= query.
+start ::= update.
 
-Query ::= Prologue SelectQuery ValuesClause.
-Query ::= Prologue ConstructQuery ValuesClause.
-Query ::= Prologue DescribeQuery ValuesClause.
-Query ::= Prologue AskQuery ValuesClause.
-Query ::= SelectQuery ValuesClause.
-Query ::= ConstructQuery ValuesClause.
-Query ::= DescribeQuery ValuesClause.
-Query ::= AskQuery ValuesClause.
-Query ::= Prologue SelectQuery.
-Query ::= Prologue ConstructQuery.
-Query ::= Prologue DescribeQuery.
-Query ::= Prologue AskQuery.
-Query ::= SelectQuery.
-Query ::= ConstructQuery.
-Query ::= DescribeQuery.
-Query ::= AskQuery.
+query ::= prologue selectQuery valuesClause.
+query ::= prologue constructQuery valuesClause.
+query ::= prologue describeQuery valuesClause.
+query ::= prologue askQuery valuesClause.
+query ::= selectQuery valuesClause.
+query ::= constructQuery valuesClause.
+query ::= describeQuery valuesClause.
+query ::= askQuery valuesClause.
+query ::= prologue selectQuery.
+query ::= prologue constructQuery.
+query ::= prologue describeQuery.
+query ::= prologue askQuery.
+query ::= selectQuery.
+query ::= constructQuery.
+query ::= describeQuery.
+query ::= askQuery.
 
-Prologue ::= BaseDecl.
-Prologue ::= PrefixDeclX BaseDecl.
-Prologue ::= BaseDecl PrefixDeclX.
-Prologue ::= PrefixDeclX BaseDecl PrefixDeclX.
-PrefixDeclX ::= PrefixDecl.
-PrefixDeclX ::= PrefixDecl PrefixDeclX.
+prologue ::= prefixDeclX baseDecl prefixDeclX.
+prologue ::= baseDecl prefixDeclX.
+prologue ::= prefixDeclX baseDecl.
+prologue ::= baseDecl.
+prefixDeclX ::= prefixDeclX prefixDecl.
+prefixDeclX ::= prefixDecl.
 
-BaseDecl ::= BASE IRIREF.
-BaseDecl ::= BASE IRIREF DOT.
+baseDecl ::= BASE IRIREF DOT.
+baseDecl ::= BASE IRIREF.
 
-PrefixDecl ::= PREFIX PNAME_NS IRIREF.
-PrefixDecl ::= PREFIX PNAME_NS IRIREF DOT.
+prefixDecl ::= PREFIX PNAME_NS IRIREF DOT.
+prefixDecl ::= PREFIX PNAME_NS IRIREF.
 
-SelectQuery ::= SelectClause WhereClause.
-SelectQuery ::= SelectClause WhereClause SolutionModifier.
-SelectQuery ::= SelectClause DatasetClauseX WhereClause.
-SelectQuery ::= SelectClause DatasetClauseX WhereClause SolutionModifier.
-DatasetClauseX ::= DatasetClause.
-DatasetClauseX ::= DatasetClause DatasetClauseX.
+selectQuery ::= selectClause datasetClauseX whereclause solutionModifier.
+selectQuery ::= selectClause datasetClauseX whereclause.
+selectQuery ::= selectClause whereclause solutionModifier.
+selectQuery ::= selectClause whereclause.
+datasetClauseX ::= datasetClauseX datasetClause.
+datasetClauseX ::= datasetClause.
 
-SubSelect ::= SelectClause WhereClause.
-SubSelect ::= SelectClause WhereClause SolutionModifier.
-SubSelect ::= SelectClause WhereClause ValuesClause.
-SubSelect ::= SelectClause WhereClause SolutionModifier ValuesClause.
 
-SelectClause ::= SELECT STAR.
-SelectClause ::= SELECT DISTINCT STAR.
-SelectClause ::= SELECT REDUCED STAR.
-SelectClause ::= SELECT DISTINCT SelectClauseX.
-SelectClause ::= SELECT REDUCED SelectClauseX.
-SelectClause ::= SELECT STAR SelectClauseX.
-SelectClauseX ::= BuiltInCall.
-SelectClauseX ::= RDFLiteral.
-SelectClauseX ::= NumericLiteral.
-SelectClauseX ::= BooleanLiteral.
-SelectClauseX ::= Var.
-SelectClauseX ::= Aggregate.
-SelectClauseX ::= FunctionCall.
-SelectClauseX ::= LPARENTHESE Expression RPARENTHESE.
-SelectClauseX ::= LPARENTHESE Expression AS Var RPARENTHESE.
-SelectClauseX ::= BuiltInCall SelectClauseX.
-SelectClauseX ::= RDFLiteral SelectClauseX.
-SelectClauseX ::= NumericLiteral SelectClauseX.
-SelectClauseX ::= BooleanLiteral SelectClauseX.
-SelectClauseX ::= Var SelectClauseX.
-SelectClauseX ::= Aggregate SelectClauseX.
-SelectClauseX ::= FunctionCall SelectClauseX.
-SelectClauseX ::= LPARENTHESE Expression RPARENTHESE SelectClauseX.
-SelectClauseX ::= LPARENTHESE Expression AS Var RPARENTHESE SelectClauseX.
+subSelect ::= selectClause whereclause solutionModifier valuesClause.
+subSelect ::= selectClause whereclause valuesClause.
+subSelect ::= selectClause whereclause solutionModifier.
+subSelect ::= selectClause whereclause.
 
-ConstructQuery ::= CONSTRUCT QuadPattern WhereClause.
-ConstructQuery ::= CONSTRUCT QuadPattern DatasetClauseX WhereClause.
-ConstructQuery ::= CONSTRUCT QuadPattern WhereClause SolutionModifier.
-ConstructQuery ::= CONSTRUCT QuadPattern DatasetClauseX WhereClause SolutionModifier.
-ConstructQuery ::= CONSTRUCT WHERE QuadPattern.
-ConstructQuery ::= CONSTRUCT DatasetClauseX  WHERE QuadPattern.
-ConstructQuery ::= CONSTRUCT WHERE QuadPattern SolutionModifier.
-ConstructQuery ::= CONSTRUCT DatasetClauseX Where QuadPattern SolutionModifier.
 
-DescribeQuery ::= DESCRIBE STAR.
-DescribeQuery ::= DESCRIBE STAR DatasetClauseX.
-DescribeQuery ::= DESCRIBE STAR WhereClause.
-DescribeQuery ::= DESCRIBE STAR SolutionModifier.
-DescribeQuery ::= DESCRIBE STAR DatasetClauseX WhereClause.
-DescribeQuery ::= DESCRIBE STAR DatasetClauseX SolutionModifier.
-DescribeQuery ::= DESCRIBE STAR WhereClause SolutionModifier.
-DescribeQuery ::= DESCRIBE STAR DatasetClauseX WhereClause SolutionModifier.
-DescribeQuery ::= DESCRIBE VarOrIriX.
-DescribeQuery ::= DESCRIBE VarOrIriX DatasetClauseX.
-DescribeQuery ::= DESCRIBE VarOrIriX WhereClause.
-DescribeQuery ::= DESCRIBE VarOrIriX SolutionModifier.
-DescribeQuery ::= DESCRIBE VarOrIriX DatasetClauseX WhereClause.
-DescribeQuery ::= DESCRIBE VarOrIriX DatasetClauseX SolutionModifier.
-DescribeQuery ::= DESCRIBE VarOrIriX WhereClause SolutionModifier.
-DescribeQuery ::= DESCRIBE VarOrIriX DatasetClauseX WhereClause SolutionModifier.
-VarOrIriX ::= VarOrIri.
-VarOrIriX ::= VarOrIri VarOrIriX.
+selectClause ::= SELECT DISTINCT selectClauseX.
+selectClause ::= SELECT REDUCED selectClauseX.
+selectClause ::= SELECT STAR selectClauseX.
+selectClause ::= SELECT DISTINCT STAR.
+selectClause ::= SELECT REDUCED STAR.
+selectClause ::= SELECT selectClauseX.
+selectClause ::= SELECT STAR.
+selectClauseX ::= selectClauseX LPARENTHESE expression AS var RPARENTHESE.
+selectClauseX ::= selectClauseX LPARENTHESE expression RPARENTHESE.
+selectClauseX ::= selectClauseX builtInCall.
+selectClauseX ::= selectClauseX rdfLiteral.
+selectClauseX ::= selectClauseX numericLiteral.
+selectClauseX ::= selectClauseX booleanLiteral.
+selectClauseX ::= selectClauseX var.
+selectClauseX ::= selectClauseX aggregate.
+selectClauseX ::= selectClauseX functionCall.
+selectClauseX ::= LPARENTHESE expression AS var RPARENTHESE.
+selectClauseX ::= LPARENTHESE expression RPARENTHESE.
+selectClauseX ::= builtInCall.
+selectClauseX ::= rdfLiteral.
+selectClauseX ::= numericLiteral.
+selectClauseX ::= booleanLiteral.
+selectClauseX ::= var.
+selectClauseX ::= aggregate.
+selectClauseX ::= functionCall.
 
-AskQuery ::= ASK WhereClause.
-AskQuery ::= ASK DatasetClauseX WhereClause.
-AskQuery ::= ASK WhereClause SolutionModifier.
-AskQuery ::= ASK DatasetClauseX WhereClause SolutionModifier.
+constructQuery ::= CONSTRUCT constructTemplate datasetClauseX whereclause solutionModifier.
+constructQuery ::= CONSTRUCT datasetClauseX WHERE LBRACE triplesTemplate RBRACE solutionModifier.
+constructQuery ::= CONSTRUCT datasetClauseX WHERE LBRACE RBRACE solutionModifier.
+constructQuery ::= CONSTRUCT constructTemplate whereclause.
+constructQuery ::= CONSTRUCT constructTemplate datasetClauseX whereclause.
+constructQuery ::= CONSTRUCT constructTemplate whereclause solutionModifier.
+constructQuery ::= CONSTRUCT WHERE LBRACE triplesTemplate RBRACE.
+constructQuery ::= CONSTRUCT WHERE LBRACE RBRACE.
+constructQuery ::= CONSTRUCT datasetClauseX  WHERE LBRACE triplesTemplate RBRACE.
+constructQuery ::= CONSTRUCT datasetClauseX  WHERE LBRACE  RBRACE.
+constructQuery ::= CONSTRUCT WHERE LBRACE triplesTemplate RBRACE solutionModifier.
+constructQuery ::= CONSTRUCT WHERE LBRACE RBRACE solutionModifier.
 
-DatasetClause ::= FROM DefaultGraphClause.
-DatasetClause ::= FROM NamedGraphClause.
+describeQuery ::= DESCRIBE varOrIriX datasetClauseX whereclause solutionModifier.
+describeQuery ::= DESCRIBE varOrIriX whereclause solutionModifier.
+describeQuery ::= DESCRIBE varOrIriX datasetClauseX solutionModifier.
+describeQuery ::= DESCRIBE varOrIriX datasetClauseX whereclause.
+describeQuery ::= DESCRIBE varOrIriX solutionModifier.
+describeQuery ::= DESCRIBE varOrIriX whereclause.
+describeQuery ::= DESCRIBE varOrIriX datasetClauseX.
+describeQuery ::= DESCRIBE varOrIriX.
+describeQuery ::= DESCRIBE STAR datasetClauseX whereclause solutionModifier.
+describeQuery ::= DESCRIBE STAR whereclause solutionModifier.
+describeQuery ::= DESCRIBE STAR datasetClauseX solutionModifier.
+describeQuery ::= DESCRIBE STAR datasetClauseX whereclause.
+describeQuery ::= DESCRIBE STAR solutionModifier.
+describeQuery ::= DESCRIBE STAR whereclause.
+describeQuery ::= DESCRIBE STAR datasetClauseX.
+describeQuery ::= DESCRIBE STAR.
+varOrIriX ::= varOrIriX varOrIri.
+varOrIriX ::= varOrIri.
 
-DefaultGraphClause ::= iri.
+askQuery ::= ASK datasetClauseX whereclause.
+askQuery ::= ASK datasetClauseX whereclause solutionModifier.
+askQuery ::= ASK whereclause solutionModifier.
+askQuery ::= ASK whereclause.
 
-NamedGraphClause ::= NAMED iri.
+datasetClause ::= FROM defaultGraphClause.
+datasetClause ::= FROM namedGraphClause.
 
-WhereClause ::= GroupGraphPattern.
-WhereClause ::= WHERE GroupGraphPattern.
+defaultGraphClause ::= iri.
 
-SolutionModifier ::= GroupClause.
-SolutionModifier ::= HavingClause.
-SolutionModifier ::= OrderClause.
-SolutionModifier ::= LimitClause.
-SolutionModifier ::= GroupClause HavingClause.
-SolutionModifier ::= GroupClause OrderClause.
-SolutionModifier ::= GroupClause LimitClause.
-SolutionModifier ::= HavingClause OrderClause.
-SolutionModifier ::= HavingClause LimitClause.
-SolutionModifier ::= OrderClause LimitClause.
-SolutionModifier ::= GroupClause HavingClause OrderClause.
-SolutionModifier ::= GroupClause HavingClause LimitClause.
-SolutionModifier ::= GroupClause OrderClause LimitClause.
-SolutionModifier ::= HavingClause OrderClause LimitClause.
-SolutionModifier ::= GroupClause HavingClause OrderClause LimitClause.
+namedGraphClause ::= NAMED iri.
 
-GroupClause ::= GROUP BY GroupConditionX.
-GroupConditionX ::= GroupCondition.
-GroupConditionX ::= GroupCondition GroupConditionX.
+whereclause ::= WHERE groupGraphPattern.
+whereclause ::= groupGraphPattern.
 
-GroupCondition ::= BultInCall.
-GroupCondition ::= FunctionCall.
-GroupCondition ::= Expression.
-GroupCondition ::= Expression AS Var.
-GroupCondition ::= Var.
+solutionModifier ::= groupClause havingClause.
+solutionModifier ::= groupClause orderClause.
+solutionModifier ::= groupClause limitOffsetClauses.
+solutionModifier ::= groupClause havingClause orderClause limitOffsetClauses.
+solutionModifier ::= havingClause orderClause limitOffsetClauses.
+solutionModifier ::= groupClause orderClause limitOffsetClauses.
+solutionModifier ::= groupClause havingClause limitOffsetClauses.
+solutionModifier ::= groupClause havingClause orderClause.
+solutionModifier ::= orderClause limitOffsetClauses.
+solutionModifier ::= havingClause limitOffsetClauses.
+solutionModifier ::= havingClause orderClause.
+solutionModifier ::= groupClause.
+solutionModifier ::= havingClause.
+solutionModifier ::= orderClause.
+solutionModifier ::= limitOffsetClauses.
 
-HavingClause ::= HAVING ConstraintX.
-ConstraintX ::= Constraint.
-ConstraintX ::= Constraint ConstraintX.
+groupClause ::= GROUP BY groupConditionX.
+groupConditionX ::= groupConditionX groupCondition.
+groupConditionX ::= groupCondition.
 
-OrderClause ::= ORDER BY OrderConditionX.
-OrderConditionX ::= OrderCondition.
-OrderConditionX ::= OrderCondition OrderConditionX.
+groupCondition ::= expression AS var.
+groupCondition ::= builtInCall.
+groupCondition ::= functionCall.
+groupCondition ::= expression.
+groupCondition ::= var.
 
-OrderCondition ::= ASC BrackettedExpression.
-OrderCondition ::= DESC BrackettedExpression.
-OrderCondition ::= Constraint.
-OrderCondition ::= Var.
+havingClause ::= HAVING constraintX.
+constraintX ::= constraintX constraint.
+constraintX ::= constraint.
 
-LimitOffsetClauses ::= LimitClause.
-LimitOffsetClauses ::= LimitClause OffsetClause.
-LimitOffsetClauses ::= OffsetClause.
-LimitOffsetClauses ::= OffsetClause LimitClause.
+orderClause ::= ORDER BY orderConditionX.
+orderConditionX ::= orderConditionX orderCondition.
+orderConditionX ::= orderCondition.
 
-LimitClause ::= LIMIT INTEGER.
+orderCondition ::= ASC brackettedExpression.
+orderCondition ::= DESC brackettedExpression.
+orderCondition ::= constraint.
+orderCondition ::= var.
 
-OffsetClause ::= OFFSET INTEGER.
+limitOffsetClauses ::= limitClause offsetClause.
+limitOffsetClauses ::= offsetClause limitClause.
+limitOffsetClauses ::= limitClause.
+limitOffsetClauses ::= offsetClause.
 
-ValuesClause ::= VALUES DataBlock.
+limitClause ::= LIMIT INTEGER.
 
-Update ::= Prologue Update1.
-Update ::= Update1.
-Update ::= Update1 SEMICOLON Update.
-Update ::= Prologue Update1 SEMICOLON Update.
+offsetClause ::= OFFSET INTEGER.
 
-Update1 ::= Load.
-Update1 ::= Clear.
-Update1 ::= Drop.
-Update1 ::= Add.
-Update1 ::= Move.
-Update1 ::= Copy.
-Update1 ::= Create.
-Update1 ::= InsertData.
-Update1 ::= DeleteData.
-Update1 ::= DeleteWhere.
-Update1 ::= Modify.
+valuesClause ::= VALUES dataBlock.
 
-Load ::= LOAD iri.
-Load ::= LOAD SILENT iri.
-Load ::= LOAD iri INTO GraphRef.
-Load ::= LOAD SILENT iri INTO GraphRef.
+update ::= prologue update1 SEMICOLON update.
+update ::= update1 SEMICOLON update.
+update ::= prologue update1.
+update ::= update1.
 
-Clear ::= CLEAR GraphRefAll.
-Clear ::= CLEAR SILENT GraphRefall.
 
-Drop ::= DROP GraphRefAll.
-Drop ::= DROP SILENT GraphRefall.
 
-Create ::= CREATE GraphRef.
-Create ::= CREATE SILENT GraphRef.
+update1 ::= load.
+update1 ::= clear.
+update1 ::= drop.
+update1 ::= add.
+update1 ::= move.
+update1 ::= copy.
+update1 ::= create.
+update1 ::= insertData.
+update1 ::= deleteData.
+update1 ::= deletewhere.
+update1 ::= modify.
 
-Add ::= ADD GraphOrDefault TO GraphOrDefault.
-Add ::= ADD SILENT GraphOrDefault TO GraphOrDefault.
+load ::= LOAD SILENT iri INTO graphRef.
+load ::= LOAD iri INTO graphRef.
+load ::= LOAD SILENT iri.
+load ::= LOAD iri.
 
-Move ::= MOVE GraphOrDefault TO GraphOrDefault.
-Move ::= MOVE SILENT GraphOrDefault TO GraphOrDefault.
+clear ::= CLEAR SILENT graphRefAll.
+clear ::= CLEAR graphRefAll.
 
-Copy ::= COPY GraphOrDefault TO GraphOrDefault.
-Copy ::= COPY SILENT GraphOrDefault TO GraphOrDefault.
+drop ::= DROP SILENT graphRefAll.
+drop ::= DROP graphRefAll.
 
-InsertData ::= INSERTDATA QuadData.
+create ::= CREATE SILENT graphRef.
+create ::= CREATE graphRef.
 
-DeleteData ::= DELETEDATA QuadData1.!!!!!!!!!!!!
+add ::= ADD SILENT graphOrDefault TO graphOrDefault.
+add ::= ADD graphOrDefault TO graphOrDefault.
 
-DeleteWhere ::= DELETEWHERE QuadPattern1.!!!!!!!
+move ::= MOVE SILENT graphOrDefault TO graphOrDefault.
+move ::= MOVE graphOrDefault TO graphOrDefault.
 
-Modify ::= DeleteClause WHERE GroupGraphPattern.
-Modify ::= DeleteClause InsertClause WHERE GroupGraphPattern.
-Modify ::= InsertClause WHERE GroupGraphPattern.
-Modify ::= WITH iri DeleteClause WHERE GroupGraphPattern.
-Modify ::= WITH iri DeleteClause InsertClause WHERE GroupGraphPattern.
-Modify ::= WITH iri InsertClause WHERE GroupGraphPattern.
-Modify ::= DeleteClause UsingClauseX WHERE GroupGraphPattern.
-Modify ::= DeleteClause InsertClause UsingClauseX WHERE GroupGraphPattern.
-Modify ::= InsertClause UsingClauseX WHERE GroupGraphPattern.
-Modify ::= WITH iri DeleteClause UsingClauseX WHERE GroupGraphPattern.
-Modify ::= WITH iri DeleteClause InsertClause UsingClauseX WHERE GroupGraphPattern.
-Modify ::= WITH iri InsertClause UsingClauseX WHERE GroupGraphPattern.
-UsingClauseX ::= UsingClause.
-UsingClauseX ::= UsingClause UsingClauseX.
+copy ::= COPY SILENT graphOrDefault TO graphOrDefault.
+copy ::= COPY graphOrDefault TO graphOrDefault.
 
-DeleteClause ::= DELETE QuadPattern1.!!!!!!!!!
+insertData ::= INSERTDATA quadData.
 
-InsertClause ::= INSERT QuadPattern.
+deleteData ::= DELETEDATA quadData.
 
-UsingClause ::= USING iri.
-UsingClause ::= USING NAMED iri.
+deletewhere ::= DELETEWHERE quadPattern.
 
-GraphOrDefault ::= DEFAULT.
-GraphOrDefault ::= iri.
-GraphOrDefault ::= GRAPH iri.
+modify ::= WITH iri deleteClause insertClause usingClauseX WHERE groupGraphPattern.
+modify ::= WITH iri deleteClause usingClauseX WHERE groupGraphPattern.
+modify ::= WITH iri insertClause usingClauseX WHERE groupGraphPattern.
+modify ::= WITH iri deleteClause insertClause WHERE groupGraphPattern.
+modify ::= WITH iri deleteClause WHERE groupGraphPattern.
+modify ::= WITH iri insertClause WHERE groupGraphPattern.
+modify ::= deleteClause insertClause usingClauseX WHERE groupGraphPattern.
+modify ::= deleteClause usingClauseX WHERE groupGraphPattern.
+modify ::= insertClause usingClauseX WHERE groupGraphPattern.
+modify ::= deleteClause insertClause WHERE groupGraphPattern.
+modify ::= deleteClause WHERE groupGraphPattern.
+modify ::= insertClause WHERE groupGraphPattern.
+usingClauseX ::= usingClauseX usingClause.
+usingClauseX ::= usingClause.
 
-GraphRef ::= GRAPH iri.
+deleteClause ::= DELETE quadPattern.
 
-GraphRefAll ::= GraphRef.
-GraphRefAll ::= DEFAULT.
-GraphRefAll ::= NAMED.
-GraphRefAll ::= ALL.
+insertClause ::= INSERT quadPattern.
 
-QuadPattern ::= LBRACE RBRACE.
-QuadPattern ::= LBRACE Quads RBRACE.
+usingClause ::= USING NAMED iri.
+usingClause ::= USING iri.
 
-QuadData ::= LBRACE RBRACE.
-QuadData ::= LBRACE Quads1 RBRACE.
+graphOrDefault ::= GRAPH iri.
+graphOrDefault ::= DEFAULT.
+graphOrDefault ::= iri.
 
-Quads ::= TriplesTemplate.
-Quads ::= QuadsX.
-Quads ::= TriplesTemplate QuadsX.
-QuadsX ::= QuadsNotTriples.
-QuadsX ::= QuadsNotTriples DOT.
-QuadsX ::= QuadsNotTriples TriplesTemplate.
-QuadsX ::= QuadsNotTriples DOT TriplesTemplate.
-QuadsX ::= QuadsNotTriples QuadsX.
-QuadsX ::= QuadsNotTriples DOT QuadsX.
-QuadsX ::= QuadsNotTriples TriplesTemplate QuadsX.
-QuadsX ::= QuadsNotTriples DOT TriplesTemplate QuadsX.
+graphRef ::= GRAPH iri.
 
-QuadsNotTriples ::= GRAPH VarOrIri LBRACE RBRACE.
-QuadsNotTriples ::= GRAPH VarOrIri LBRACE TriplesTemplate RBRACE.
+graphRefAll ::= graphRef.
+graphRefAll ::= DEFAULT.
+graphRefAll ::= NAMED.
+graphRefAll ::= ALL.
 
-TriplesTemplate ::= TriplesSameSubject.
-TriplesTemplate ::= TriplesSameSubject DOT.
-TriplesTemplate ::= TriplesSameSubject DOT TriplesTemplate.
+quadPattern ::= LBRACE quads RBRACE.
+quadPattern ::= LBRACE RBRACE.
 
-GroupGraphPattern ::= LBRACE RBRACE.
-GroupGraphPattern ::= LBRACE SubSelect RBRACE.
-GroupGraphPattern ::= LBRACE GroupGraphPatternSub RBRACE.
+quadData ::= LBRACE quads RBRACE.
+quadData ::= LBRACE RBRACE.
 
-GroupGraphPatternSub ::= TriplesBlock.
-GroupGraphPatternSub ::= GroupGraphPatternSubX.
-GroupGraphPatternSub ::= TriplesBlock GroupGraphPatternSubX.
-GroupGraphPatternSubX ::= GraphPatternNotTriples.
-GroupGraphPatternSubX ::= GraphPatternNotTriples DOT.
-GroupGraphPatternSubX ::= GraphPatternNotTriples TriplesBlock.
-GroupGraphPatternSubX ::= GraphPatternNotTriples DOT TriplesBlock.
-GroupGraphPatternSubX ::= GraphPatternNotTriples GroupGraphPatternSubX.
-GroupGraphPatternSubX ::= GraphPatternNotTriples DOT GroupGraphPatternSubX.
-GroupGraphPatternSubX ::= GraphPatternNotTriples TriplesBlock GroupGraphPatternSubX.
-GroupGraphPatternSubX ::= GraphPatternNotTriples DOT TriplesBlock GroupGraphPatternSubX.
+quads ::= triplesTemplate quadsX.
+quads ::= triplesTemplate.
+quads ::= quadsX.
+quadsX ::= quadsX quadsNotTriples DOT triplesTemplate.
+quadsX ::= quadsX quadsNotTriples triplesTemplate.
+quadsX ::= quadsX quadsNotTriples DOT.
+quadsX ::= quadsX quadsNotTriples.
+quadsX ::= quadsNotTriples DOT triplesTemplate.
+quadsX ::= quadsNotTriples triplesTemplate.
+quadsX ::= quadsNotTriples DOT.
+quadsX ::= quadsNotTriples.
 
-TriplesBlock ::= TriplesSameSubjectPath.
-TriplesBlock ::= TriplesSameSubjectPath DOT.
-TriplesBlock ::= TriplesSameSubjectPath DOT TriplesBlock.
+quadsNotTriples ::= GRAPH varOrIri LBRACE triplesTemplate RBRACE.
+quadsNotTriples ::= GRAPH varOrIri LBRACE RBRACE.
 
-GraphPatternNotTriples ::= GroupOrUnionGraphPattern.
-GraphPatternNotTriples ::= OptionalGraphPattern.
-GraphPatternNotTriples ::= MinusGraphPattern.
-GraphPatternNotTriples ::= GraphGraphPattern.
-GraphPatternNotTriples ::= ServiceGraphPattern.
-GraphPatternNotTriples ::= Filter.
-GraphPatternNotTriples ::= Bind.
-GraphPatternNotTriples ::= InlineData.
+triplesTemplate ::= triplesSameSubject DOT triplesTemplate.
+triplesTemplate ::= triplesSameSubject DOT.
+triplesTemplate ::= triplesSameSubject.
 
-OptionalGraphPattern ::= OPTIONAL GroupGraphPattern.
+groupGraphPattern ::= LBRACE groupGraphPatternSub RBRACE.
+groupGraphPattern ::= LBRACE subSelect RBRACE.
+groupGraphPattern ::= LBRACE RBRACE.
 
-ServiceGraphPattern ::= SERVICE VarOrIri GroupGraphPattern.
-ServiceGraphPattern ::= SERVICE SILENT VarOrIri GroupGraphPattern.
 
-Bind ::= BIND LPARENTHESE Expression AS Var RPARENTHESE.
+groupGraphPatternSub ::= triplesBlock groupGraphPatternSubX. {/*check variable if GoupGraphPatternSubX has some in the array*/}
+groupGraphPatternSub ::= triplesBlock.
+groupGraphPatternSub ::= groupGraphPatternSubX.
+groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples DOT triplesBlock. {/*for all below set variable from graphPatternNotTriples to X and for all Tripleblock check if both have variable*/}
+groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples triplesBlock.
+groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples DOT.
+groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples.
+groupGraphPatternSubX ::= graphPatternNotTriples DOT triplesBlock.
+groupGraphPatternSubX ::= graphPatternNotTriples triplesBlock.
+groupGraphPatternSubX ::= graphPatternNotTriples DOT.
+groupGraphPatternSubX ::= graphPatternNotTriples. 
+
+triplesBlock ::= triplesSameSubjectPath DOT triplesBlock.
+triplesBlock ::= triplesSameSubjectPath DOT.
+triplesBlock ::= triplesSameSubjectPath. {/*if variable - check*/}
+
+
+
+graphPatternNotTriples ::= groupOrUnionGraphPattern.
+graphPatternNotTriples ::= optionalGraphPattern.
+graphPatternNotTriples ::= minusGraphPattern.
+graphPatternNotTriples ::= graphGraphPattern.
+graphPatternNotTriples ::= serviceGraphPattern.
+graphPatternNotTriples ::= filter.
+graphPatternNotTriples ::= bind. {/*set variable*/}
+graphPatternNotTriples ::= inlineData.
+
+optionalGraphPattern ::= OPTIONAL groupGraphPattern.
+
+graphGraphPattern ::= GRAPH varOrIri groupGraphPattern.
+
+serviceGraphPattern ::= SERVICE SILENT varOrIri groupGraphPattern.
+serviceGraphPattern ::= SERVICE varOrIri groupGraphPattern.
+
+bind ::= BIND LPARENTHESE expression AS var RPARENTHESE.
+
+inlineData ::= VALUES dataBlock.
+
+dataBlock ::= inlineDataOneVar.
+dataBlock ::= inlineDataFull.
+
+inlineDataOneVar ::= var LBRACE dataBlockValueX RBRACE.
+inlineDataOneVar ::= var LBRACE RBRACE.
+dataBlockValueX ::= dataBlockValueX dataBlockValue. {/*count +1*/}
+dataBlockValueX ::= dataBlockValue. {/*count +1*/}
+
+inlineDataFull ::= LPARENTHESE varX RPARENTHESE LBRACE inlineDataFullX RBRACE. {/*if both >0 and equal ok, var>0 i..X =0 ok else break*/} 
+inlineDataFull ::= NIL LBRACE nilX RBRACE.
+inlineDataFull ::= NIL LBRACE RBRACE.
+nilX ::= nilX NIL.
+nilX ::= NIL.
+varX ::= varX var. {/*count +1*/}
+varX ::= var. {/*count +1*/}
+inlineDataFullX ::= inlineDataFullX LPARENTHESE dataBlockValueX RPARENTHESE. {/*if (both >0 and equal - count = i..X.count else if unequal - break, else d..X.count)*/}
+inlineDataFullX ::= inlineDataFullX nilX. {/*count = i..X.count*/}
+inlineDataFullX ::= LPARENTHESE dataBlockValueX RPARENTHESE. {/*count = d..X.count*/}
+inlineDataFullX ::= nilX. {/*count = 0*/}
+
+dataBlockValue ::= iri.
+dataBlockValue ::= rdfLiteral.
+dataBlockValue ::= numericLiteral.
+dataBlockValue ::= booleanLiteral.
+dataBlockValue ::= UNDEF.
+
+minusGraphPattern ::= SMINUS groupGraphPattern.
+
+groupOrUnionGraphPattern ::= groupGraphPattern groupOrUnionGraphPatternX.
+groupOrUnionGraphPattern ::= groupGraphPattern.
+groupOrUnionGraphPatternX ::= groupOrUnionGraphPatternX UNION groupGraphPattern.
+groupOrUnionGraphPatternX ::= UNION GroupGraphPattern.
+
+filter ::= FILTER constraint.
+
+constraint ::= brackettedExpression.
+constraint ::= builtInCall.
+constraint ::= functionCall.
+
+functionCall ::= iri argList.
+
+argList ::= LPARENTHESE DISTINCT expression argListX RPARENTHESE.
+argList ::= LPARENTHESE expression argListX RPARENTHESE.
+argList ::= NIL.
+argListX ::= argListX COMMA expression.
+argListX ::= COMMA expression.
+
+expressionList ::= LPARENTHESE expression argListX RPARENTHESE.
+expressionList ::= NIL.
+
+constructTemplate ::= LBRACE constructTriples RBRACE.
+constructTemplate ::= LBRACE RBRACE.
+
+constructTriples ::= triplesSameSubject DOT constructTriples.
+constructTriples ::= triplesSameSubject DOT.
+constructTriples ::= triplesSameSubject.
+
+triplesSameSubject ::= varOrTerm propertyListNotEmpty.
+triplesSameSubject ::= triplesNode propertyListNotEmpty.
+triplesSameSubject ::= triplesNode.
+
+propertyListNotEmpty ::= verb objectList propertyListNotEmptyX.
+propertyListNotEmpty ::= verb objectList.
+propertyListNotEmptyX ::= propertyListNotEmptyX SEMICOLON verb objectList.
+propertyListNotEmptyX ::= propertyListNotEmptyX SEMICOLON.
+propertyListNotEmptyX ::= SEMICOLON verb objectList.
+propertyListNotEmptyX ::= SEMICOLON.
+
+verb ::= varOrIri.
+verb ::= A.
+
+objectList ::= object objectListX.
+objectList ::= object.
+objectListX ::= objectListX COMMA object.
+objectListX ::= COMMA object.
+
+object ::= graphNode.
+
+triplesSameSubjectPath ::= varOrTerm propertyListPathNotEmpty.
+triplesSameSubjectPath ::= triplesNodePath propertyListPathNotEmpty.
+triplesSameSubjectPath ::= triplesNodePath.
+
+propertyListPathNotEmpty ::= pathAlternative objectListPath propertyListPathNotEmptyX.
+propertyListPathNotEmpty ::= var objectListPath propertyListPathNotEmptyX.
+propertyListPathNotEmpty ::= pathAlternative objectListPath.
+propertyListPathNotEmpty ::= var objectListPath.
+propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON pathAlternative objectList.
+propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON var objectList.
+propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON.
+propertyListPathNotEmptyX ::= SEMICOLON pathAlternative objectList.
+propertyListPathNotEmptyX ::= SEMICOLON var objectList.
+propertyListPathNotEmptyX ::= SEMICOLON.
+
+objectListPath ::= objectPath objectListPathX.
+objectListPath ::= objectPath.
+objectListPathX ::= objectListPathX COMMA objectPath.
+objectListPathX ::= COMMA objectPath.
+
+objectPath ::= graphNodePath.
+
+pathAlternative ::= pathSequence pathAlternativeX.
+pathAlternative ::= pathSequence.
+pathAlternativeX ::= pathAlternativeX VBAR pathSequence.
+pathAlternativeX ::= VBAR pathSequence.
+
+pathSequence ::= pathEltOrInverse pathSequenceX.
+pathSequence ::= pathEltOrInverse.
+pathSequenceX ::= pathSequenceX SLASH pathEltOrInverse.
+pathSequenceX ::= SLASH pathEltOrInverse.
+
+pathElt ::= pathPrimary pathMod.
+pathElt ::= pathPrimary.
+
+pathEltOrInverse ::= HAT pathElt.
+pathEltOrInverse ::= pathElt.
+
+pathMod ::= STAR.
+pathMod ::= PLUS.
+pathMod ::= QUESTION.
+
+pathPrimary ::= LPARENTHESE pathAlternative RPARENTHESE.
+pathPrimary ::= EXCLAMATION pathNegatedPropertySet.
+pathPrimary ::= A.
+pathPrimary ::= iri.
+
+pathNegatedPropertySet ::= LPARENTHESE pathOneInPropertySet pathNegatedPropertySetX RPARENTHESE.
+pathNegatedPropertySet ::= LPARENTHESE RPARENTHESE.
+pathNegatedPropertySet ::= pathOneInPropertySet.
+pathNegatedPropertySetX ::= pathNegatedPropertySetX VBAR pathOneInPropertySet.
+pathNegatedPropertySetX ::= VBAR pathOneInPropertySet.
+
+pathOneInPropertySet ::= HAT iri.
+pathOneInPropertySet ::= HAT A.
+pathOneInPropertySet ::= A.
+pathOneInPropertySet ::= iri.
+
+triplesNode ::= collection.
+triplesNode ::= blankNodePropertyList.
+
+blankNodePropertyList ::= LBRACKET propertyListNotEmpty RBRACKET.
+
+triplesNodePath ::= collectionPath.
+triplesNodePath ::= blankNodePropertyListPath.
+
+blankNodePropertyListPath ::= LBRACKET propertyListPathNotEmpty RBRACKET.
+
+collection ::= LPARENTHESE graphNodeX RPARENTHESE.
+graphNodeX ::= graphNodeX graphNode.
+graphNodeX ::= graphNode.
+
+collectionPath ::= LPARENTHESE graphNodePathX RPARENTHESE.
+graphNodePathX ::= graphNodePathX graphNodePath.
+graphNodePathX ::= graphNodePath.
+
+graphNode ::= varOrTerm.
+graphNode ::= triplesNode.
+
+graphNodePath ::= varOrTerm.
+graphNodePath ::= triplesNodePath.
+
+varOrTerm ::= var.
+varOrTerm ::= graphTerm.
+
+varOrIri ::= var.
+varOrIri ::= iri.
+
+var ::= VAR1.
+var ::= VAR2.
+
+graphTerm ::= iri.
+graphTerm ::= rdfLiteral.
+graphTerm ::= numericLiteral.
+graphTerm ::= booleanLiteral.
+graphTerm ::= blankNode.
+graphTerm ::= NIL.
+
+expression ::= conditionalOrExpression.
+
+conditionalOrExpression ::= conditionalAndExpression conditionalOrExpressionX.
+conditionalOrExpression ::= conditionalAndExpression.
+conditionalOrExpressionX ::= conditionalOrExpressionX OR conditionalAndExpression.
+conditionalOrExpressionX ::= OR conditionalAndExpression.
+
+conditionalAndExpression ::= valueLogical conditionalAndExpressionX.
+conditionalAndExpression ::= valueLogical.
+conditionalAndExpressionX ::= conditionalAndExpressionX AND valueLogical.
+conditionalAndExpressionX ::= AND valueLogical.
+
+valueLogical ::= relationalExpression.
+
+relationalExpression ::= additiveExpression relationalExpressionX.
+relationalExpression ::= additiveExpression.
+relationalExpressionX ::= EQUAL additiveExpression.
+relationalExpressionX ::= NEQUAL additiveExpression.
+relationalExpressionX ::= SMALLERTHEN additiveExpression.
+relationalExpressionX ::= GREATERTHEN additiveExpression.
+relationalExpressionX ::= SMALLERTHENQ additiveExpression.
+relationalExpressionX ::= GREATERTHENQ additiveExpression.
+relationalExpressionX ::= IN expressionList.
+relationalExpressionX ::= NOT IN expressionList.
+
+additiveExpression ::= multiplicativeExpression additiveExpressionX.
+additiveExpression ::= multiplicativeExpression.
+additiveExpressionX ::= additiveExpressionX numericLiteralPositive additiveExpressionY.
+additiveExpressionX ::= additiveExpressionX numericLiteralNegative additiveExpressionY.
+additiveExpressionX ::= additiveExpressionX numericLiteralPositive.
+additiveExpressionX ::= additiveExpressionX numericLiteralNegative.
+additiveExpressionX ::= additiveExpressionX PLUS multiplicativeExpression.
+additiveExpressionX ::= additiveExpressionX MINUS multiplicativeExpression.
+additiveExpressionX ::= numericLiteralPositive additiveExpressionY.
+additiveExpressionX ::= numericLiteralNegative additiveExpressionY.
+additiveExpressionX ::= numericLiteralPositive.
+additiveExpressionX ::= numericLiteralNegative.
+additiveExpressionX ::= PLUS multiplicativeExpression.
+additiveExpressionX ::= MINUS multiplicativeExpression.
+additiveExpressionY ::= additiveExpressionY STAR unaryExpression.
+additiveExpressionY ::= additiveExpressionY SLASH unaryExpression.
+additiveExpressionY ::= STAR unaryExpression.
+additiveExpressionY ::= SLASH unaryExpression.
+
+multiplicativeExpression ::= unaryExpression additiveExpressionY.
+multiplicativeExpression ::= unaryExpression.
+
+unaryExpression ::= EXCLAMATION primaryExpression.
+unaryExpression ::= PLUS primaryExpression.
+unaryExpression ::= MINUS primaryExpression.
+unaryExpression ::= primaryExpression.
+
+primaryExpression ::= brackettedExpression.
+primaryExpression ::= builtInCall.
+primaryExpression ::= iriOrFunction.
+primaryExpression ::= rdfLiteral.
+primaryExpression ::= numericLiteral.
+primaryExpression ::= booleanLiteral.
+primaryExpression ::= var.
+
+brackettedExpression ::= LPARENTHESE expression RPARENTHESE.
+
+builtInCall ::= aggregate.
+builtInCall ::= regexExpression.
+builtInCall ::= existsFunc.
+builtInCall ::= notExistsFunc.
+builtInCall ::= STR LPARENTHESE expression RPARENTHESE.
+builtInCall ::= LANG LPARENTHESE expression RPARENTHESE.
+builtInCall ::= LANGMATCHES LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= DATATYPE LPARENTHESE expression RPARENTHESE.
+builtInCall ::= BOUND LPARENTHESE var RPARENTHESE.
+builtInCall ::= IRI LPARENTHESE expression RPARENTHESE.
+builtInCall ::= URI LPARENTHESE expression RPARENTHESE.
+builtInCall ::= BNODE LPARENTHESE expression RPARENTHESE.
+builtInCall ::= BNODE NIL.
+builtInCall ::= RAND NIL.
+builtInCall ::= ABS LPARENTHESE expression RPARENTHESE.
+builtInCall ::= CEIL LPARENTHESE expression RPARENTHESE.
+builtInCall ::= FOOR LPARENTHESE expression RPARENTHESE.
+builtInCall ::= ROUND LPARENTHESE expression RPARENTHESE.
+builtInCall ::= CONCAT expressionList.
+builtInCall ::= subStringExpression.
+builtInCall ::= STRLEN LPARENTHESE expression RPARENTHESE.
+builtInCall ::= strReplaceExpression.
+builtInCall ::= UCASE LPARENTHESE expression RPARENTHESE.
+builtInCall ::= LCASE LPARENTHESE expression RPARENTHESE.
+builtInCall ::= ENCODE_FOR_URI LPARENTHESE expression RPARENTHESE.
+builtInCall ::= CONTAINS LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= STRSTARTS LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= STRENDS LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= STBEFORE LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= STRAFTER LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= YEAR LPARENTHESE expression RPARENTHESE.
+builtInCall ::= MONTH LPARENTHESE expression RPARENTHESE.
+builtInCall ::= DAY LPARENTHESE expression RPARENTHESE.
+builtInCall ::= HOURS LPARENTHESE expression RPARENTHESE.
+builtInCall ::= MINUTES LPARENTHESE expression RPARENTHESE.
+builtInCall ::= SECONDS LPARENTHESE expression RPARENTHESE.
+builtInCall ::= TIMEZONE LPARENTHESE expression RPARENTHESE.
+builtInCall ::= TZ LPARENTHESE expression RPARENTHESE.
+builtInCall ::= NOW NIL.
+builtInCall ::= UUID NIL.
+builtInCall ::= STRUUID NIL.
+builtInCall ::= MD5 LPARENTHESE expression RPARENTHESE.
+builtInCall ::= SHA1 LPARENTHESE expression RPARENTHESE.
+builtInCall ::= SHA256 LPARENTHESE expression RPARENTHESE.
+builtInCall ::= SHA384 LPARENTHESE expression RPARENTHESE.
+builtInCall ::= SHA512 LPARENTHESE expression RPARENTHESE.
+builtInCall ::= COALESCE expressionList.
+builtInCall ::= IF LPARENTHESE expression COMMA expression COMMA expression RPARENTHESE.
+builtInCall ::= STRLANG LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= STRDT LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= SAMETERM LPARENTHESE expression COMMA expression RPARENTHESE.
+builtInCall ::= ISIRI LPARENTHESE expression RPARENTHESE.
+builtInCall ::= ISURI LPARENTHESE expression RPARENTHESE.
+builtInCall ::= ISBLANK LPARENTHESE expression RPARENTHESE.
+builtInCall ::= ISLITERAL LPARENTHESE expression RPARENTHESE.
+builtInCall ::= ISNUMERIC LPARENTHESE expression RPARENTHESE.
+
+regexExpression ::= REGEX LPARENTHESE expression COMMA expression COMMA expression RPARENTHESE.
+regexExpression ::= REGEX LPARENTHESE expression COMMA expression RPARENTHESE.
+
+subStringExpression ::= SUBSTR LPARENTHESE expression COMMA expression COMMA expression RPARENTHESE.
+subStringExpression ::= SUBSTR LPARENTHESE expression COMMA expression RPARENTHESE.
+
+strReplaceExpression ::= REPLACE LPARENTHESE expression COMMA expression COMMA expression COMMA expression RPARENTHESE.
+strReplaceExpression ::= REPLACE LPARENTHESE expression COMMA expression COMMA expression RPARENTHESE.
+
+existsFunc ::= EXISTS groupGraphPattern.
+
+notExistsFunc ::= NOT EXISTS groupGraphPattern.
+
+aggregate ::= COUNT LPARENTHESE DISTINCT STAR RPARENTHESE.
+aggregate ::= COUNT LPARENTHESE DISTINCT expression RPARENTHESE.
+aggregate ::= COUNT LPARENTHESE STAR RPARENTHESE.
+aggregate ::= COUNT LPARENTHESE expression RPARENTHESE.
+aggregate ::= SUM LPARENTHESE DISTINCT expression RPARENTHESE.
+aggregate ::= MIN LPARENTHESE DISTINCT expression RPARENTHESE.
+aggregate ::= MAX LPARENTHESE DISTINCT expression RPARENTHESE.
+aggregate ::= AVG LPARENTHESE DISTINCT expression RPARENTHESE.
+aggregate ::= SAMPLE LPARENTHESE DISTINCT expression RPARENTHESE.
+aggregate ::= SUM LPARENTHESE expression RPARENTHESE.
+aggregate ::= MIN LPARENTHESE expression RPARENTHESE.
+aggregate ::= MAX LPARENTHESE expression RPARENTHESE.
+aggregate ::= AVG LPARENTHESE expression RPARENTHESE.
+aggregate ::= SAMPLE LPARENTHESE expression RPARENTHESE.
+aggregate ::= GROUP_CONCAT LPARENTHESE DISTINCT expression SEMICOLON SEPARATOR EQUAL string RPARENTHESE.
+aggregate ::= GROUP_CONCAT LPARENTHESE DISTINCT expression RPARENTHESE.
+aggregate ::= GROUP_CONCAT LPARENTHESE expression SEMICOLON SEPARATOR EQUAL string RPARENTHESE.
+aggregate ::= GROUP_CONCAT LPARENTHESE expression RPARENTHESE.
+
+iriOrFunction ::= iri argList.
+iriOrFunction ::= iri.
+
+rdfLiteral ::= string LANGTAG.
+rdfLiteral ::= string DHAT iri.
+rdfLiteral ::= string.
+
+numericLiteral ::= numericLiteralUnsigned.
+numericLiteral ::= numericLiteralPositive.
+numericLiteral ::= numericLiteralNegative.
+
+numericLiteralUnsigned ::= INTEGER.
+numericLiteralUnsigned ::= DECIMAL.
+numericLiteralUnsigned ::= DOUBLE.
+
+numericLiteralPositive ::= INTEGER_POSITIVE.
+numericLiteralPositive ::= DECIMAL_POSITIVE.
+numericLiteralPositive ::= DOUBLE_POSITIVE.
+
+numericLiteralNegative ::= INTEGER_NEGATIVE.
+numericLiteralNegative ::= DECIMAL_NEGATIVE.
+numericLiteralNegative ::= DOUBLE_NEGATIVE.
+
+booleanLiteral ::= TRUE.
+booleanLiteral ::= FALSE.
+
+string ::= STRING_LITERAL1.
+string ::= STRING_LITERAL2.
+string ::= STRING_LITERAL_LONG1.
+string ::= STRING_LITERAL_LONG2.
+
+iri ::= IRIREF.
+iri ::= prefixedName.
+
+prefixedName ::= PNAME_LN.
+prefixedName ::= PNAME_NS.
+
+blankNode ::= BLANK_NODE_LABEL.
+blankNode ::= ANON.
 
 /* solved issues: * + through loops, update is allowed to be empty (completely empty) -> removed, 
- * no vars in QuadData -> extra rules, no blanknodes in delete where, delete clause, 
+ * no vars in quadData -> extra rules, no blanknodes in delete where, delete clause, 
  * delete data -> extra rules,
  * troublemaker: DataBlock - needs same amount of variables and datablockvalues, scoping, 
  * limiting aggregates, custom aggregates
+ * idea for variables - store them in a array and shove them up (if you need to) --- check variable arrays where you need to for scoping 
 */

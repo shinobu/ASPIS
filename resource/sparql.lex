@@ -116,6 +116,7 @@ WS = \x20|\x09|\x0D|\x0A
 <YYINITIAL> "/" { return $this->createToken(SparqlPHPParser::TK_SLASH); }
 <YYINITIAL> "^" { return $this->createToken(SparqlPHPParser::TK_HAT); }
 <YYINITIAL> "?" { return $this->createToken(SparqlPHPParser::TK_QUESTION); }
+<YYINITIAL> "!" { return $this->createToken(SparqlPHPParser::TK_EXCLAMATION); }
 <YYINITIAL> "+" { return $this->createToken(SparqlPHPParser::TK_PLUS); }
 <YYINITIAL> "[" { return $this->createToken(SparqlPHPParser::TK_LBRACKET); }
 <YYINITIAL> "]" { return $this->createToken(SparqlPHPParser::TK_RBRACKET); }

@@ -163,6 +163,7 @@
 #define TK_DELETE_DATA 163
 #define TK_DELETE_WHERE 164
 
+/*
 #define TK_start 165
 #define TK_Query 166
 #define TK_Prologue 167
@@ -290,3 +291,4 @@
 #define TK_Blanknode 289
 
 //do rest of lexer constants + maybe non-terminals as well - number must fit position in the array in sparql.php maybe add them later in the c.php
+*/
