@@ -1,6 +1,17 @@
 /* This is a lemon grammar for the Sparql1.1 language */
 %name SparqlPHPParser
 %token_prefix TK_
+/*might need to set a token type*/
+%type groupGraphPatternSub { Test }
+%include { /* this will be copied blindly */}
+
+%parse_accept {
+    /*add a function to print a clean version of query (or a sparql algebra version)*/
+}
+
+%parse_failure {
+    /*transfer somehow execution class and write the error into it maybe? maybe as fourth parameter (kinda wasteful as every token will throw it in the parser again)*/
+}
 
 /* this defines a symbol for the lexer */
 %nonassoc PRAGMA.
@@ -66,7 +77,6 @@ selectClauseX ::= selectClauseX rdfLiteral.
 selectClauseX ::= selectClauseX numericLiteral.
 selectClauseX ::= selectClauseX booleanLiteral.
 selectClauseX ::= selectClauseX var.
-selectClauseX ::= selectClauseX aggregate.
 selectClauseX ::= selectClauseX functionCall.
 selectClauseX ::= LPARENTHESE expression AS var RPARENTHESE.
 selectClauseX ::= LPARENTHESE expression RPARENTHESE.
@@ -75,7 +85,6 @@ selectClauseX ::= rdfLiteral.
 selectClauseX ::= numericLiteral.
 selectClauseX ::= booleanLiteral.
 selectClauseX ::= var.
-selectClauseX ::= aggregate.
 selectClauseX ::= functionCall.
 
 constructQuery ::= CONSTRUCT constructTemplate datasetClauseX whereclause solutionModifier.
@@ -142,26 +151,34 @@ solutionModifier ::= orderClause.
 solutionModifier ::= limitOffsetClauses.
 
 groupClause ::= GROUP BY groupConditionX.
-groupConditionX ::= groupConditionX groupCondition.
-groupConditionX ::= groupCondition.
-
-groupCondition ::= expression AS var.
-groupCondition ::= builtInCall.
-groupCondition ::= functionCall.
-groupCondition ::= expression.
-groupCondition ::= var.
+groupConditionX ::= groupConditionX LPARENTHESE expression AS var RPARENTHESE.
+groupConditionX ::= groupConditionX builtInCall.
+groupConditionX ::= groupConditionX functionCall.
+groupConditionX ::= groupConditionX LPARENTHESE expression RPARENTHESE.
+groupConditionX ::= groupConditionX var.
+groupConditionX ::= LPARENTHESE expression AS var RPARENTHESE.
+groupConditionX ::= builtInCall.
+groupConditionX ::= functionCall.
+groupConditionX ::= LPARENTHESE expression RPARENTHESE.
+groupConditionX ::= var.
 
 havingClause ::= HAVING constraintX.
-constraintX ::= constraintX constraint.
-constraintX ::= constraint.
+constraintX ::= constraintX LPARENTHESE expression RPARENTHESE.
+constraintX ::= constraintX builtInCall.
+constraintX ::= constraintX functionCall.
+constraintX ::= LPARENTHESE expression RPARENTHESE.
+constraintX ::= builtInCall.
+constraintX ::= functionCall.
 
 orderClause ::= ORDER BY orderConditionX.
 orderConditionX ::= orderConditionX orderCondition.
 orderConditionX ::= orderCondition.
 
-orderCondition ::= ASC brackettedExpression.
-orderCondition ::= DESC brackettedExpression.
-orderCondition ::= constraint.
+orderCondition ::= ASC LPARENTHESE expression RPARENTHESE.
+orderCondition ::= DESC LPARENTHESE expression RPARENTHESE.
+orderCondition ::= LPARENTHESE expression RPARENTHESE.
+orderCondition ::= builtInCall.
+orderCondition ::= functionCall.
 orderCondition ::= var.
 
 limitOffsetClauses ::= limitClause offsetClause.
@@ -179,8 +196,6 @@ update ::= prologue update1 SEMICOLON update.
 update ::= update1 SEMICOLON update.
 update ::= prologue update1.
 update ::= update1.
-
-
 
 update1 ::= load.
 update1 ::= clear.
@@ -286,7 +301,7 @@ groupGraphPattern ::= LBRACE subSelect RBRACE.
 groupGraphPattern ::= LBRACE RBRACE.
 
 
-groupGraphPatternSub ::= triplesBlock groupGraphPatternSubX. {/*check variable if GoupGraphPatternSubX has some in the array*/}
+groupGraphPatternSub(A) ::= triplesBlock(B) groupGraphPatternSubX(C). {/*check variable if GoupGraphPatternSubX has some in the array*/ A.test = B + C; }
 groupGraphPatternSub ::= triplesBlock.
 groupGraphPatternSub ::= groupGraphPatternSubX.
 groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples DOT triplesBlock. {/*for all below set variable from graphPatternNotTriples to X and for all Tripleblock check if both have variable*/}
@@ -357,11 +372,9 @@ groupOrUnionGraphPattern ::= groupGraphPattern.
 groupOrUnionGraphPatternX ::= groupOrUnionGraphPatternX UNION groupGraphPattern.
 groupOrUnionGraphPatternX ::= UNION GroupGraphPattern.
 
-filter ::= FILTER constraint.
-
-constraint ::= brackettedExpression.
-constraint ::= builtInCall.
-constraint ::= functionCall.
+filter ::= FILTER LPARENTHESE expression RPARENTHESE.
+filter ::= FILTER builtInCall.
+filter ::= FILTER functionCall.
 
 functionCall ::= iri argList.
 
@@ -552,15 +565,14 @@ unaryExpression ::= PLUS primaryExpression.
 unaryExpression ::= MINUS primaryExpression.
 unaryExpression ::= primaryExpression.
 
-primaryExpression ::= brackettedExpression.
+primaryExpression ::= LPARENTHESE expression RPARENTHESE.
 primaryExpression ::= builtInCall.
-primaryExpression ::= iriOrFunction.
+primaryExpression ::= iri.
+primaryExpression ::= functionCall.
 primaryExpression ::= rdfLiteral.
 primaryExpression ::= numericLiteral.
 primaryExpression ::= booleanLiteral.
 primaryExpression ::= var.
-
-brackettedExpression ::= LPARENTHESE expression RPARENTHESE.
 
 builtInCall ::= aggregate.
 builtInCall ::= regexExpression.
@@ -571,7 +583,6 @@ builtInCall ::= LANG LPARENTHESE expression RPARENTHESE.
 builtInCall ::= LANGMATCHES LPARENTHESE expression COMMA expression RPARENTHESE.
 builtInCall ::= DATATYPE LPARENTHESE expression RPARENTHESE.
 builtInCall ::= BOUND LPARENTHESE var RPARENTHESE.
-builtInCall ::= IRI LPARENTHESE expression RPARENTHESE.
 builtInCall ::= URI LPARENTHESE expression RPARENTHESE.
 builtInCall ::= BNODE LPARENTHESE expression RPARENTHESE.
 builtInCall ::= BNODE NIL.
@@ -650,9 +661,6 @@ aggregate ::= GROUP_CONCAT LPARENTHESE DISTINCT expression SEMICOLON SEPARATOR E
 aggregate ::= GROUP_CONCAT LPARENTHESE DISTINCT expression RPARENTHESE.
 aggregate ::= GROUP_CONCAT LPARENTHESE expression SEMICOLON SEPARATOR EQUAL string RPARENTHESE.
 aggregate ::= GROUP_CONCAT LPARENTHESE expression RPARENTHESE.
-
-iriOrFunction ::= iri argList.
-iriOrFunction ::= iri.
 
 rdfLiteral ::= string LANGTAG.
 rdfLiteral ::= string DHAT iri.
