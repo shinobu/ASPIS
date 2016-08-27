@@ -2,8 +2,68 @@
 %name SparqlPHPParser
 %token_prefix TK_
 /*might need to set a token type*/
-%type groupGraphPatternSub { Test }
-%include { /* this will be copied blindly */}
+%default_type { Test }
+%include { /* this will be copied blindly */
+<php class NTToken {
+	/* arrays */
+	public $vars = null;
+	public $bNodes = null;
+	/* non-arrays */
+	public $bindVar = null;
+	public $query = null;
+	/* booleans */
+	public $hasBN = false;
+	public $hasFNC = false;
+	public $hasAGG = false;
+
+	function addVars($tmpVar) {
+		if (!empty($tmpVar)) {
+    	    if ($this->vars == null) {
+    	        $this->vars = array();
+    	    }
+    	    $duplicate = false;
+    	    foreach ($tmpVar as $toAdd) {
+    	        foreach ($this->vars as $exists) {
+    	            if (strcmp($exists, $toAdd) == 0) {
+    	                $duplicate = true;
+    	            }
+    	        }
+    	        if ($duplicate == false) {
+    	            $this->vars[] = $toAdd;
+    	        }
+    	    }
+    	}
+	}
+
+	function noDuplicates($tmpVar) {
+		$noDuplicate = true;
+        if ($this->vars == null || $tmpVar == null) {
+            return $noDuplicate;
+        } else {
+            foreach ($tmpVar as $toAdd) {
+    	        foreach ($this->vars as $exists) {
+    	            if (strcmp($exists, $toAdd) == 0) {
+    	                $noDuplicate = false;
+    	            }
+    	        }
+    	    }
+        }
+        return $noDuplicate;
+	}
+
+	function copyBools($tmpToken) {
+		if ($this->hasBN == false) {
+			$this->hasBN = $tmpToken->hasBN;
+		}
+		if ($this->hasFNC == false) {
+			$this->hasFNC = $tmpToken->hasFNC;
+		}
+		if ($this->hasAGG == false) {
+			$this->hasAGG = $tmpToken->hasAGG;
+		}
+	}
+
+}?>  }
 
 %parse_accept {
     /*add a function to print a clean version of query (or a sparql algebra version)*/
@@ -124,24 +184,20 @@ askQuery ::= ASK datasetClauseX whereclause solutionModifier.
 askQuery ::= ASK whereclause solutionModifier.
 askQuery ::= ASK whereclause.
 
-datasetClause ::= FROM defaultGraphClause.
-datasetClause ::= FROM namedGraphClause.
-
-defaultGraphClause ::= iri.
-
-namedGraphClause ::= NAMED iri.
+datasetClause ::= FROM NAMED iri.
+datasetClause ::= FROM iri.
 
 whereclause ::= WHERE groupGraphPattern.
 whereclause ::= groupGraphPattern.
 
-solutionModifier ::= groupClause havingClause.
-solutionModifier ::= groupClause orderClause.
-solutionModifier ::= groupClause limitOffsetClauses.
 solutionModifier ::= groupClause havingClause orderClause limitOffsetClauses.
 solutionModifier ::= havingClause orderClause limitOffsetClauses.
 solutionModifier ::= groupClause orderClause limitOffsetClauses.
 solutionModifier ::= groupClause havingClause limitOffsetClauses.
 solutionModifier ::= groupClause havingClause orderClause.
+solutionModifier ::= groupClause havingClause.
+solutionModifier ::= groupClause orderClause.
+solutionModifier ::= groupClause limitOffsetClauses.
 solutionModifier ::= orderClause limitOffsetClauses.
 solutionModifier ::= havingClause limitOffsetClauses.
 solutionModifier ::= havingClause orderClause.
@@ -301,7 +357,7 @@ groupGraphPattern ::= LBRACE subSelect RBRACE.
 groupGraphPattern ::= LBRACE RBRACE.
 
 
-groupGraphPatternSub(A) ::= triplesBlock(B) groupGraphPatternSubX(C). {/*check variable if GoupGraphPatternSubX has some in the array*/ A.test = B + C; }
+groupGraphPatternSub(A) ::= triplesBlock(B) groupGraphPatternSubX(C). {/*check variable if GoupGraphPatternSubX has some in the array*/ A->test = B + C; }
 groupGraphPatternSub ::= triplesBlock.
 groupGraphPatternSub ::= groupGraphPatternSubX.
 groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples DOT triplesBlock. {/*for all below set variable from graphPatternNotTriples to X and for all Tripleblock check if both have variable*/}
@@ -355,9 +411,9 @@ nilX ::= NIL.
 varX ::= varX var. {/*count +1*/}
 varX ::= var. {/*count +1*/}
 inlineDataFullX ::= inlineDataFullX LPARENTHESE dataBlockValueX RPARENTHESE. {/*if (both >0 and equal - count = i..X.count else if unequal - break, else d..X.count)*/}
-inlineDataFullX ::= inlineDataFullX nilX. {/*count = i..X.count*/}
+inlineDataFullX ::= inlineDataFullX NIL. {/*count = i..X.count*/}
 inlineDataFullX ::= LPARENTHESE dataBlockValueX RPARENTHESE. {/*count = d..X.count*/}
-inlineDataFullX ::= nilX. {/*count = 0*/}
+inlineDataFullX ::= NIL. {/*count = 0*/}
 
 dataBlockValue ::= iri.
 dataBlockValue ::= rdfLiteral.
@@ -408,12 +464,10 @@ propertyListNotEmptyX ::= SEMICOLON.
 verb ::= varOrIri.
 verb ::= A.
 
-objectList ::= object objectListX.
-objectList ::= object.
-objectListX ::= objectListX COMMA object.
-objectListX ::= COMMA object.
-
-object ::= graphNode.
+objectList ::= graphNode objectListX.
+objectList ::= graphNode.
+objectListX ::= objectListX COMMA graphNode.
+objectListX ::= COMMA graphNode.
 
 triplesSameSubjectPath ::= varOrTerm propertyListPathNotEmpty.
 triplesSameSubjectPath ::= triplesNodePath propertyListPathNotEmpty.
@@ -434,8 +488,6 @@ objectListPath ::= objectPath objectListPathX.
 objectListPath ::= objectPath.
 objectListPathX ::= objectListPathX COMMA objectPath.
 objectListPathX ::= COMMA objectPath.
-
-objectPath ::= graphNodePath.
 
 pathAlternative ::= pathSequence pathAlternativeX.
 pathAlternative ::= pathSequence.
@@ -463,6 +515,7 @@ pathPrimary ::= A.
 pathPrimary ::= iri.
 
 pathNegatedPropertySet ::= LPARENTHESE pathOneInPropertySet pathNegatedPropertySetX RPARENTHESE.
+pathNegatedPropertySet ::= LPARENTHESE pathOneInPropertySet RPARENTHESE.
 pathNegatedPropertySet ::= LPARENTHESE RPARENTHESE.
 pathNegatedPropertySet ::= pathOneInPropertySet.
 pathNegatedPropertySetX ::= pathNegatedPropertySetX VBAR pathOneInPropertySet.
