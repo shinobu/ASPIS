@@ -1,10 +1,24 @@
 /* This is a lemon grammar for the Sparql1.1 language */
 %name SparqlPHPParser
 %token_prefix TK_
-/*might need to set a token type*/
-%default_type { Test }
+
+/* as the extra argument doesn't work for the php version, You need to add this manually 
+afterwards into the parser class (otherwhise we would need to use global vars):
+
+public $main;
+public $allNS = array();
+
+function __construct ($parent) {
+    $this->main = $parent;
+}
+
+function addNS($alias, $iri) {
+    $this->allNS[$alias] = $iri;
+}
+
 %include { /* this will be copied blindly */
-<php class NTToken {
+
+class NTToken {
 	/* arrays */
 	public $vars = null;
 	public $bNodes = null;
@@ -62,8 +76,8 @@
 			$this->hasAGG = $tmpToken->hasAGG;
 		}
 	}
-
-}?>  }
+}  
+}
 
 %parse_accept {
     /*add a function to print a clean version of query (or a sparql algebra version)*/
@@ -76,38 +90,38 @@
 /* this defines a symbol for the lexer */
 %nonassoc PRAGMA.
 
-start ::= query.
-start ::= update.
+start(A) ::= query(B). { A = B; }
+start(B) ::= update(B). { A = B; }
 
-query ::= prologue selectQuery valuesClause.
-query ::= prologue constructQuery valuesClause.
-query ::= prologue describeQuery valuesClause.
-query ::= prologue askQuery valuesClause.
-query ::= selectQuery valuesClause.
-query ::= constructQuery valuesClause.
-query ::= describeQuery valuesClause.
-query ::= askQuery valuesClause.
-query ::= prologue selectQuery.
-query ::= prologue constructQuery.
-query ::= prologue describeQuery.
-query ::= prologue askQuery.
-query ::= selectQuery.
-query ::= constructQuery.
-query ::= describeQuery.
-query ::= askQuery.
+query(A) ::= prologue(B) selectQuery(C) valuesClause(D). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+query(A) ::= prologue(B) constructQuery(C) valuesClause(D). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+query(A) ::= prologue(B) describeQuery(C) valuesClause(D). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+query(A) ::= prologue(B) askQuery(C) valuesClause(D). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+query(A) ::= selectQuery(B) valuesClause(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query; }
+query(A) ::= constructQuery(B) valuesClause(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query; }
+query(A) ::= describeQuery(B) valuesClause(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query; }
+query(A) ::= askQuery(B) valuesClause(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query; }
+query(A) ::= prologue(B) selectQuery(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query; }
+query(A) ::= prologue(B) constructQuery(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query; }
+query(A) ::= prologue(B) describeQuery(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query; }
+query(A) ::= prologue(B) askQuery(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query; }
+query(A) ::= selectQuery(B). { A = B; }
+query(A) ::= constructQuery(B). { A = B; }
+query(A) ::= describeQuery(B). { A = B; }
+query(A) ::= askQuery(B). { A = B; }
 
-prologue ::= prefixDeclX baseDecl prefixDeclX.
-prologue ::= baseDecl prefixDeclX.
-prologue ::= prefixDeclX baseDecl.
-prologue ::= baseDecl.
-prefixDeclX ::= prefixDeclX prefixDecl.
-prefixDeclX ::= prefixDecl.
+prologue(A) ::= prefixDeclX(B) baseDecl(C) prefixDeclX(D). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query;}
+prologue(A) ::= baseDecl(B) prefixDeclX(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query;}
+prologue(A) ::= prefixDeclX(B) baseDecl(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query;}
+prologue(A) ::= baseDecl(B). { A = new NTToken(); A->query = B->query;}
+prefixDeclX(A) ::= prefixDeclX(B) prefixDecl(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query;}
+prefixDeclX(A) ::= prefixDecl(B). { A = new NTToken(); A->query = B->query;}
 
-baseDecl ::= BASE IRIREF DOT.
-baseDecl ::= BASE IRIREF.
+baseDecl(A) ::= BASE IRIREF(B) DOT. { addNS('base',B->value); A = new NTToken(); A->query = 'BASE ' . B->value . ' .';}
+baseDecl(A) ::= BASE IRIREF(B). { addNS('base',B->value); A = new NTToken(); A->query = 'BASE ' . B->value;}
 
-prefixDecl ::= PREFIX PNAME_NS IRIREF DOT.
-prefixDecl ::= PREFIX PNAME_NS IRIREF.
+prefixDecl(A) ::= PREFIX PNAME_NS(B) IRIREF(C) DOT. { addNS('base',B->value); A = new NTToken(); A->query = 'PREFIX ' . B->value . C->value . ' .';}
+prefixDecl(A) ::= PREFIX PNAME_NS(B) IRIREF(C). { addNS('base',B->value); A = new NTToken(); A->query = 'PREFIX ' . B->value . C->value;}
 
 selectQuery ::= selectClause datasetClauseX whereclause solutionModifier.
 selectQuery ::= selectClause datasetClauseX whereclause.
@@ -749,8 +763,8 @@ iri ::= prefixedName.
 prefixedName ::= PNAME_LN.
 prefixedName ::= PNAME_NS.
 
-blankNode ::= BLANK_NODE_LABEL.
-blankNode ::= ANON.
+blankNode(A) ::= BLANK_NODE_LABEL(B). {A = new NTToken(); A->hasBN = true; A->bNodes[] = B->value;}
+blankNode(A) ::= ANON. {A = new NTToken(); A->hasBN = true;}
 
 /* solved issues: * + through loops, update is allowed to be empty (completely empty) -> removed, 
  * no vars in quadData -> extra rules, no blanknodes in delete where, delete clause, 
