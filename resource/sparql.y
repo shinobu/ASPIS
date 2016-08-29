@@ -16,15 +16,35 @@ function addNS($alias, $iri) {
     $this->allNS[$alias] = $iri;
 }
 
+function checkNS($alias) {
+    if ($alias == null) {
+        return false;
+    }
+    $trueAlias = substr($alias, 0, (strpos($alias, ':')+1));
+    if (strlen($trueAlias) == 1) { 
+        if(isset($allNS['base'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    if (isset($allNS[$trueAlias])) {
+        return true;
+    }
+    return false;
+}
+
+*/
 %include { /* this will be copied blindly */
 
 class NTToken {
 	/* arrays */
 	public $vars = null;
-	public $bNodes = null;
+	public $bNodes = array();
 	/* non-arrays */
 	public $bindVar = null;
 	public $query = null;
+    public $counter = 0;
 	/* booleans */
 	public $hasBN = false;
 	public $hasFNC = false;
@@ -120,8 +140,8 @@ prefixDeclX(A) ::= prefixDecl(B). { A = new NTToken(); A->query = B->query;}
 baseDecl(A) ::= BASE IRIREF(B) DOT. { addNS('base',B->value); A = new NTToken(); A->query = 'BASE ' . B->value . ' .';}
 baseDecl(A) ::= BASE IRIREF(B). { addNS('base',B->value); A = new NTToken(); A->query = 'BASE ' . B->value;}
 
-prefixDecl(A) ::= PREFIX PNAME_NS(B) IRIREF(C) DOT. { addNS('base',B->value); A = new NTToken(); A->query = 'PREFIX ' . B->value . C->value . ' .';}
-prefixDecl(A) ::= PREFIX PNAME_NS(B) IRIREF(C). { addNS('base',B->value); A = new NTToken(); A->query = 'PREFIX ' . B->value . C->value;}
+prefixDecl(A) ::= PREFIX PNAME_NS(B) IRIREF(C) DOT. { addNS(B->value, C->value); A = new NTToken(); A->query = 'PREFIX ' . B->value . C->value . ' .';}
+prefixDecl(A) ::= PREFIX PNAME_NS(B) IRIREF(C). { addNS(B->value, C->value); A = new NTToken(); A->query = 'PREFIX ' . B->value . C->value;}
 
 selectQuery ::= selectClause datasetClauseX whereclause solutionModifier.
 selectQuery ::= selectClause datasetClauseX whereclause.
@@ -749,25 +769,25 @@ numericLiteralNegative ::= INTEGER_NEGATIVE.
 numericLiteralNegative ::= DECIMAL_NEGATIVE.
 numericLiteralNegative ::= DOUBLE_NEGATIVE.
 
-booleanLiteral ::= TRUE.
-booleanLiteral ::= FALSE.
+booleanLiteral(A) ::= TRUE. { A = new NTToken(); A->query = "true";}
+booleanLiteral(A) ::= FALSE. { A = new NTToken(); A->query = "false";}
 
-string ::= STRING_LITERAL1.
-string ::= STRING_LITERAL2.
-string ::= STRING_LITERAL_LONG1.
-string ::= STRING_LITERAL_LONG2.
+string(A) ::= STRING_LITERAL1(B). { A = new NTToken(); A->query = B->value;}
+string(A) ::= STRING_LITERAL2(B). { A = new NTToken(); A->query = B->value;}
+string(A) ::= STRING_LITERAL_LONG1(B). { A = new NTToken(); A->query = B->value;}
+string(A) ::= STRING_LITERAL_LONG2(B). { A = new NTToken(); A->query = B->value;}
 
-iri ::= IRIREF.
-iri ::= prefixedName.
+iri(A) ::= IRIREF(B). { A = new NTToken(); A->query = B->value;}
+iri(A) ::= prefixedName(B). { A = new NTToken(); A->query = B->query;}
 
-prefixedName ::= PNAME_LN.
-prefixedName ::= PNAME_NS.
+prefixedName(A) ::= PNAME_LN(B). {if(!checkNS(B->value)){$main->error = "Missing Base/Prefix for " . B->value;yy_parse_failed();} A = new NTToken(); A->query = B->value;}
+prefixedName(A) ::= PNAME_NS(B). {if(!checkNS(B->value)){$main->error = "Missing Base/Prefix for " . B->value;yy_parse_failed();} A = new NTTOKEN(); A->query = B->value;}
 
 blankNode(A) ::= BLANK_NODE_LABEL(B). {A = new NTToken(); A->hasBN = true; A->bNodes[] = B->value;}
 blankNode(A) ::= ANON. {A = new NTToken(); A->hasBN = true;}
 
 /* solved issues: * + through loops, update is allowed to be empty (completely empty) -> removed, 
- * no vars in quadData -> extra rules, no blanknodes in delete where, delete clause, 
+ * no vars in quadData -> class which remembers if vars/bnodes/etc are used, 
  * delete data -> extra rules,
  * troublemaker: DataBlock - needs same amount of variables and datablockvalues, scoping, 
  * limiting aggregates, custom aggregates
