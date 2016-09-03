@@ -92,7 +92,7 @@
 #define TK_RAND                           92
 #define TK_ABS                            93
 #define TK_CEIL                           94
-#define TK_FOOR                           95
+#define TK_FLOOR                          95
 #define TK_ROUND                          96
 #define TK_CONCAT                         97
 #define TK_STRLEN                         98
