@@ -644,30 +644,27 @@ graphTerm ::= booleanLiteral.
 graphTerm ::= blankNode.
 graphTerm ::= NIL.
 
-expression ::= conditionalOrExpression.
+expression ::= conditionalAndExpression conditionalOrExpressionX. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+expression ::= conditionalAndExpression. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+conditionalOrExpressionX ::= conditionalOrExpressionX OR conditionalAndExpression. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' || ' . C->query; }
+conditionalOrExpressionX ::= OR conditionalAndExpression. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '|| ' . B->query; }
 
-conditionalOrExpression ::= conditionalAndExpression conditionalOrExpressionX.
-conditionalOrExpression ::= conditionalAndExpression.
-conditionalOrExpressionX ::= conditionalOrExpressionX OR conditionalAndExpression.
-conditionalOrExpressionX ::= OR conditionalAndExpression.
+conditionalAndExpression(A) ::= relationalExpression(B) conditionalAndExpressionX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+conditionalAndExpression(A) ::= relationalExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+conditionalAndExpressionX(A) ::= conditionalAndExpressionX(B) AND relationalExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' && ' . C->query; }
+conditionalAndExpressionX(A) ::= AND relationalExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '&& ' . B->query; }
 
-conditionalAndExpression ::= valueLogical conditionalAndExpressionX.
-conditionalAndExpression ::= valueLogical.
-conditionalAndExpressionX ::= conditionalAndExpressionX AND valueLogical.
-conditionalAndExpressionX ::= AND valueLogical.
 
-valueLogical ::= relationalExpression.
-
-relationalExpression ::= additiveExpression relationalExpressionX.
-relationalExpression ::= additiveExpression.
-relationalExpressionX ::= EQUAL additiveExpression.
-relationalExpressionX ::= NEQUAL additiveExpression.
-relationalExpressionX ::= SMALLERTHEN additiveExpression.
-relationalExpressionX ::= GREATERTHEN additiveExpression.
-relationalExpressionX ::= SMALLERTHENQ additiveExpression.
-relationalExpressionX ::= GREATERTHENQ additiveExpression.
-relationalExpressionX ::= IN expressionList.
-relationalExpressionX ::= NOT IN expressionList.
+relationalExpression(A) ::= additiveExpression(B) relationalExpressionX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+relationalExpression(A) ::= additiveExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+relationalExpressionX(A) ::= EQUAL additiveExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '= ' . B->query; }
+relationalExpressionX(A) ::= NEQUAL additiveExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '!= ' . B->query; }
+relationalExpressionX(A) ::= SMALLERTHEN additiveExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '< ' . B->query; }
+relationalExpressionX(A) ::= GREATERTHEN additiveExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '> ' . B->query; }
+relationalExpressionX(A) ::= SMALLERTHENQ additiveExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '<= ' . B->query; }
+relationalExpressionX(A) ::= GREATERTHENQ additiveExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '>= ' . B->query; }
+relationalExpressionX(A) ::= IN expressionList(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'IN' . B->query; }
+relationalExpressionX(A) ::= NOT IN expressionList(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'NOT IN' . B->query; }
 
 additiveExpression(A) ::= multiplicativeExpression(B) additiveExpressionX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); ->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
 additiveExpression(A) ::= multiplicativeExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
