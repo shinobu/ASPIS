@@ -567,87 +567,87 @@ objectListPath ::= objectPath.
 objectListPathX ::= objectListPathX COMMA objectPath.
 objectListPathX ::= COMMA objectPath.
 
-pathAlternative ::= pathSequence pathAlternativeX.
-pathAlternative ::= pathSequence.
-pathAlternativeX ::= pathAlternativeX VBAR pathSequence.
-pathAlternativeX ::= VBAR pathSequence.
+pathAlternative(A) ::= pathSequence(B) pathAlternativeX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . C->query; }
+pathAlternative(A) ::= pathSequence(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+pathAlternativeX(A) ::= pathAlternativeX(B) VBAR pathSequence(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . '|' . C->query; }
+pathAlternativeX(A) ::= VBAR pathSequence(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '|' . B->query; }
 
-pathSequence ::= pathEltOrInverse pathSequenceX.
-pathSequence ::= pathEltOrInverse.
-pathSequenceX ::= pathSequenceX SLASH pathEltOrInverse.
-pathSequenceX ::= SLASH pathEltOrInverse.
+pathSequence(A) ::= pathEltOrInverse(B) pathSequenceX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . C->query; }
+pathSequence(A) ::= pathEltOrInverse(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+pathSequenceX(A) ::= pathSequenceX(B) SLASH pathEltOrInverse(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . '/' . C->query; }
+pathSequenceX(A) ::= SLASH pathEltOrInverse(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '/' . B->query; }
 
-pathElt ::= pathPrimary pathMod.
-pathElt ::= pathPrimary.
+pathElt(A) ::= pathPrimary(B) pathMod(C). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query . C->query; }
+pathElt(A) ::= pathPrimary(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-pathEltOrInverse ::= HAT pathElt.
-pathEltOrInverse ::= pathElt.
+pathEltOrInverse(A) ::= HAT pathElt(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '^' . B->query; }
+pathEltOrInverse(A) ::= pathElt(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-pathMod ::= STAR.
-pathMod ::= PLUS.
-pathMod ::= QUESTION.
+pathMod(A) ::= STAR. { A = new NTToken(); A->query = '*'; }
+pathMod(A) ::= PLUS. { A = new NTToken(); A->query = '+'; }
+pathMod(A) ::= QUESTION. { A = new NTToken(); A->query = '?'; }
 
-pathPrimary ::= LPARENTHESE pathAlternative RPARENTHESE.
-pathPrimary ::= EXCLAMATION pathNegatedPropertySet.
-pathPrimary ::= A.
-pathPrimary ::= iri.
+pathPrimary(A) ::= LPARENTHESE pathAlternative(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '( ' . B->query . ' )'; }
+pathPrimary(A) ::= EXCLAMATION pathNegatedPropertySet(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '!' . B->query; }
+pathPrimary(A) ::= A. { A = new NTToken(); A->query = 'rdf:type'; }
+pathPrimary(A) ::= iri(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-pathNegatedPropertySet ::= LPARENTHESE pathOneInPropertySet pathNegatedPropertySetX RPARENTHESE.
-pathNegatedPropertySet ::= LPARENTHESE pathOneInPropertySet RPARENTHESE.
-pathNegatedPropertySet ::= LPARENTHESE RPARENTHESE.
-pathNegatedPropertySet ::= pathOneInPropertySet.
-pathNegatedPropertySetX ::= pathNegatedPropertySetX VBAR pathOneInPropertySet.
-pathNegatedPropertySetX ::= VBAR pathOneInPropertySet.
+pathNegatedPropertySet(A) ::= LPARENTHESE pathOneInPropertySet(B) pathNegatedPropertySetX(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+pathNegatedPropertySet(A) ::= LPARENTHESE pathOneInPropertySet(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '( ' . B->query . ' )'; }
+pathNegatedPropertySet(A) ::= LPARENTHESE RPARENTHESE. { A = new NTToken(); A->query = '( )'; }
+pathNegatedPropertySet(A) ::= pathOneInPropertySet(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+pathNegatedPropertySetX(A) ::= pathNegatedPropertySetX(B) VBAR pathOneInPropertySet(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' | ' . C->query; }
+pathNegatedPropertySetX(A) ::= VBAR pathOneInPropertySet(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '| ' . B->query; }
 
-pathOneInPropertySet ::= HAT iri.
-pathOneInPropertySet ::= HAT A.
-pathOneInPropertySet ::= A.
-pathOneInPropertySet ::= iri.
+pathOneInPropertySet(A) ::= HAT iri(B). { A = new NTToken(); A->query = '^' . B->query; }
+pathOneInPropertySet(A) ::= HAT A. { if(!checkNS('rdf:type')){$main->error = "Missing Prefix for rdf:type (a)";yy_parse_failed();} A = new NTToken(); ; A->query = '^rdf:type'; }
+pathOneInPropertySet(A) ::= A. { if(!checkNS('rdf:type')){$main->error = "Missing Prefix for rdf:type (a)";yy_parse_failed();} A = new NTToken(); A->query = 'rdf:type'; }
+pathOneInPropertySet(A) ::= iri(B). { A = new NTToken(); A->query = B->query; }
 
-triplesNode ::= collection.
-triplesNode ::= blankNodePropertyList.
+triplesNode(A) ::= collection(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+triplesNode(A) ::= blankNodePropertyList(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-blankNodePropertyList ::= LBRACKET propertyListNotEmpty RBRACKET.
+blankNodePropertyList(A) ::= LBRACKET propertyListNotEmpty(B) RBRACKET. { A = new NTToken(); A->hasBN = true; A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '[ ' . B->query . ' ]'; }
 
-triplesNodePath ::= collectionPath.
-triplesNodePath ::= blankNodePropertyListPath.
+triplesNodePath(A) ::= collectionPath(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+triplesNodePath(A) ::= blankNodePropertyListPath(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-blankNodePropertyListPath ::= LBRACKET propertyListPathNotEmpty RBRACKET.
+blankNodePropertyListPath(A) ::= LBRACKET propertyListPathNotEmpty(B) RBRACKET. { A = new NTToken(); A->hasBN = true; A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '[ ' . B->query . ' ]'; }
 
-collection ::= LPARENTHESE graphNodeX RPARENTHESE.
-graphNodeX ::= graphNodeX graphNode.
-graphNodeX ::= graphNode.
+collection(A) ::= LPARENTHESE graphNodeX(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '( ' . B->query . ' )'; }
+graphNodeX(A) ::= graphNodeX(B) graphNode(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+graphNodeX(A) ::= graphNode(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-collectionPath ::= LPARENTHESE graphNodePathX RPARENTHESE.
-graphNodePathX ::= graphNodePathX graphNodePath.
-graphNodePathX ::= graphNodePath.
+collectionPath(A) ::= LPARENTHESE graphNodePathX(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '( ' . B->query . ' )'; }
+graphNodePathX(A) ::= graphNodePathX(B) graphNodePath(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+graphNodePathX(A) ::= graphNodePath(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-graphNode ::= varOrTerm.
-graphNode ::= triplesNode.
+graphNode(A) ::= varOrTerm(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphNode(A) ::= triplesNode(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-graphNodePath ::= varOrTerm.
-graphNodePath ::= triplesNodePath.
+graphNodePath(A) ::= varOrTerm(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphNodePath(A) ::= triplesNodePath(B).  { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-varOrTerm ::= var.
-varOrTerm ::= graphTerm.
+varOrTerm(A) ::= var(B). { A = new NTToken(); A->addVars(B->vars); A->query = B->query; }
+varOrTerm(A) ::= graphTerm(B). { A = new NTToken(); A->copyBools(B); A->addBNodes(B->bNodes); A->query = B->query; }
 
-varOrIri ::= var.
-varOrIri ::= iri.
+varOrIri(A) ::= var(B). { A = new NTToken(); A->addVars(B->vars); A->query = B->query; }
+varOrIri(A) ::= iri(B). { A = new NTToken(); A->query = B->query; }
 
-var ::= VAR1.
-var ::= VAR2.
+var(A) ::= VAR1(B). { A = new NTToken(); A->vars = array(); A->vars[] = B->value A->query = B->value; }
+var(A) ::= VAR2(B). { A = new NTToken(); A->vars = array(); A->vars[] = B->value A->query = B->value; }
 
-graphTerm ::= iri.
-graphTerm ::= rdfLiteral.
-graphTerm ::= numericLiteral.
-graphTerm ::= booleanLiteral.
-graphTerm ::= blankNode.
-graphTerm ::= NIL.
+graphTerm(A) ::= iri(B). { A = new NTToken(); A->query = B->query; }
+graphTerm(A) ::= rdfLiteral(B). { A = new NTToken(); A->query = B->query; }
+graphTerm(A) ::= numericLiteral(B). { A = new NTToken(); A->query = B->query; }
+graphTerm(A) ::= booleanLiteral(B). { A = new NTToken(); A->query = B->query; }
+graphTerm(A) ::= blankNode(B). { A = new NTToken(); A->copyBools(B); A->addBNodes(B->bNodes); A->query = B->query; }
+graphTerm(A) ::= NIL. { A = new NTToken(); A->query = '( )'; }
 
-expression ::= conditionalAndExpression conditionalOrExpressionX. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
-expression ::= conditionalAndExpression. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
-conditionalOrExpressionX ::= conditionalOrExpressionX OR conditionalAndExpression. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' || ' . C->query; }
-conditionalOrExpressionX ::= OR conditionalAndExpression. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '|| ' . B->query; }
+expression(A) ::= conditionalAndExpression(B) conditionalOrExpressionX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+expression(A) ::= conditionalAndExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+conditionalOrExpressionX(A) ::= conditionalOrExpressionX(B) OR conditionalAndExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' || ' . C->query; }
+conditionalOrExpressionX(A) ::= OR conditionalAndExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '|| ' . B->query; }
 
 conditionalAndExpression(A) ::= relationalExpression(B) conditionalAndExpressionX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
 conditionalAndExpression(A) ::= relationalExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
