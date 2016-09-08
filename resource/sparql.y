@@ -331,241 +331,241 @@ update ::= update1 SEMICOLON update.
 update ::= prologue update1.
 update ::= update1.
 
-update1 ::= load.
-update1 ::= clear.
-update1 ::= drop.
-update1 ::= add.
-update1 ::= move.
-update1 ::= copy.
-update1 ::= create.
-update1 ::= insertData.
-update1 ::= deleteData.
-update1 ::= deletewhere.
-update1 ::= modify.
+update1(A) ::= load(B).
+update1(A) ::= clear(B).
+update1(A) ::= drop(B).
+update1(A) ::= add(B).
+update1(A) ::= move(B).
+update1(A) ::= copy(B).
+update1(A) ::= create(B).
+update1(A) ::= insertData(B).
+update1(A) ::= deleteData(B).
+update1(A) ::= deletewhere(B).
+update1(A) ::= modify(B).
 
-load ::= LOAD SILENT iri INTO graphRef.
-load ::= LOAD iri INTO graphRef.
-load ::= LOAD SILENT iri.
-load ::= LOAD iri.
+load(A) ::= LOAD SILENT iri(B) INTO graphRef(C).
+load(A) ::= LOAD iri(B) INTO graphRef(C).
+load(A) ::= LOAD SILENT iri(B).
+load(A) ::= LOAD iri(B).
 
-clear ::= CLEAR SILENT graphRefAll.
-clear ::= CLEAR graphRefAll.
+clear(A) ::= CLEAR SILENT graphRefAll(B).
+clear(A) ::= CLEAR graphRefAll(B).
 
-drop ::= DROP SILENT graphRefAll.
-drop ::= DROP graphRefAll.
+drop(A) ::= DROP SILENT graphRefAll(B).
+drop(A) ::= DROP graphRefAll(B).
 
-create ::= CREATE SILENT graphRef.
-create ::= CREATE graphRef.
+create(A) ::= CREATE SILENT graphRef(B).
+create(A) ::= CREATE graphRef(B).
 
-add ::= ADD SILENT graphOrDefault TO graphOrDefault.
-add ::= ADD graphOrDefault TO graphOrDefault.
+add(A) ::= ADD SILENT graphOrDefault(B) TO graphOrDefault(C).
+add(A) ::= ADD graphOrDefault(B) TO graphOrDefault(C).
 
-move ::= MOVE SILENT graphOrDefault TO graphOrDefault.
-move ::= MOVE graphOrDefault TO graphOrDefault.
+move(A) ::= MOVE SILENT graphOrDefault(C) TO graphOrDefault(D).
+move(A) ::= MOVE graphOrDefault(B) TO graphOrDefault(D).
 
-copy ::= COPY SILENT graphOrDefault TO graphOrDefault.
-copy ::= COPY graphOrDefault TO graphOrDefault.
+copy(A) ::= COPY SILENT graphOrDefault(B) TO graphOrDefault(C).
+copy(A) ::= COPY graphOrDefault(B) TO graphOrDefault(C).
 
-insertData ::= INSERTDATA quadData.
+insertData(A) ::= INSERTDATA quadData(B).
 
-deleteData ::= DELETEDATA quadData.
+deleteData(A) ::= DELETEDATA quadData(B).
 
-deletewhere ::= DELETEWHERE quadPattern.
+deletewhere(A) ::= DELETEWHERE quadPattern(B).
 
-modify ::= WITH iri deleteClause insertClause usingClauseX WHERE groupGraphPattern.
-modify ::= WITH iri deleteClause usingClauseX WHERE groupGraphPattern.
-modify ::= WITH iri insertClause usingClauseX WHERE groupGraphPattern.
-modify ::= WITH iri deleteClause insertClause WHERE groupGraphPattern.
-modify ::= WITH iri deleteClause WHERE groupGraphPattern.
-modify ::= WITH iri insertClause WHERE groupGraphPattern.
-modify ::= deleteClause insertClause usingClauseX WHERE groupGraphPattern.
-modify ::= deleteClause usingClauseX WHERE groupGraphPattern.
-modify ::= insertClause usingClauseX WHERE groupGraphPattern.
-modify ::= deleteClause insertClause WHERE groupGraphPattern.
-modify ::= deleteClause WHERE groupGraphPattern.
-modify ::= insertClause WHERE groupGraphPattern.
-usingClauseX ::= usingClauseX usingClause.
-usingClauseX ::= usingClause.
+modify(A) ::= WITH iri(B) deleteClause(C) insertClause(D) usingClauseX(E) WHERE groupGraphPattern(F).
+modify(A) ::= WITH iri(B) deleteClause(C) usingClauseX(D) WHERE groupGraphPattern(E).
+modify(A) ::= WITH iri(B) insertClause(C) usingClauseX(D) WHERE groupGraphPattern(E).
+modify(A) ::= WITH iri(B) deleteClause(C) insertClause(D) WHERE groupGraphPattern(E).
+modify(A) ::= WITH iri(B) deleteClause(C) WHERE groupGraphPattern(D).
+modify(A) ::= WITH iri(B) insertClause(C) WHERE groupGraphPattern(D).
+modify(A) ::= deleteClause(B) insertClause(C) usingClauseX(D) WHERE groupGraphPattern(E).
+modify(A) ::= deleteClause(B) usingClauseX(C) WHERE groupGraphPattern(D).
+modify(A) ::= insertClause(B) usingClauseX(C) WHERE groupGraphPattern(D).
+modify(A) ::= deleteClause(B) insertClause(C) WHERE groupGraphPattern(D).
+modify(A) ::= deleteClause(B) WHERE groupGraphPattern(C).
+modify(A) ::= insertClause(B) WHERE groupGraphPattern(C).
+usingClauseX(A) ::= usingClauseX(B) usingClause(C).
+usingClauseX(A) ::= usingClause(B).
 
-deleteClause ::= DELETE quadPattern.
+deleteClause(A) ::= DELETE quadPattern(B).
 
-insertClause ::= INSERT quadPattern.
+insertClause(A) ::= INSERT quadPattern(B).
 
-usingClause ::= USING NAMED iri.
-usingClause ::= USING iri.
+usingClause(A) ::= USING NAMED iri(B).
+usingClause(A) ::= USING iri(B).
 
-graphOrDefault ::= GRAPH iri.
-graphOrDefault ::= DEFAULT.
-graphOrDefault ::= iri.
+graphOrDefault(A) ::= GRAPH iri(B).
+graphOrDefault(A) ::= DEFAULT.
+graphOrDefault(A) ::= iri(B).
 
-graphRef ::= GRAPH iri.
+graphRef(A) ::= GRAPH iri(B).
 
-graphRefAll ::= graphRef.
-graphRefAll ::= DEFAULT.
-graphRefAll ::= NAMED.
-graphRefAll ::= ALL.
+graphRefAll(A) ::= graphRef(B).
+graphRefAll(A) ::= DEFAULT.
+graphRefAll(A) ::= NAMED.
+graphRefAll(A) ::= ALL.
 
-quadPattern ::= LBRACE quads RBRACE.
-quadPattern ::= LBRACE RBRACE.
+quadPattern(A) ::= LBRACE quads(B) RBRACE.
+quadPattern(A) ::= LBRACE RBRACE.
 
-quadData ::= LBRACE quads RBRACE.
-quadData ::= LBRACE RBRACE.
+quadData(A) ::= LBRACE quads(B) RBRACE.
+quadData(A) ::= LBRACE RBRACE.
 
-quads ::= triplesTemplate quadsX.
-quads ::= triplesTemplate.
-quads ::= quadsX.
-quadsX ::= quadsX quadsNotTriples DOT triplesTemplate.
-quadsX ::= quadsX quadsNotTriples triplesTemplate.
-quadsX ::= quadsX quadsNotTriples DOT.
-quadsX ::= quadsX quadsNotTriples.
-quadsX ::= quadsNotTriples DOT triplesTemplate.
-quadsX ::= quadsNotTriples triplesTemplate.
-quadsX ::= quadsNotTriples DOT.
-quadsX ::= quadsNotTriples.
+quads(A) ::= triplesTemplate(B) quadsX(C).
+quads(A) ::= triplesTemplate(B).
+quads(A) ::= quadsX(B).
+quadsX(A) ::= quadsX(A) quadsNotTriples(B) DOT triplesTemplate(C).
+quadsX(A) ::= quadsX(A) quadsNotTriples(B) triplesTemplate(C).
+quadsX(A) ::= quadsX(A) quadsNotTriples(B) DOT.
+quadsX(A) ::= quadsX(A) quadsNotTriples(B).
+quadsX(A) ::= quadsNotTriples(B) DOT triplesTemplate(C).
+quadsX(A) ::= quadsNotTriples(B) triplesTemplate(C).
+quadsX(A) ::= quadsNotTriples(B) DOT.
+quadsX(A) ::= quadsNotTriples(B).
 
-quadsNotTriples ::= GRAPH varOrIri LBRACE triplesTemplate RBRACE.
-quadsNotTriples ::= GRAPH varOrIri LBRACE RBRACE.
+quadsNotTriples(A) ::= GRAPH varOrIri(B) LBRACE triplesTemplate(C) RBRACE.
+quadsNotTriples(A) ::= GRAPH varOrIri(B) LBRACE RBRACE.
 
-triplesTemplate ::= triplesSameSubject DOT triplesTemplate.
-triplesTemplate ::= triplesSameSubject DOT.
-triplesTemplate ::= triplesSameSubject.
+triplesTemplate(A) ::= triplesSameSubject(B) DOT triplesTemplate(C).
+triplesTemplate(A) ::= triplesSameSubject(B) DOT.
+triplesTemplate(A) ::= triplesSameSubject(B).
 
-groupGraphPattern ::= LBRACE groupGraphPatternSub RBRACE.
-groupGraphPattern ::= LBRACE subSelect RBRACE.
-groupGraphPattern ::= LBRACE RBRACE.
+groupGraphPattern(A) ::= LBRACE groupGraphPatternSub(B) RBRACE.
+groupGraphPattern(A) ::= LBRACE subSelect(B) RBRACE.
+groupGraphPattern(A) ::= LBRACE RBRACE.
 
 
 groupGraphPatternSub(A) ::= triplesBlock(B) groupGraphPatternSubX(C). {/*check variable if GoupGraphPatternSubX has some in the array*/ A->test = B + C; }
-groupGraphPatternSub ::= triplesBlock.
-groupGraphPatternSub ::= groupGraphPatternSubX.
-groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples DOT triplesBlock. {/*for all below set variable from graphPatternNotTriples to X and for all Tripleblock check if both have variable*/}
-groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples triplesBlock.
-groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples DOT.
-groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples.
-groupGraphPatternSubX ::= graphPatternNotTriples DOT triplesBlock.
-groupGraphPatternSubX ::= graphPatternNotTriples triplesBlock.
-groupGraphPatternSubX ::= graphPatternNotTriples DOT.
-groupGraphPatternSubX ::= graphPatternNotTriples. 
+groupGraphPatternSub(A) ::= triplesBlock(B).
+groupGraphPatternSub(A) ::= groupGraphPatternSubX(B).
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT triplesBlock(D). {/*for all below set variable from graphPatternNotTriples to X and for all Tripleblock check if both have variable*/}
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) triplesBlock(D).
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT.
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C).
+groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT triplesBlock(C).
+groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) triplesBlock(C).
+groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT.
+groupGraphPatternSubX(A) ::= graphPatternNotTriples(B). 
 
-triplesBlock ::= triplesSameSubjectPath DOT triplesBlock.
-triplesBlock ::= triplesSameSubjectPath DOT.
-triplesBlock ::= triplesSameSubjectPath. {/*if variable - check*/}
+triplesBlock(A) ::= triplesSameSubjectPath(B) DOT triplesBlock(C).
+triplesBlock(A) ::= triplesSameSubjectPath(B) DOT.
+triplesBlock(A) ::= triplesSameSubjectPath(B). {/*if variable - check*/}
 
 
 
-graphPatternNotTriples ::= groupOrUnionGraphPattern.
-graphPatternNotTriples ::= optionalGraphPattern.
-graphPatternNotTriples ::= minusGraphPattern.
-graphPatternNotTriples ::= graphGraphPattern.
-graphPatternNotTriples ::= serviceGraphPattern.
-graphPatternNotTriples ::= filter.
-graphPatternNotTriples ::= bind. {/*set variable*/}
-graphPatternNotTriples ::= inlineData.
+graphPatternNotTriples(A) ::= groupOrUnionGraphPattern(B).
+graphPatternNotTriples(A) ::= optionalGraphPattern(B).
+graphPatternNotTriples(A) ::= minusGraphPattern(B).
+graphPatternNotTriples(A) ::= graphGraphPattern(B).
+graphPatternNotTriples(A) ::= serviceGraphPattern(B).
+graphPatternNotTriples(A) ::= filter(B).
+graphPatternNotTriples(A) ::= bind(B). {/*set variable*/}
+graphPatternNotTriples(A) ::= inlineData(B).
 
-optionalGraphPattern ::= OPTIONAL groupGraphPattern.
+optionalGraphPattern(A) ::= OPTIONAL groupGraphPattern(B).
 
-graphGraphPattern ::= GRAPH varOrIri groupGraphPattern.
+graphGraphPattern(A) ::= GRAPH varOrIri(B) groupGraphPattern(C).
 
-serviceGraphPattern ::= SERVICE SILENT varOrIri groupGraphPattern.
-serviceGraphPattern ::= SERVICE varOrIri groupGraphPattern.
+serviceGraphPattern(A) ::= SERVICE SILENT varOrIri(B) groupGraphPattern(C).
+serviceGraphPattern(A) ::= SERVICE varOrIri(B) groupGraphPattern(C).
 
-bind ::= BIND LPARENTHESE expression AS var RPARENTHESE.
+bind(A) ::= BIND LPARENTHESE expression(B) AS var(C) RPARENTHESE.
 
-inlineData ::= VALUES dataBlock.
+inlineData(A) ::= VALUES dataBlock(B).
 
-dataBlock ::= inlineDataOneVar.
-dataBlock ::= inlineDataFull.
+dataBlock(A) ::= inlineDataOneVar(B).
+dataBlock(A) ::= inlineDataFull(B).
 
-inlineDataOneVar ::= var LBRACE dataBlockValueX RBRACE.
-inlineDataOneVar ::= var LBRACE RBRACE.
-dataBlockValueX ::= dataBlockValueX dataBlockValue. {/*count +1*/}
-dataBlockValueX ::= dataBlockValue. {/*count +1*/}
+inlineDataOneVar(A) ::= var(B) LBRACE dataBlockValueX(C) RBRACE.
+inlineDataOneVar(A) ::= var(B) LBRACE RBRACE.
+dataBlockValueX(A) ::= dataBlockValueX(B) dataBlockValue(C). {/*count +1*/}
+dataBlockValueX(A) ::= dataBlockValue(B). {/*count +1*/}
 
-inlineDataFull ::= LPARENTHESE varX RPARENTHESE LBRACE inlineDataFullX RBRACE. {/*if both >0 and equal ok, var>0 i..X =0 ok else break*/} 
-inlineDataFull ::= NIL LBRACE nilX RBRACE.
-inlineDataFull ::= NIL LBRACE RBRACE.
-nilX ::= nilX NIL.
-nilX ::= NIL.
-varX ::= varX var. {/*count +1*/}
-varX ::= var. {/*count +1*/}
-inlineDataFullX ::= inlineDataFullX LPARENTHESE dataBlockValueX RPARENTHESE. {/*if (both >0 and equal - count = i..X.count else if unequal - break, else d..X.count)*/}
-inlineDataFullX ::= inlineDataFullX NIL. {/*count = i..X.count*/}
-inlineDataFullX ::= LPARENTHESE dataBlockValueX RPARENTHESE. {/*count = d..X.count*/}
-inlineDataFullX ::= NIL. {/*count = 0*/}
+inlineDataFull(A) ::= LPARENTHESE varX(B) RPARENTHESE LBRACE inlineDataFullX(C) RBRACE. {/*if both >0 and equal ok, var>0 i..X =0 ok else break*/} 
+inlineDataFull(A) ::= NIL LBRACE nilX(B) RBRACE.
+inlineDataFull(A) ::= NIL LBRACE RBRACE.
+nilX(A) ::= nilX(B) NIL.
+nilX(A) ::= NIL.
+varX(A) ::= varX(B) var(C). {/*count +1*/}
+varX(A) ::= var(B). {/*count +1*/}
+inlineDataFullX(A) ::= inlineDataFullX(B) LPARENTHESE dataBlockValueX(C) RPARENTHESE. {/*if (both >0 and equal - count = i..X.count else if unequal - break, else d..X.count)*/}
+inlineDataFullX(A) ::= inlineDataFullX(B) NIL. {/*count = i..X.count*/}
+inlineDataFullX(A) ::= LPARENTHESE dataBlockValueX(B) RPARENTHESE. {/*count = d..X.count*/}
+inlineDataFullX(A) ::= NIL. {/*count = 0*/}
 
-dataBlockValue ::= iri.
-dataBlockValue ::= rdfLiteral.
-dataBlockValue ::= numericLiteral.
-dataBlockValue ::= booleanLiteral.
-dataBlockValue ::= UNDEF.
+dataBlockValue(A) ::= iri(B).
+dataBlockValue(A) ::= rdfLiteral(B).
+dataBlockValue(A) ::= numericLiteral(B).
+dataBlockValue(A) ::= booleanLiteral(B).
+dataBlockValue(A) ::= UNDEF.
 
-minusGraphPattern ::= SMINUS groupGraphPattern.
+minusGraphPattern(A) ::= SMINUS groupGraphPattern(B).
 
-groupOrUnionGraphPattern ::= groupGraphPattern groupOrUnionGraphPatternX.
-groupOrUnionGraphPattern ::= groupGraphPattern.
-groupOrUnionGraphPatternX ::= groupOrUnionGraphPatternX UNION groupGraphPattern.
-groupOrUnionGraphPatternX ::= UNION GroupGraphPattern.
+groupOrUnionGraphPattern(A) ::= groupGraphPattern(B) groupOrUnionGraphPatternX(C).
+groupOrUnionGraphPattern(A) ::= groupGraphPattern(B).
+groupOrUnionGraphPatternX(A) ::= groupOrUnionGraphPatternX(B) UNION groupGraphPattern(C).
+groupOrUnionGraphPatternX(A) ::= UNION GroupGraphPattern(B).
 
-filter ::= FILTER LPARENTHESE expression RPARENTHESE.
-filter ::= FILTER builtInCall.
-filter ::= FILTER functionCall.
+filter(A) ::= FILTER LPARENTHESE expression(B) RPARENTHESE.
+filter(A) ::= FILTER builtInCall(B).
+filter(A) ::= FILTER functionCall(B).
 
-functionCall ::= iri argList.
+functionCall(A) ::= iri(B) argList(C).
 
-argList ::= LPARENTHESE DISTINCT expression argListX RPARENTHESE.
-argList ::= LPARENTHESE expression argListX RPARENTHESE.
-argList ::= NIL.
-argListX ::= argListX COMMA expression.
-argListX ::= COMMA expression.
+argList(A) ::= LPARENTHESE DISTINCT expression(B) argListX(C) RPARENTHESE.
+argList(A) ::= LPARENTHESE expression(B) argListX(C) RPARENTHESE.
+argList(A) ::= NIL.
+argListX(A) ::= argListX(B) COMMA expression(C).
+argListX(A) ::= COMMA expression(B).
 
-expressionList ::= LPARENTHESE expression argListX RPARENTHESE.
-expressionList ::= NIL.
+expressionList(A) ::= LPARENTHESE expression(B) argListX(C) RPARENTHESE.
+expressionList(A) ::= NIL.
 
-constructTemplate ::= LBRACE constructTriples RBRACE.
-constructTemplate ::= LBRACE RBRACE.
+constructTemplate(A) ::= LBRACE constructTriples(B) RBRACE.
+constructTemplate(A) ::= LBRACE RBRACE.
 
-constructTriples ::= triplesSameSubject DOT constructTriples.
-constructTriples ::= triplesSameSubject DOT.
-constructTriples ::= triplesSameSubject.
+constructTriples(A) ::= triplesSameSubject(B) DOT constructTriples(C).
+constructTriples(A) ::= triplesSameSubject(B) DOT.
+constructTriples(A) ::= triplesSameSubject(B).
 
-triplesSameSubject ::= varOrTerm propertyListNotEmpty.
-triplesSameSubject ::= triplesNode propertyListNotEmpty.
-triplesSameSubject ::= triplesNode.
+triplesSameSubject(A) ::= varOrTerm(B) propertyListNotEmpty(C).
+triplesSameSubject(A) ::= triplesNode(B) propertyListNotEmpty(C).
+triplesSameSubject(A) ::= triplesNode(B).
 
-propertyListNotEmpty ::= verb objectList propertyListNotEmptyX.
-propertyListNotEmpty ::= verb objectList.
-propertyListNotEmptyX ::= propertyListNotEmptyX SEMICOLON verb objectList.
-propertyListNotEmptyX ::= propertyListNotEmptyX SEMICOLON.
-propertyListNotEmptyX ::= SEMICOLON verb objectList.
-propertyListNotEmptyX ::= SEMICOLON.
+propertyListNotEmpty(A) ::= verb(B) objectList(C) propertyListNotEmptyX(D).
+propertyListNotEmpty(A) ::= verb(B) objectList(C).
+propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON verb(C) objectList(D).
+propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON.
+propertyListNotEmptyX(A) ::= SEMICOLON verb(B) objectList(C).
+propertyListNotEmptyX(A) ::= SEMICOLON.
 
-verb ::= varOrIri.
-verb ::= A.
+verb(A) ::= varOrIri(B).
+verb(A) ::= A.
 
-objectList ::= graphNode objectListX.
-objectList ::= graphNode.
-objectListX ::= objectListX COMMA graphNode.
-objectListX ::= COMMA graphNode.
+objectList(A) ::= graphNode(B) objectListX(C).
+objectList(A) ::= graphNode(B).
+objectListX(A) ::= objectListX(B) COMMA graphNode(C).
+objectListX(A) ::= COMMA graphNode(B).
 
-triplesSameSubjectPath ::= varOrTerm propertyListPathNotEmpty.
-triplesSameSubjectPath ::= triplesNodePath propertyListPathNotEmpty.
-triplesSameSubjectPath ::= triplesNodePath.
+triplesSameSubjectPath(A) ::= varOrTerm(B) propertyListPathNotEmpty(C).
+triplesSameSubjectPath(A) ::= triplesNodePath(B) propertyListPathNotEmpty(C).
+triplesSameSubjectPath(A) ::= triplesNodePath(B).
 
-propertyListPathNotEmpty ::= pathAlternative objectListPath propertyListPathNotEmptyX.
-propertyListPathNotEmpty ::= var objectListPath propertyListPathNotEmptyX.
-propertyListPathNotEmpty ::= pathAlternative objectListPath.
-propertyListPathNotEmpty ::= var objectListPath.
-propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON pathAlternative objectList.
-propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON var objectList.
-propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON.
-propertyListPathNotEmptyX ::= SEMICOLON pathAlternative objectList.
-propertyListPathNotEmptyX ::= SEMICOLON var objectList.
-propertyListPathNotEmptyX ::= SEMICOLON.
+propertyListPathNotEmpty(A) ::= pathAlternative(B) objectListPath(C) propertyListPathNotEmptyX(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->addVars(B->vars); A->addVars(C->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
+propertyListPathNotEmpty(A) ::= var(B) objectListPath(C) propertyListPathNotEmptyX(D). { A = new NTToken(); A->copyBools(C); A->copyBools(D); A->addVars(B->vars); A->addVars(C->vars); A->addVars(D->vars); A->addBNodes(C->bNodes); A->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
+propertyListPathNotEmpty(A) ::= pathAlternative(B) objectListPath(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+propertyListPathNotEmpty(A) ::= var(B) objectListPath(C). { A = new NTToken(); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+propertyListPathNotEmptyX(A) ::= propertyListPathNotEmptyX(B) SEMICOLON pathAlternative(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->addVars(B->vars); A->addVars(C->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->addBNodes(D->bNodes); A->query = B->query . '; ' . C->query . ' ' D->query; }
+propertyListPathNotEmptyX(A) ::= propertyListPathNotEmptyX(B) SEMICOLON var(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->addVars(B->vars); A->addVars(C->vars) A->addVars(D->vars); A->addBNodes(B->bNodes); A->addBNodes(D->bNodes); A->query = B->query . '; ' . C->query . ' ' D->query; }
+propertyListPathNotEmptyX(A) ::= propertyListPathNotEmptyX(B) SEMICOLON. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query. ';'; }
+propertyListPathNotEmptyX(A) ::= SEMICOLON pathAlternative(B) objectList(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = '; ' . B->query . ' ' . C->query; }
+propertyListPathNotEmptyX(A) ::= SEMICOLON var(B) objectList(C). { A = new NTToken(); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(C->bNodes); A->query = '; ' . ' ' . B->query . C->query; }
+propertyListPathNotEmptyX(A) ::= SEMICOLON. { A = new NTToken(); A->query = ';'; }
 
-objectListPath ::= objectPath objectListPathX.
-objectListPath ::= objectPath.
-objectListPathX ::= objectListPathX COMMA objectPath.
-objectListPathX ::= COMMA objectPath.
+objectListPath(A) ::= objectPath(B) objectListPathX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . C->query; }
+objectListPath(A) ::= objectPath(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+objectListPathX(A) ::= objectListPathX(B) COMMA objectPath(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ', ' . C->query; }
+objectListPathX(A) ::= COMMA objectPath(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = ', ' . B->query; }
 
 pathAlternative(A) ::= pathSequence(B) pathAlternativeX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . C->query; }
 pathAlternative(A) ::= pathSequence(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
@@ -666,21 +666,21 @@ relationalExpressionX(A) ::= GREATERTHENQ additiveExpression(B). { A = new NTTok
 relationalExpressionX(A) ::= IN expressionList(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'IN' . B->query; }
 relationalExpressionX(A) ::= NOT IN expressionList(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'NOT IN' . B->query; }
 
-additiveExpression(A) ::= multiplicativeExpression(B) additiveExpressionX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); ->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+additiveExpression(A) ::= multiplicativeExpression(B) additiveExpressionX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
 additiveExpression(A) ::= multiplicativeExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
-additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralPositive(C) additiveExpressionY(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->addVars(B->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); ->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
-additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralNegative(C) additiveExpressionY(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->addVars(B->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); ->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
+additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralPositive(C) additiveExpressionY(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->addVars(B->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); A->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
+additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralNegative(C) additiveExpressionY(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->addVars(B->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); A->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
 additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralPositive(C). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query . ' ' . C->query; }
 additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralNegative(C). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query . ' ' . C->query; }
-additiveExpressionX(A) ::= additiveExpressionX(B) PLUS multiplicativeExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); ->addBNodes(C->bNodes); A->query = B->query . ' + ' . C->query; }
-additiveExpressionX(A) ::= additiveExpressionX(B) MINUS multiplicativeExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); ->addBNodes(C->bNodes); A->query = B->query . ' - ' . C->query; }
+additiveExpressionX(A) ::= additiveExpressionX(B) PLUS multiplicativeExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' + ' . C->query; }
+additiveExpressionX(A) ::= additiveExpressionX(B) MINUS multiplicativeExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' - ' . C->query; }
 additiveExpressionX(A) ::= numericLiteralPositive(B) additiveExpressionY(C). { A = new NTToken(); A->copyBools(C); A->addVars(C->vars); A->addBNodes(C->bNodes); A->query = B->query . ' ' C->query; }
 additiveExpressionX(A) ::= numericLiteralNegative(B) additiveExpressionY(C). { A = new NTToken(); A->copyBools(C); A->addVars(C->vars); A->addBNodes(C->bNodes); A->query = B->query . ' ' C->query; }
 additiveExpressionX(A) ::= numericLiteralPositive(B). { A = new NTToken(); A->query = B->query; }
 additiveExpressionX(A) ::= numericLiteralNegative(B). { A = new NTToken(); A->query = B->query; }
 additiveExpressionX(A) ::= PLUS multiplicativeExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '+ ' . B->query; }
 additiveExpressionX(A) ::= MINUS multiplicativeExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '- ' . B->query; }
-additiveExpressionY(A) ::= additiveExpressionY(B) STAR unaryExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); ->addBNodes(C->bNodes); A->query = B->query . ' * ' . C->query; }
+additiveExpressionY(A) ::= additiveExpressionY(B) STAR unaryExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' * ' . C->query; }
 additiveExpressionY(A) ::= additiveExpressionY(B) SLASH unaryExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' * ' . C->query; }
 additiveExpressionY(A) ::= STAR unaryExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '* ' . B->query; }
 additiveExpressionY(A) ::= SLASH unaryExpression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '/ ' . B->query; }
