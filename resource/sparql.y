@@ -493,63 +493,66 @@ inlineDataFullX(A) ::= inlineDataFullX(B) NIL. {/*count = i..X.count*/}
 inlineDataFullX(A) ::= LPARENTHESE dataBlockValueX(B) RPARENTHESE. {/*count = d..X.count*/}
 inlineDataFullX(A) ::= NIL. {/*count = 0*/}
 
-dataBlockValue(A) ::= iri(B).
-dataBlockValue(A) ::= rdfLiteral(B).
-dataBlockValue(A) ::= numericLiteral(B).
-dataBlockValue(A) ::= booleanLiteral(B).
-dataBlockValue(A) ::= UNDEF.
+dataBlockValue(A) ::= iri(B). { A = new NTToken(); A->query = B->query; }
+dataBlockValue(A) ::= rdfLiteral(B). { A = new NTToken(); A->query = B->query; }
+dataBlockValue(A) ::= numericLiteral(B). { A = new NTToken(); A->query = B->query; }
+dataBlockValue(A) ::= booleanLiteral(B). { A = new NTToken(); A->query = B->query; }
+dataBlockValue(A) ::= UNDEF. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'UNDEF'; }
 
-minusGraphPattern(A) ::= SMINUS groupGraphPattern(B).
+minusGraphPattern(A) ::= SMINUS groupGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'MINUS ' . PHP_EOL .  B->query; }
 
-groupOrUnionGraphPattern(A) ::= groupGraphPattern(B) groupOrUnionGraphPatternX(C).
-groupOrUnionGraphPattern(A) ::= groupGraphPattern(B).
-groupOrUnionGraphPatternX(A) ::= groupOrUnionGraphPatternX(B) UNION groupGraphPattern(C).
-groupOrUnionGraphPatternX(A) ::= UNION GroupGraphPattern(B).
+groupOrUnionGraphPattern(A) ::= groupGraphPattern(B) groupOrUnionGraphPatternX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . PHP_EOL . C->query; }
+groupOrUnionGraphPattern(A) ::= groupGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+groupOrUnionGraphPatternX(A) ::= groupOrUnionGraphPatternX(B) UNION groupGraphPattern(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . PHP_EOL . ' UNION ' . PHP_EOL . C->query; }
+groupOrUnionGraphPatternX(A) ::= UNION GroupGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'UNION ' . PHP_EOL . B->query; }
 
-filter(A) ::= FILTER LPARENTHESE expression(B) RPARENTHESE.
-filter(A) ::= FILTER builtInCall(B).
-filter(A) ::= FILTER functionCall(B).
+filter(A) ::= FILTER LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'FILTER ( ' . B->query . ' )'; }
+filter(A) ::= FILTER builtInCall(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'FILTER ' . B->query; }
+filter(A) ::= FILTER functionCall(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'FILTER ' . B->query; }
 
-functionCall(A) ::= iri(B) argList(C).
+functionCall(A) ::= iri(B) argList(C). { A = new NTToken(); A->hasFNC = true, A->hasAGG = true; A->copyBools(C);A->addVars(C->vars); A->addBNodes(C->bNodes); A->query = B->query . C->query; }
 
-argList(A) ::= LPARENTHESE DISTINCT expression(B) argListX(C) RPARENTHESE.
-argList(A) ::= LPARENTHESE expression(B) argListX(C) RPARENTHESE.
-argList(A) ::= NIL.
-argListX(A) ::= argListX(B) COMMA expression(C).
-argListX(A) ::= COMMA expression(B).
+argList(A) ::= LPARENTHESE DISTINCT expression(B) argListX(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '( DISTINCT' . B->query . PHP_EOL . C->query .  ' )'; }
+argList(A) ::= LPARENTHESE expression(B) argListX(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '( ' . B->query . PHP_EOL . C->query .  ' )'; }
+argList(A) ::= NIL. { A = new NTToken(); A->query = '( )' . PHP_EOL; }
+argListX(A) ::= argListX(B) COMMA expression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ', ' . PHP_EOL . C->query; }
+argListX(A) ::= COMMA expression(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = ', ' . PHP_EOL . B->query; }
 
-expressionList(A) ::= LPARENTHESE expression(B) argListX(C) RPARENTHESE.
-expressionList(A) ::= NIL.
+expressionList(A) ::= LPARENTHESE expression(B) argListX(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '( ' . B->query . PHP_EOL . C->query .  ' )'; }
+expressionList(A) ::= NIL. LBRACE RBRACE. { A = new NTToken(); A->query = '( )' . PHP_EOL; }
 
-constructTemplate(A) ::= LBRACE constructTriples(B) RBRACE.
-constructTemplate(A) ::= LBRACE RBRACE.
+constructTemplate(A) ::= LBRACE constructTriples(B) RBRACE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '{ ' . B->query . ' }' . PHP_EOL; }
+constructTemplate(A) ::= LBRACE RBRACE. { A = new NTToken(); A->query = '{ }' . PHP_EOL; }
 
-constructTriples(A) ::= triplesSameSubject(B) DOT constructTriples(C).
-constructTriples(A) ::= triplesSameSubject(B) DOT.
-constructTriples(A) ::= triplesSameSubject(B).
+constructTriples(A) ::= triplesSameSubject(B) DOT constructTriplesX(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' .' . PHP_EOL . C->query ' .'; }
+constructTriples(A) ::= triplesSameSubject(B) DOT constructTriplesX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' .' . PHP_EOL . C->query; }
+constructTriples(A) ::= triplesSameSubject(B) DOT. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query . ' .'; }
+constructTriples(A) ::= triplesSameSubject(B) { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+constructTriplesX(A) ::= constructTriplesX(B) DOT triplesSameSubject(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' .' . PHP_EOL . C->query; }
+constructTriplesX(A) ::= triplesSameSubject(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-triplesSameSubject(A) ::= varOrTerm(B) propertyListNotEmpty(C).
-triplesSameSubject(A) ::= triplesNode(B) propertyListNotEmpty(C).
-triplesSameSubject(A) ::= triplesNode(B).
+triplesSameSubject(A) ::= varOrTerm(B) propertyListNotEmpty(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+triplesSameSubject(A) ::= triplesNode(B) propertyListNotEmpty(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+triplesSameSubject(A) ::= triplesNode(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-propertyListNotEmpty(A) ::= verb(B) objectList(C) propertyListNotEmptyX(D).
-propertyListNotEmpty(A) ::= verb(B) objectList(C).
-propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON verb(C) objectList(D).
-propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON.
-propertyListNotEmptyX(A) ::= SEMICOLON verb(B) objectList(C).
-propertyListNotEmptyX(A) ::= SEMICOLON.
+propertyListNotEmpty(A) ::= verb(B) objectList(C) propertyListNotEmptyX(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->addVars(B->vars); A->addVars(C->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
+propertyListNotEmpty(A) ::= verb(B) objectList(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON verb(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->addVars(B->vars); A->addVars(C->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->addBNodes(D->bNodes); A->query = B->query . '; ' . C->query . ' ' D->query; }
+propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query. ';'; }
+propertyListNotEmptyX(A) ::= SEMICOLON verb(B) objectList(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = '; ' . B->query . ' ' . C->query; }
+propertyListNotEmptyX(A) ::= SEMICOLON. { A = new NTToken(); A->query = ';'; }
 
-verb(A) ::= varOrIri(B).
-verb(A) ::= A.
+verb(A) ::= varOrIri(B). { A = new NTToken(); A->addVars(B->vars); A->query = B->query; }
+verb(A) ::= A. { if(!checkNS('rdf:type')){$main->error = "Missing Prefix for rdf:type (a)";yy_parse_failed();} A = new NTToken(); A->query = 'rdf:type'; }
 
-objectList(A) ::= graphNode(B) objectListX(C).
-objectList(A) ::= graphNode(B).
-objectListX(A) ::= objectListX(B) COMMA graphNode(C).
-objectListX(A) ::= COMMA graphNode(B).
+objectList(A) ::= graphNode(B) objectListX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+objectList(A) ::= graphNode(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+objectListX(A) ::= objectListX(B) COMMA graphNode(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ', ' . C->query; }
+objectListX(A) ::= COMMA graphNode(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = ', ' . B->query; }
 
-triplesSameSubjectPath(A) ::= varOrTerm(B) propertyListPathNotEmpty(C).
-triplesSameSubjectPath(A) ::= triplesNodePath(B) propertyListPathNotEmpty(C).
-triplesSameSubjectPath(A) ::= triplesNodePath(B).
+triplesSameSubjectPath(A) ::= varOrTerm(B) propertyListPathNotEmpty(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+triplesSameSubjectPath(A) ::= triplesNodePath(B) propertyListPathNotEmpty(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
+triplesSameSubjectPath(A) ::= triplesNodePath(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
 propertyListPathNotEmpty(A) ::= pathAlternative(B) objectListPath(C) propertyListPathNotEmptyX(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->addVars(B->vars); A->addVars(C->vars); A->addVars(D->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
 propertyListPathNotEmpty(A) ::= var(B) objectListPath(C) propertyListPathNotEmptyX(D). { A = new NTToken(); A->copyBools(C); A->copyBools(D); A->addVars(B->vars); A->addVars(C->vars); A->addVars(D->vars); A->addBNodes(C->bNodes); A->addBNodes(D->bNodes); A->query = B->query . ' ' . C->query . ' ' D->query; }
@@ -589,7 +592,7 @@ pathMod(A) ::= QUESTION. { A = new NTToken(); A->query = '?'; }
 
 pathPrimary(A) ::= LPARENTHESE pathAlternative(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '( ' . B->query . ' )'; }
 pathPrimary(A) ::= EXCLAMATION pathNegatedPropertySet(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = '!' . B->query; }
-pathPrimary(A) ::= A. { A = new NTToken(); A->query = 'rdf:type'; }
+pathPrimary(A) ::= A. { if(!checkNS('rdf:type')){$main->error = "Missing Prefix for rdf:type (a)";yy_parse_failed();} A = new NTToken(); A->query = 'rdf:type'; }
 pathPrimary(A) ::= iri(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
 pathNegatedPropertySet(A) ::= LPARENTHESE pathOneInPropertySet(B) pathNegatedPropertySetX(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' ' . C->query; }
