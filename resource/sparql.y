@@ -462,42 +462,42 @@ graphPatternNotTriples(A) ::= filter(B).
 graphPatternNotTriples(A) ::= bind(B). {/*set variable*/}
 graphPatternNotTriples(A) ::= inlineData(B).
 
-optionalGraphPattern(A) ::= OPTIONAL groupGraphPattern(B).
+optionalGraphPattern(A) ::= OPTIONAL groupGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'OPTIONAL ' . B->query; }
 
-graphGraphPattern(A) ::= GRAPH varOrIri(B) groupGraphPattern(C).
+graphGraphPattern(A) ::= GRAPH varOrIri(B) groupGraphPattern(C). { A = new NTToken(); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(C->bNodes); A->query = 'GRAPH ' . B->query . ' ' . C->query; }
 
-serviceGraphPattern(A) ::= SERVICE SILENT varOrIri(B) groupGraphPattern(C).
-serviceGraphPattern(A) ::= SERVICE varOrIri(B) groupGraphPattern(C).
+serviceGraphPattern(A) ::= SERVICE SILENT varOrIri(B) groupGraphPattern(C). { A = new NTToken(); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(C->bNodes); A->query = 'SERVICE SILENT ' . B->query . ' ' . C->query; }
+serviceGraphPattern(A) ::= SERVICE varOrIri(B) groupGraphPattern(C). { A = new NTToken(); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(C->bNodes); A->query = 'SERVICE ' . B->query . ' ' . C->query; }
 
-bind(A) ::= BIND LPARENTHESE expression(B) AS var(C) RPARENTHESE.
+bind(A) ::= BIND LPARENTHESE expression(B) AS var(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addVars(C->vars); A->bindVar = C->query; A->addBNodes(B->bNodes); A->query = B->query . ' AS ' . C->query; }
 
-inlineData(A) ::= VALUES dataBlock(B).
+inlineData(A) ::= VALUES dataBlock(B). { A = new NTToken(); A->addVars(B->vars); A->query = B->query; }
 
-dataBlock(A) ::= inlineDataOneVar(B).
-dataBlock(A) ::= inlineDataFull(B).
+dataBlock(A) ::= inlineDataOneVar(B). { A = new NTToken(); A->addVars(B->vars); A->query = B->query; }
+dataBlock(A) ::= inlineDataFull(B). { A = new NTToken(); A->addVars(B->vars); A->query = B->query; }
 
-inlineDataOneVar(A) ::= var(B) LBRACE dataBlockValueX(C) RBRACE.
-inlineDataOneVar(A) ::= var(B) LBRACE RBRACE.
-dataBlockValueX(A) ::= dataBlockValueX(B) dataBlockValue(C). {/*count +1*/}
-dataBlockValueX(A) ::= dataBlockValue(B). {/*count +1*/}
+inlineDataOneVar(A) ::= var(B) LBRACE dataBlockValueX(C) RBRACE. { A = new NTToken(); A->addVars(B->vars); A->query = B->query . ' { ' . C->query .  ' }'; }
+inlineDataOneVar(A) ::= var(B) LBRACE RBRACE. { A = new NTToken(); A->addVars(B->vars); A->query = B->query . '{ }'; }
+dataBlockValueX(A) ::= dataBlockValueX(B) dataBlockValue(C). { A = new NTToken(); A->count = B->count + 1; A->query = B->query . ' ' . C->query; }
+dataBlockValueX(A) ::= dataBlockValue(B). { A = new NTToken(); A->count = 1; A->query = B->query; }
 
-inlineDataFull(A) ::= LPARENTHESE varX(B) RPARENTHESE LBRACE inlineDataFullX(C) RBRACE. {/*if both >0 and equal ok, var>0 i..X =0 ok else break*/} 
-inlineDataFull(A) ::= NIL LBRACE nilX(B) RBRACE.
-inlineDataFull(A) ::= NIL LBRACE RBRACE.
-nilX(A) ::= nilX(B) NIL.
-nilX(A) ::= NIL.
-varX(A) ::= varX(B) var(C). {/*count +1*/}
-varX(A) ::= var(B). {/*count +1*/}
-inlineDataFullX(A) ::= inlineDataFullX(B) LPARENTHESE dataBlockValueX(C) RPARENTHESE. {/*if (both >0 and equal - count = i..X.count else if unequal - break, else d..X.count)*/}
-inlineDataFullX(A) ::= inlineDataFullX(B) NIL. {/*count = i..X.count*/}
-inlineDataFullX(A) ::= LPARENTHESE dataBlockValueX(B) RPARENTHESE. {/*count = d..X.count*/}
-inlineDataFullX(A) ::= NIL. {/*count = 0*/}
+inlineDataFull(A) ::= LPARENTHESE varX(B) RPARENTHESE LBRACE inlineDataFullX(C) RBRACE. {if(C->count > 0 ){if(B->count == C->count){ A = new NTToken(); A->addVars(B->vars); A->query = '( ' . B->query . ' ) {' . PHP_EOL . C->query . ' }';}else{$main->error = "Different Amount of Variables and Values for Value Clause : " . B->query . ' and ' . C->query; yy_parse_failed();}}else{A = new NTToken(); A->addVars(B->vars); A->query = '( ' . B->query . ' ) {' . PHP_EOL . C->query . ' }';}}
+inlineDataFull(A) ::= NIL LBRACE nilX(B) RBRACE. { A = new NTToken(); A->query = '( ) { ' . B->query . ' }'; }
+inlineDataFull(A) ::= NIL LBRACE RBRACE. { A = new NTToken(); A->query = '( ) { }'; }
+nilX(A) ::= nilX(B) NIL.{ A = new NTToken(); A->query = B->query . ' ( )'; }
+nilX(A) ::= NIL. { A = new NTToken(); A->query = '( )'; }
+varX(A) ::= varX(B) var(C). { A = new NTToken(); A->count = B->count + 1; A->addVars(B->vars); A->addVars(C->vars); A->query = B->query . ' ' . C->query; }
+varX(A) ::= var(B). { A = new NTToken(); A->addVars(B->vars); A->count = 1; A->query = B->query; }
+inlineDataFullX(A) ::= inlineDataFullX(B) LPARENTHESE dataBlockValueX(C) RPARENTHESE. {if(B->count > 0 ){if(B->count == C->count){ A = new NTToken(); A->count = B->count; A->query = B->query . PHP_EOL . '( ' . C->query . ' )';}else{$main->error = "Different Amount of Values for Value Clause : " . B->query . ' and ' . C->query; yy_parse_failed();}}else{A = new NTToken(); A->count = C->count; A->query = B->query . PHP_EOL . '( ' . C->query . ' )';}}
+inlineDataFullX(A) ::= inlineDataFullX(B) NIL. { A = new NTToken(); A->query = B->query . PHP_EOL . '( )'; }
+inlineDataFullX(A) ::= LPARENTHESE dataBlockValueX(B) RPARENTHESE.  { A = new NTToken(); A->count = B->count; A->query = '( ' . B->query . ' )'; }
+inlineDataFullX(A) ::= NIL. { A = new NTToken(); A->query = '( )'; }
 
 dataBlockValue(A) ::= iri(B). { A = new NTToken(); A->query = B->query; }
 dataBlockValue(A) ::= rdfLiteral(B). { A = new NTToken(); A->query = B->query; }
 dataBlockValue(A) ::= numericLiteral(B). { A = new NTToken(); A->query = B->query; }
 dataBlockValue(A) ::= booleanLiteral(B). { A = new NTToken(); A->query = B->query; }
-dataBlockValue(A) ::= UNDEF. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'UNDEF'; }
+dataBlockValue(A) ::= UNDEF. { A = new NTToken(); A->query = 'UNDEF'; }
 
 minusGraphPattern(A) ::= SMINUS groupGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'MINUS ' . PHP_EOL .  B->query; }
 
