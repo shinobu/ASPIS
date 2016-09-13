@@ -447,20 +447,21 @@ groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) triplesBlock(C).
 groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT.
 groupGraphPatternSubX(A) ::= graphPatternNotTriples(B). 
 
-triplesBlock(A) ::= triplesSameSubjectPath(B) DOT triplesBlock(C).
-triplesBlock(A) ::= triplesSameSubjectPath(B) DOT.
-triplesBlock(A) ::= triplesSameSubjectPath(B). {/*if variable - check*/}
+triplesBlock(A) ::= triplesSameSubjectPath(B) DOT triplesBlockX(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' .' . PHP_EOL . C->query ' .'; }
+triplesBlock(A) ::= triplesSameSubjectPath(B) DOT triplesBlockX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' .' . PHP_EOL . C->query; }
+triplesBlock(A) ::= triplesSameSubjectPath(B) DOT. { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query . ' .'; }
+triplesBlock(A) ::= triplesSameSubjectPath(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+triplesBlockX(A) ::= triplesBlockX(B) DOT triplesSameSubjectPath(C) { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->addVars(B->vars); A->addVars(C->vars); A->addBNodes(B->bNodes); A->addBNodes(C->bNodes); A->query = B->query . ' .' . PHP_EOL . C->query; }
+triplesBlockX(A) ::= triplesSameSubjectPath(B) { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
-
-
-graphPatternNotTriples(A) ::= groupOrUnionGraphPattern(B).
-graphPatternNotTriples(A) ::= optionalGraphPattern(B).
-graphPatternNotTriples(A) ::= minusGraphPattern(B).
-graphPatternNotTriples(A) ::= graphGraphPattern(B).
-graphPatternNotTriples(A) ::= serviceGraphPattern(B).
-graphPatternNotTriples(A) ::= filter(B).
-graphPatternNotTriples(A) ::= bind(B). {/*set variable*/}
-graphPatternNotTriples(A) ::= inlineData(B).
+graphPatternNotTriples(A) ::= groupOrUnionGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphPatternNotTriples(A) ::= optionalGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphPatternNotTriples(A) ::= minusGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphPatternNotTriples(A) ::= graphGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphPatternNotTriples(A) ::= serviceGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphPatternNotTriples(A) ::= filter(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphPatternNotTriples(A) ::= bind(B). { A = new NTToken(); A->bindVar = B->bindVar; A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
+graphPatternNotTriples(A) ::= inlineData(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = B->query; }
 
 optionalGraphPattern(A) ::= OPTIONAL groupGraphPattern(B). { A = new NTToken(); A->copyBools(B); A->addVars(B->vars); A->addBNodes(B->bNodes); A->query = 'OPTIONAL ' . B->query; }
 
