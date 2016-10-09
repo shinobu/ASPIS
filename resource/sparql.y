@@ -68,17 +68,18 @@ class NTToken {
 	public $hasFNC = false;
 	public $hasAGG = false;
 
-  /* to reduce the amount of isset calls the 'usual' smaller set should be set 1, returns true if NO duplicates are found
+  /* to reduce the amount of isset calls the 'usual' smaller set should be set 1, returns null if NO duplicates are found
    * might be useful to return the duplicate for the error message tho (TODO)
+   * array_intersect_key could be faster 
    */
   function noDuplicates($set1, $set2) {
-		$noDuplicate = true;
+		$noDuplicate = null;
         if ($set1 == null || $set2 == null) {
             return $noDuplicate;
         } else {
             foreach (array_keys($set1) as $key) {
                 if (isset($set2[$key])) {
-                    $noDuplicate = false;
+                    $noDuplicate = $key;
                 }
     	      }
         }
@@ -400,11 +401,11 @@ groupGraphPatternSub(A) ::= groupGraphPatternSubX(B).
 groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT triplesBlock(D). {/*for all below set variable from graphPatternNotTriples to X and for all Tripleblock check if both have variable*/}
 groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) triplesBlock(D).
 groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT.
-groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C).
-groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT triplesBlock(C).
-groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) triplesBlock(C).
-groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT.
-groupGraphPatternSubX(A) ::= graphPatternNotTriples(B). 
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C). { $tmp = B->noDuplicates(C->ssVars, B->ssVars); if(isset($tmp)){$this->main->error = "Variable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();} else if(isset(C->bindVar)){ if(isset(B->noDuplicates(array(C->bindVar => 1), B->vars))){$this->main->error = "Bindvariable is already in scope: " . C->bindVar; unset($tmp); yy_parse_failed();}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT triplesBlock(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
+groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) triplesBlock(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT. { A = new NTToken(); A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query . ' .'; }
+groupGraphPatternSubX(A) ::= graphPatternNotTriples(B). { A = new NTToken(); A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
 
 triplesBlock(A) ::= triplesSameSubjectPath(B) DOT triplesBlockX(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query ' .'; }
 triplesBlock(A) ::= triplesSameSubjectPath(B) DOT triplesBlockX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
