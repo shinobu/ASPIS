@@ -55,11 +55,14 @@ class NTToken {
    * Furthermore this allows for a quick isset check for searching duplicates
    */
 	public $vars = array();
-  /* need to somehow check Scoping for (only?) vars noted with AS */
+  /* need to somehow check Scoping for (only?) vars noted with AS, only needs to be checked (for subselects) until a whereclause (and for the select it belongs to), 
+   *the as's of the selectclause count for the above area as well though 
+   */
   public $ssVars = array();
 	public $bNodes = array();
+  /* needs to be an array, because multiple binds can be reduced and be checked against one triplegroup preceding all binds */
+  public $bindVar = array();
 	/* non-arrays */
-	public $bindVar = null;
 	public $query = null;
   public $counter = 0;
 	/* booleans */
@@ -395,13 +398,13 @@ groupGraphPattern(A) ::= LBRACE subSelect(B) RBRACE.{->into ssvars}
 groupGraphPattern(A) ::= LBRACE RBRACE.
 
 
-groupGraphPatternSub(A) ::= triplesBlock(B) groupGraphPatternSubX(C). {/*check variable if GoupGraphPatternSubX has some in the array*/ A->test = B + C; }
-groupGraphPatternSub(A) ::= triplesBlock(B).
-groupGraphPatternSub(A) ::= groupGraphPatternSubX(B).
-groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT triplesBlock(D). {/*for all below set variable from graphPatternNotTriples to X and for all Tripleblock check if both have variable*/}
-groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) triplesBlock(D).
-groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT.
-groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C). { $tmp = B->noDuplicates(C->ssVars, B->ssVars); if(isset($tmp)){$this->main->error = "Variable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();} else if(isset(C->bindVar)){ if(isset(B->noDuplicates(array(C->bindVar => 1), B->vars))){$this->main->error = "Bindvariable is already in scope: " . C->bindVar; unset($tmp); yy_parse_failed();}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+groupGraphPatternSub(A) ::= triplesBlock(B) groupGraphPatternSubX(C). { if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){$this->main->error = "Bindvariable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = C->ssVars; A->bindVar = C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+groupGraphPatternSub(A) ::= triplesBlock(B). {A = B}
+groupGraphPatternSub(A) ::= groupGraphPatternSubX(B). {A = B;}
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT triplesBlock(D). { $tmp = B->noDuplicates(C->ssVars, B->ssVars); if(isset($tmp)){$this->main->error = "Variable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();} else if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){$this->main->error = "Bindvariable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->bindVar = B->bindVar + C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query . ' .' . PHP_EOL . D->query; }
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) triplesBlock(D). { $tmp = B->noDuplicates(C->ssVars, B->ssVars); if(isset($tmp)){$this->main->error = "Variable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();} else if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){$this->main->error = "Bindvariable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->bindVar = B->bindVar + C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT. { $tmp = B->noDuplicates(C->ssVars, B->ssVars); if(isset($tmp)){$this->main->error = "Variable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();} else if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){$this->main->error = "Bindvariable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->bindVar = B->bindVar + C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query . ' .'; }
+groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C). { $tmp = B->noDuplicates(C->ssVars, B->ssVars); if(isset($tmp)){$this->main->error = "Variable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();} else if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){$this->main->error = "Bindvariable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->bindVar = B->bindVar + C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
 groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT triplesBlock(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
 groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) triplesBlock(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
 groupGraphPatternSubX(A) ::= graphPatternNotTriples(B) DOT. { A = new NTToken(); A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query . ' .'; }
@@ -430,7 +433,7 @@ graphGraphPattern(A) ::= GRAPH varOrIri(B) groupGraphPattern(C). { A = new NTTok
 serviceGraphPattern(A) ::= SERVICE SILENT varOrIri(B) groupGraphPattern(C). { A = new NTToken(); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = C->bNodes; A->query = 'SERVICE SILENT ' . B->query . ' ' . C->query; }
 serviceGraphPattern(A) ::= SERVICE varOrIri(B) groupGraphPattern(C). { A = new NTToken(); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = C->bNodes; A->query = 'SERVICE ' . B->query . ' ' . C->query; }
 
-bind(A) ::= BIND LPARENTHESE expression(B) AS var(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->ssVars = C->query; A->bindVar = C->query; A->vars = B->vars + C->vars; A->bNodes = B->bNodes; A->query = B->query . ' AS ' . C->query; }
+bind(A) ::= BIND LPARENTHESE expression(B) AS var(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->ssVars[C->query] = 1; A->bindVar[C->query] = 1; A->vars = B->vars + C->vars; A->bNodes = B->bNodes; A->query = B->query . ' AS ' . C->query; }
 
 inlineData(A) ::= VALUES dataBlock(B). { A = new NTToken(); A->vars = B->vars; A->query = B->query; }
 
