@@ -188,18 +188,22 @@ selectClauseX(A) ::= booleanLiteral(B).
 selectClauseX(A) ::= var(B).
 selectClauseX(A) ::= functionCall(B).
 
-constructQuery(A) ::= CONSTRUCT constructTemplate(B) datasetClauseX(C) whereclause(D) solutionModifier(E).
+constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE datasetClauseX(C) whereclause(D) solutionModifier(E).
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(C) whereclause(D) solutionModifier(E).
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE triplesTemplate(C) RBRACE solutionModifier(D).
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE RBRACE solutionModifier(C).
-constructQuery(A) ::= CONSTRUCT constructTemplate(B) whereclause(C).
-constructQuery(A) ::= CONSTRUCT constructTemplate(B) datasetClauseX(C) whereclause(D).
-constructQuery(A) ::= CONSTRUCT constructTemplate(B) whereclause(C) solutionModifier(D).
-constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE.
-constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE.
+constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE whereclause(C) solutionModifier(D).
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(C) solutionModifier(D).
+constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE whereclause(C).
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(C).
+constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE datasetClauseX(C) whereclause(D).
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(C) whereclause(D).
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE triplesTemplate(C) RBRACE.
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE  RBRACE.
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE solutionModifier(C).
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE solutionModifier(B).
+constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE.
+constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE.
 
 describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C) whereclause(D) solutionModifier(E).
 describeQuery(A) ::= DESCRIBE varOrIriX(B) whereclause(C) solutionModifier(D).
@@ -350,53 +354,55 @@ modify(A) ::= insertClause(B) WHERE groupGraphPattern(C).
 usingClauseX(A) ::= usingClauseX(B) usingClause(C).
 usingClauseX(A) ::= usingClause(B).
 
-deleteClause(A) ::= DELETE quadPattern(B).
+deleteClause(A) ::= DELETE quadPattern(B). { if(!empty(B->bNodes){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE ' . B->query; }
 
-insertClause(A) ::= INSERT quadPattern(B).
+insertClause(A) ::= INSERT quadPattern(B). { A = B; A->query = 'INSERT ' . B->query; }
 
-usingClause(A) ::= USING NAMED iri(B).
-usingClause(A) ::= USING iri(B).
+usingClause(A) ::= USING NAMED iri(B). { A = B; A->query = 'USING NAMED ' . B->query; }
+usingClause(A) ::= USING iri(B). { A = B; A->query = 'USING ' . B->query; }
 
-graphOrDefault(A) ::= GRAPH iri(B).
-graphOrDefault(A) ::= DEFAULT.
-graphOrDefault(A) ::= iri(B).
+graphOrDefault(A) ::= GRAPH iri(B). { A = B; A->query = 'GRAPH ' . B->query; }
+graphOrDefault(A) ::= DEFAULT. { A = new NTToken(); A->query = 'DEFAULT';}
+graphOrDefault(A) ::= iri(B). {A = B;}
 
-graphRef(A) ::= GRAPH iri(B).
+graphRef(A) ::= GRAPH iri(B). { A = B; A->query = 'GRAPH ' . B->query; }
 
-graphRefAll(A) ::= graphRef(B).
-graphRefAll(A) ::= DEFAULT.
-graphRefAll(A) ::= NAMED.
-graphRefAll(A) ::= ALL.
+graphRefAll(A) ::= graphRef(B). { A = B; }
+graphRefAll(A) ::= DEFAULT. { A = new NTToken(); A->query = 'DEFAULT';}
+graphRefAll(A) ::= NAMED. { A = new NTToken(); A->query = 'NAMED';}
+graphRefAll(A) ::= ALL. { A = new NTToken(); A->query = 'ALL';}
 
-quadPattern(A) ::= LBRACE quads(B) RBRACE.
-quadPattern(A) ::= LBRACE RBRACE.
+quadPattern(A) ::= LBRACE quads(B) RBRACE. '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
+quadPattern(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }'}
 
-quadData(A) ::= LBRACE quads(B) RBRACE.
-quadData(A) ::= LBRACE RBRACE.
+quadData(A) ::= LBRACE quads(B) RBRACE. '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
+quadData(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }'}
 
-quads(A) ::= triplesTemplate(B) quadsX(C).
-quads(A) ::= triplesTemplate(B).
-quads(A) ::= quadsX(B).
-quadsX(A) ::= quadsX(A) quadsNotTriples(B) DOT triplesTemplate(C).
-quadsX(A) ::= quadsX(A) quadsNotTriples(B) triplesTemplate(C).
-quadsX(A) ::= quadsX(A) quadsNotTriples(B) DOT.
-quadsX(A) ::= quadsX(A) quadsNotTriples(B).
-quadsX(A) ::= quadsNotTriples(B) DOT triplesTemplate(C).
-quadsX(A) ::= quadsNotTriples(B) triplesTemplate(C).
-quadsX(A) ::= quadsNotTriples(B) DOT.
-quadsX(A) ::= quadsNotTriples(B).
+quads(A) ::= triplesTemplate(B) quadsX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
+quads(A) ::= triplesTemplate(B). { A = B; }
+quads(A) ::= quadsX(B). { A = B; }
+quadsX(A) ::= quadsX(B) quadsNotTriples(C) DOT triplesTemplate(D).
+quadsX(A) ::= quadsX(B) quadsNotTriples(C) triplesTemplate(D).
+quadsX(A) ::= quadsX(B) quadsNotTriples(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
+quadsX(A) ::= quadsX(B) quadsNotTriples(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+quadsX(A) ::= quadsNotTriples(B) DOT triplesTemplate(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
+quadsX(A) ::= quadsNotTriples(B) triplesTemplate(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+quadsX(A) ::= quadsNotTriples(B) DOT. { A = B; A->query = B->query . ' .'}
+quadsX(A) ::= quadsNotTriples(B). { A = B; }
 
-quadsNotTriples(A) ::= GRAPH varOrIri(B) LBRACE triplesTemplate(C) RBRACE.
-quadsNotTriples(A) ::= GRAPH varOrIri(B) LBRACE RBRACE.
+quadsNotTriples(A) ::= GRAPH varOrIri(B) LBRACE triplesTemplate(C) RBRACE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'GRAPH ' . B->query . PHP_EOL . ' { ' .  PHP_EOL . C->query . PHP_EOL . ' }'; }
+quadsNotTriples(A) ::= GRAPH varOrIri(B) LBRACE RBRACE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->query = 'GRAPH ' . B->query . ' { }'; }
 
-triplesTemplate(A) ::= triplesSameSubject(B) DOT triplesTemplate(C).
-triplesTemplate(A) ::= triplesSameSubject(B) DOT.
-triplesTemplate(A) ::= triplesSameSubject(B).
+triplesTemplate(A) ::= triplesSameSubject(B) DOT triplesTemplateX(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query ' .'; }
+triplesTemplate(A) ::= triplesSameSubject(B) DOT triplesTemplateX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
+triplesTemplate(A) ::= triplesSameSubject(B) DOT. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query . ' .'; }
+triplesTemplate(A) ::= triplesSameSubject(B). { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
+triplesTemplateX(A) ::= triplesTemplateX(B) DOT triplesSameSubject(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
+triplesTemplateX(A) ::= triplesSameSubject(B). { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
 
-groupGraphPattern(A) ::= LBRACE groupGraphPatternSub(B) RBRACE.
-groupGraphPattern(A) ::= LBRACE subSelect(B) RBRACE.{->into ssvars}
-groupGraphPattern(A) ::= LBRACE RBRACE.
-
+groupGraphPattern(A) ::= LBRACE groupGraphPatternSub(B) RBRACE. { A = B; A->query = '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
+groupGraphPattern(A) ::= LBRACE subSelect(B) RBRACE. { A = B; A->query = '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
+groupGraphPattern(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }'}
 
 groupGraphPatternSub(A) ::= triplesBlock(B) groupGraphPatternSubX(C). { if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){$this->main->error = "Bindvariable is already in scope: " . $tmp; unset($tmp); yy_parse_failed();}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = C->ssVars; A->bindVar = C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
 groupGraphPatternSub(A) ::= triplesBlock(B). {A = B}
@@ -484,16 +490,6 @@ argListX(A) ::= COMMA expression(B). { A = new NTToken(); A->copyBools(B); A->va
 
 expressionList(A) ::= LPARENTHESE expression(B) argListX(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = '( ' . B->query . PHP_EOL . C->query .  ' )'; }
 expressionList(A) ::= NIL. LBRACE RBRACE. { A = new NTToken(); A->query = '( )' . PHP_EOL; }
-
-constructTemplate(A) ::= LBRACE constructTriples(B) RBRACE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = '{ ' . B->query . ' }' . PHP_EOL; }
-constructTemplate(A) ::= LBRACE RBRACE. { A = new NTToken(); A->query = '{ }' . PHP_EOL; }
-
-constructTriples(A) ::= triplesSameSubject(B) DOT constructTriplesX(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query ' .'; }
-constructTriples(A) ::= triplesSameSubject(B) DOT constructTriplesX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
-constructTriples(A) ::= triplesSameSubject(B) DOT. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query . ' .'; }
-constructTriples(A) ::= triplesSameSubject(B) { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
-constructTriplesX(A) ::= constructTriplesX(B) DOT triplesSameSubject(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
-constructTriplesX(A) ::= triplesSameSubject(B). { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
 
 triplesSameSubject(A) ::= varOrTerm(B) propertyListNotEmpty(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
 triplesSameSubject(A) ::= triplesNode(B) propertyListNotEmpty(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
