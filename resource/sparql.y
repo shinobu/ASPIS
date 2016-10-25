@@ -1,6 +1,6 @@
 /* !!!!!!!!!!!!!!!!!SCOPING NOTES !!!!!!!!!!!!!!!!!!!
  * might need to throw A->ssVars = B->ssVars; to everyting containing "expression" rules
- *
+ * need to rework catching errors (use throw error)
  *
  */
 
@@ -284,75 +284,75 @@ orderCondition(A) ::= var(B).
 
 limitOffsetClauses(A) ::= limitClause(B) offsetClause(C).
 limitOffsetClauses(A) ::= offsetClause(B) limitClause(C).
-limitOffsetClauses(A) ::= limitClause(B).
-limitOffsetClauses(A) ::= offsetClause(B).
+limitOffsetClauses(A) ::= limitClause(B). { A = B; }
+limitOffsetClauses(A) ::= offsetClause(B). { A = B; }
 
-limitClause(A) ::= LIMIT INTEGER.
+limitClause(A) ::= LIMIT INTEGER(B). { A = new NTToken(); A->query = 'LIMIT ' . B->value; }
 
-offsetClause(A) ::= OFFSET INTEGER.
+offsetClause(A) ::= OFFSET INTEGER(B). { A = new NTToken(); A->query = 'OFFSET ' . B->value; }
 
-valuesClause(A) ::= VALUES dataBlock(B).
+valuesClause(A) ::= VALUES dataBlock(B). { A = B; A->query = 'VALUES ' . B->query;}
 
-update(A) ::= prologue(B) update1(C) SEMICOLON update(D).
-update(A) ::= update1(B) SEMICOLON update(C).
-update(A) ::= prologue(B) update1(C).
-update(A) ::= update1(B).
+update(A) ::= prologue(B) update1(C) SEMICOLON update(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . ' ;' . PHP_EOL . D->query; }
+update(A) ::= update1(B) SEMICOLON update(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ;' . PHP_EOL . C->query; }
+update(A) ::= prologue(B) update1(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+update(A) ::= update1(B). { A = B; }
 
-update1(A) ::= load(B).
-update1(A) ::= clear(B).
-update1(A) ::= drop(B).
-update1(A) ::= add(B).
-update1(A) ::= move(B).
-update1(A) ::= copy(B).
-update1(A) ::= create(B).
-update1(A) ::= insertData(B).
-update1(A) ::= deleteData(B).
-update1(A) ::= deletewhere(B).
-update1(A) ::= modify(B).
+update1(A) ::= load(B). { A = B; }
+update1(A) ::= clear(B). { A = B; }
+update1(A) ::= drop(B). { A = B; }
+update1(A) ::= add(B). { A = B; }
+update1(A) ::= move(B). { A = B; }
+update1(A) ::= copy(B). { A = B; }
+update1(A) ::= create(B). { A = B; }
+update1(A) ::= insertData(B). { A = B; }
+update1(A) ::= deleteData(B). { A = B; }
+update1(A) ::= deletewhere(B). { A = B; }
+update1(A) ::= modify(B). { A = B; }
 
-load(A) ::= LOAD SILENT iri(B) INTO graphRef(C).
-load(A) ::= LOAD iri(B) INTO graphRef(C).
-load(A) ::= LOAD SILENT iri(B).
-load(A) ::= LOAD iri(B).
+load(A) ::= LOAD SILENT iri(B) INTO graphRef(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'LOAD SILENT ' B->query . ' INTO ' . C->query; }
+load(A) ::= LOAD iri(B) INTO graphRef(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'LOAD ' B->query . ' INTO ' . C->query; }
+load(A) ::= LOAD SILENT iri(B). { A = B; A->query = 'LOAD SILENT ' . B->query; }
+load(A) ::= LOAD iri(B). { A = B; A->query = 'LOAD ' . B->query; }
 
-clear(A) ::= CLEAR SILENT graphRefAll(B).
-clear(A) ::= CLEAR graphRefAll(B).
+clear(A) ::= CLEAR SILENT graphRefAll(B). { A = B; A->query = 'CLEAR SILENT ' . B->query; }
+clear(A) ::= CLEAR graphRefAll(B). { A = B; A->query = 'CLEAR ' . B->query; }
 
-drop(A) ::= DROP SILENT graphRefAll(B).
-drop(A) ::= DROP graphRefAll(B).
+drop(A) ::= DROP SILENT graphRefAll(B). { A = B; A->query = 'DROP SILENT ' . B->query; }
+drop(A) ::= DROP graphRefAll(B). { A = B; A->query = 'DROP ' . B->query; }
 
-create(A) ::= CREATE SILENT graphRef(B).
-create(A) ::= CREATE graphRef(B).
+create(A) ::= CREATE SILENT graphRef(B). { A = B; A->query = 'CREATE SILENT ' . B->query; }
+create(A) ::= CREATE graphRef(B). { A = B; A->query = 'CREATE ' . B->query; }
 
-add(A) ::= ADD SILENT graphOrDefault(B) TO graphOrDefault(C).
-add(A) ::= ADD graphOrDefault(B) TO graphOrDefault(C).
+add(A) ::= ADD SILENT graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'ADD TO ' B->query . ' TO ' . C->query; }
+add(A) ::= ADD graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'ADD ' B->query . ' TO ' . C->query; }
 
-move(A) ::= MOVE SILENT graphOrDefault(C) TO graphOrDefault(D).
-move(A) ::= MOVE graphOrDefault(B) TO graphOrDefault(D).
+move(A) ::= MOVE SILENT graphOrDefault(C) TO graphOrDefault(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'MOVE SILENT ' B->query . ' TO ' . C->query; }
+move(A) ::= MOVE graphOrDefault(B) TO graphOrDefault(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'MOVE ' B->query . ' TO ' . C->query; }
 
-copy(A) ::= COPY SILENT graphOrDefault(B) TO graphOrDefault(C).
-copy(A) ::= COPY graphOrDefault(B) TO graphOrDefault(C).
+copy(A) ::= COPY SILENT graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'COPY SILENT ' B->query . ' TO ' . C->query; }
+copy(A) ::= COPY graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'COPY ' B->query . ' TO ' . C->query; }
 
-insertData(A) ::= INSERTDATA quadData(B).
+insertData(A) ::= INSERTDATA quadData(B). { A = B; A->query = 'DELETE DATA ' . B->query; }
 
-deleteData(A) ::= DELETEDATA quadData(B).
+deleteData(A) ::= DELETEDATA quadData(B). { if(!empty(B->bNodes){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE DATA" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE DATA ' . B->query; }
 
-deletewhere(A) ::= DELETEWHERE quadPattern(B).
+deletewhere(A) ::= DELETEWHERE quadPattern(B). { if(!empty(B->bNodes){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE WHERE" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE WHERE ' . B->query; }
 
-modify(A) ::= WITH iri(B) deleteClause(C) insertClause(D) usingClauseX(E) WHERE groupGraphPattern(F).
-modify(A) ::= WITH iri(B) deleteClause(C) usingClauseX(D) WHERE groupGraphPattern(E).
-modify(A) ::= WITH iri(B) insertClause(C) usingClauseX(D) WHERE groupGraphPattern(E).
-modify(A) ::= WITH iri(B) deleteClause(C) insertClause(D) WHERE groupGraphPattern(E).
-modify(A) ::= WITH iri(B) deleteClause(C) WHERE groupGraphPattern(D).
-modify(A) ::= WITH iri(B) insertClause(C) WHERE groupGraphPattern(D).
-modify(A) ::= deleteClause(B) insertClause(C) usingClauseX(D) WHERE groupGraphPattern(E).
-modify(A) ::= deleteClause(B) usingClauseX(C) WHERE groupGraphPattern(D).
-modify(A) ::= insertClause(B) usingClauseX(C) WHERE groupGraphPattern(D).
-modify(A) ::= deleteClause(B) insertClause(C) WHERE groupGraphPattern(D).
-modify(A) ::= deleteClause(B) WHERE groupGraphPattern(C).
-modify(A) ::= insertClause(B) WHERE groupGraphPattern(C).
-usingClauseX(A) ::= usingClauseX(B) usingClause(C).
-usingClauseX(A) ::= usingClause(B).
+modify(A) ::= WITH iri(B) deleteClause(C) insertClause(D) usingClauseX(E) WHERE groupGraphPattern(F). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->copyBools(F); A->ssVars = F->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars + F->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes + F->bNodes; A->query = 'WITH ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query . PHP_EOL . 'WHERE' . PHP_EOL . F->query; }
+modify(A) ::= WITH iri(B) deleteClause(C) usingClauseX(D) WHERE groupGraphPattern(E).{ A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = E->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes; A->query = 'WITH ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . 'WHERE' . PHP_EOL . E->query; }
+modify(A) ::= WITH iri(B) insertClause(C) usingClauseX(D) WHERE groupGraphPattern(E).{ A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = E->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes; A->query = 'WITH ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . 'WHERE' . PHP_EOL . E->query; }
+modify(A) ::= WITH iri(B) deleteClause(C) insertClause(D) WHERE groupGraphPattern(E).{ A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = E->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes; A->query = 'WITH ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . 'WHERE' . PHP_EOL . E->query; }
+modify(A) ::= WITH iri(B) deleteClause(C) WHERE groupGraphPattern(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'WITH ' . B->query . PHP_EOL . C->query . PHP_EOL . 'WHERE' . PHP_EOL . D->query; }
+modify(A) ::= WITH iri(B) insertClause(C) WHERE groupGraphPattern(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'WITH ' . B->query . PHP_EOL . C->query . PHP_EOL . 'WHERE' . PHP_EOL . D->query; }
+modify(A) ::= deleteClause(B) insertClause(C) usingClauseX(D) WHERE groupGraphPattern(E). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = E->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . 'WHERE' . PHP_EOL . E->query; }
+modify(A) ::= deleteClause(B) usingClauseX(C) WHERE groupGraphPattern(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . 'WHERE' . PHP_EOL . D->query; }
+modify(A) ::= insertClause(B) usingClauseX(C) WHERE groupGraphPattern(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . 'WHERE' . PHP_EOL . D->query; }
+modify(A) ::= deleteClause(B) insertClause(C) WHERE groupGraphPattern(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . 'WHERE' . PHP_EOL . D->query; }
+modify(A) ::= deleteClause(B) WHERE groupGraphPattern(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = D->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . 'WHERE' . PHP_EOL . C->query; }
+modify(A) ::= insertClause(B) WHERE groupGraphPattern(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = D->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . 'WHERE' . PHP_EOL . C->query; }
+usingClauseX(A) ::= usingClauseX(B) usingClause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->query = B->query . PHP_EOL . C->query; }
+usingClauseX(A) ::= usingClause(B). {A = B;}
 
 deleteClause(A) ::= DELETE quadPattern(B). { if(!empty(B->bNodes){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE ' . B->query; }
 
@@ -372,17 +372,17 @@ graphRefAll(A) ::= DEFAULT. { A = new NTToken(); A->query = 'DEFAULT';}
 graphRefAll(A) ::= NAMED. { A = new NTToken(); A->query = 'NAMED';}
 graphRefAll(A) ::= ALL. { A = new NTToken(); A->query = 'ALL';}
 
-quadPattern(A) ::= LBRACE quads(B) RBRACE. '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
+quadPattern(A) ::= LBRACE quads(B) RBRACE. { A = B; A->query = '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
 quadPattern(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }'}
 
-quadData(A) ::= LBRACE quads(B) RBRACE. '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
+quadData(A) ::= LBRACE quads(B) RBRACE. { if(!empty(B->vars)){$this->main->error = "QuadPattern arent allowed to contain variables: " . B->query; yy_parse_failed();} A = B; A->query = '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
 quadData(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }'}
 
 quads(A) ::= triplesTemplate(B) quadsX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
 quads(A) ::= triplesTemplate(B). { A = B; }
 quads(A) ::= quadsX(B). { A = B; }
-quadsX(A) ::= quadsX(B) quadsNotTriples(C) DOT triplesTemplate(D).
-quadsX(A) ::= quadsX(B) quadsNotTriples(C) triplesTemplate(D).
+quadsX(A) ::= quadsX(B) quadsNotTriples(C) DOT triplesTemplate(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query . ' .' . PHP_EOL . D->query; }
+quadsX(A) ::= quadsX(B) quadsNotTriples(C) triplesTemplate(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query . PHP_EOL . D->query; }
 quadsX(A) ::= quadsX(B) quadsNotTriples(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
 quadsX(A) ::= quadsX(B) quadsNotTriples(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
 quadsX(A) ::= quadsNotTriples(B) DOT triplesTemplate(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }

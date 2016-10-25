@@ -7,7 +7,7 @@ class SparqlPHPParserMain {
 	public $error = null;
 
     function parse($object) {
-    	//check type/catch potential errors
+    	//catch parse errors, if error -> throw it out as message (error is used to break the parsing function)
     	//call subfunction
     	//set $error back to 0
     }
