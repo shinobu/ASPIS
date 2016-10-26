@@ -201,95 +201,95 @@ constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(C) whereclause(D).
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE triplesTemplate(C) RBRACE.
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE  RBRACE.
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE solutionModifier(C).
-constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE solutionModifier(B).
-constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE.
-constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE.
+constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE solutionModifier(B). { A = B; A->query = 'CONSTRUCT WHERE { }' . PHP_EOL . B->query; }
+constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE. { A = B; A->query = 'CONSTRUCT WHERE {' . PHP_EOL B->query . PHP_EOL . '}'; }
+constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE. { A = new NTToken(); A->query = 'CONSTRUCT WHERE { }'; }
 
-describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C) whereclause(D) solutionModifier(E).
-describeQuery(A) ::= DESCRIBE varOrIriX(B) whereclause(C) solutionModifier(D).
-describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C) solutionModifier(D).
-describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C) whereclause(D).
-describeQuery(A) ::= DESCRIBE varOrIriX(B) solutionModifier(C).
-describeQuery(A) ::= DESCRIBE varOrIriX(B) whereclause(C).
-describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C).
-describeQuery(A) ::= DESCRIBE varOrIriX(B).
-describeQuery(A) ::= DESCRIBE STAR datasetClauseX(B) whereclause(C) solutionModifier(D).
-describeQuery(A) ::= DESCRIBE STAR whereclause(B) solutionModifier(C).
-describeQuery(A) ::= DESCRIBE STAR datasetClauseX(B) solutionModifier(C).
-describeQuery(A) ::= DESCRIBE STAR datasetClauseX(B) whereclause(C).
-describeQuery(A) ::= DESCRIBE STAR solutionModifier(B).
-describeQuery(A) ::= DESCRIBE STAR whereclause(B).
-describeQuery(A) ::= DESCRIBE STAR datasetClauseX(B).
-describeQuery(A) ::= DESCRIBE STAR.
-varOrIriX(A) ::= varOrIriX(B) varOrIri(C).
-varOrIriX(A) ::= varOrIri(B).
+describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C) whereclause(D) solutionModifier(E). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = B->ssVars + C->ssVars + D->ssVars + E->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes; A->query = 'DESCRIBE ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
+describeQuery(A) ::= DESCRIBE varOrIriX(B) whereclause(C) solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'DESCRIBE ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C) solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'DESCRIBE ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C) whereclause(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'DESCRIBE ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+describeQuery(A) ::= DESCRIBE varOrIriX(B) solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'DESCRIBE ' . B->query . PHP_EOL . C->query; }
+describeQuery(A) ::= DESCRIBE varOrIriX(B) whereclause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'DESCRIBE ' . B->query . PHP_EOL . C->query; }
+describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'DESCRIBE ' . B->query . PHP_EOL . C->query; }
+describeQuery(A) ::= DESCRIBE varOrIriX(B). { A = B; A->query = 'DESCRIBE ' . B->query;}
+describeQuery(A) ::= DESCRIBE STAR datasetClauseX(B) whereclause(C) solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'DESCRIBE *' . PHP_EOL . B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+describeQuery(A) ::= DESCRIBE STAR whereclause(B) solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'DESCRIBE *' . PHP_EOL . B->query . PHP_EOL . C->query; }
+describeQuery(A) ::= DESCRIBE STAR datasetClauseX(B) solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'DESCRIBE *' . PHP_EOL . B->query . PHP_EOL . C->query; }
+describeQuery(A) ::= DESCRIBE STAR datasetClauseX(B) whereclause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'DESCRIBE *' . PHP_EOL . B->query . PHP_EOL . C->query; }
+describeQuery(A) ::= DESCRIBE STAR solutionModifier(B). { A = B; A->query = 'DESCRIBE *' . PHP_EOL . B->query; }
+describeQuery(A) ::= DESCRIBE STAR whereclause(B). { A = B; A->query = 'DESCRIBE *' . PHP_EOL . B->query; }
+describeQuery(A) ::= DESCRIBE STAR datasetClauseX(B). { A = B; A->query = 'DESCRIBE *' . PHP_EOL . B->query; }
+describeQuery(A) ::= DESCRIBE STAR. { A = new NTToken(); A->query = 'DESCRIBE *'; }
+varOrIriX(A) ::= varOrIriX(B) varOrIri(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+varOrIriX(A) ::= varOrIri(B). { A = B; }
 
-askQuery(A) ::= ASK datasetClauseX(B) whereclause(C) solutionModifier(D).
-askQuery(A) ::= ASK datasetClauseX(B) whereclause(C).
-askQuery(A) ::= ASK whereclause(B) solutionModifier(C).
-askQuery(A) ::= ASK whereclause(B).
+askQuery(A) ::= ASK datasetClauseX(B) whereclause(C) solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'ASK' . B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+askQuery(A) ::= ASK datasetClauseX(B) whereclause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'ASK' . B->query . PHP_EOL . C->query; }
+askQuery(A) ::= ASK whereclause(B) solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'ASK' . B->query . PHP_EOL . C->query; }
+askQuery(A) ::= ASK whereclause(B). { A = B; A->query = 'ASK ' . B->query;}
 
-datasetClause(A) ::= FROM NAMED iri(B).
-datasetClause(A) ::= FROM iri(B).
+datasetClause(A) ::= FROM NAMED iri(B). { A = B; A->query = 'FROM NAMED ' . B->query;}
+datasetClause(A) ::= FROM iri(B). { A = B; A->query = 'FROM ' . B->query;}
 
-whereclause(A) ::= WHERE groupGraphPattern(B).
-whereclause(A) ::= groupGraphPattern(B).
+whereclause(A) ::= WHERE groupGraphPattern(B). { A = B; A->query = 'WHERE ' . B->query;}
+whereclause(A) ::= groupGraphPattern(B). { A = B; }
 
-solutionModifier(A) ::= groupClause(B) havingClause(C) orderClause(D) limitOffsetClauses(E).
-solutionModifier(A) ::= havingClause(B) orderClause(C) limitOffsetClauses(D).
-solutionModifier(A) ::= groupClause(B) orderClause(C) limitOffsetClauses(D).
-solutionModifier(A) ::= groupClause(B) havingClause(C) limitOffsetClauses(D).
-solutionModifier(A) ::= groupClause(B) havingClause(C) orderClause(D).
-solutionModifier(A) ::= groupClause(B) havingClause(C).
-solutionModifier(A) ::= groupClause(B) orderClause(C).
-solutionModifier(A) ::= groupClause(B) limitOffsetClauses(C).
-solutionModifier(A) ::= orderClause(B) limitOffsetClauses(C).
-solutionModifier(A) ::= havingClause(B) limitOffsetClauses(C).
-solutionModifier(A) ::= havingClause(B) orderClause(C).
-solutionModifier(A) ::= groupClause(B).
-solutionModifier(A) ::= havingClause(B).
-solutionModifier(A) ::= orderClause(B).
-solutionModifier(A) ::= limitOffsetClauses(B).
+solutionModifier(A) ::= groupClause(B) havingClause(C) orderClause(D) limitOffsetClauses(E). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = B->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
+solutionModifier(A) ::= havingClause(B) orderClause(C) limitOffsetClauses(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+solutionModifier(A) ::= groupClause(B) orderClause(C) limitOffsetClauses(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+solutionModifier(A) ::= groupClause(B) havingClause(C) limitOffsetClauses(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+solutionModifier(A) ::= groupClause(B) havingClause(C) orderClause(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+solutionModifier(A) ::= groupClause(B) havingClause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+solutionModifier(A) ::= groupClause(B) orderClause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+solutionModifier(A) ::= groupClause(B) limitOffsetClauses(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+solutionModifier(A) ::= orderClause(B) limitOffsetClauses(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+solutionModifier(A) ::= havingClause(B) limitOffsetClauses(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+solutionModifier(A) ::= havingClause(B) orderClause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+solutionModifier(A) ::= groupClause(B). { A = B; }
+solutionModifier(A) ::= havingClause(B). { A = B; }
+solutionModifier(A) ::= orderClause(B). { A = B; }
+solutionModifier(A) ::= limitOffsetClauses(B). { A = B; }
 
-groupClause(A) ::= GROUP BY groupConditionX(B).
-groupConditionX(A) ::= groupConditionX(B) LPARENTHESE expression(C) AS var(D) RPARENTHESE.
-groupConditionX(A) ::= groupConditionX(B) builtInCall(C).
-groupConditionX(A) ::= groupConditionX(B) functionCall(C).
-groupConditionX(A) ::= groupConditionX(B) LPARENTHESE expression(C) RPARENTHESE.
-groupConditionX(A) ::= groupConditionX(B) var(C).
-groupConditionX(A) ::= LPARENTHESE expression(B) AS var(C) RPARENTHESE.
-groupConditionX(A) ::= builtInCall(B).
-groupConditionX(A) ::= functionCall(B).
-groupConditionX(A) ::= LPARENTHESE expression(B) RPARENTHESE.
-groupConditionX(A) ::= var(B).
+groupClause(A) ::= GROUP BY groupConditionX(B). { A = B; A->query = 'GROUP BY ' . B->query;}
+groupConditionX(A) ::= groupConditionX(B) LPARENTHESE expression(C) AS var(D) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + D->query; A->vars = B->vars + C->vars D->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' (' . C->query . ' AS ' . D->query . ' )';}
+groupConditionX(A) ::= groupConditionX(B) builtInCall(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query;}
+groupConditionX(A) ::= groupConditionX(B) functionCall(C). { A = new NTToken(); A->hasFNC = true; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query;}
+groupConditionX(A) ::= groupConditionX(B) LPARENTHESE expression(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' (' . C->query . ' )';}
+groupConditionX(A) ::= groupConditionX(B) var(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query;}
+groupConditionX(A) ::= LPARENTHESE expression(B) AS var(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = C->query; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = '( ' . B->query . ' AS ' . C->query ' )';}
+groupConditionX(A) ::= builtInCall(B). { A = B; }
+groupConditionX(A) ::= functionCall(B). { A = B; A->hasFNC = true; }
+groupConditionX(A) ::= LPARENTHESE expression(B) RPARENTHESE. { A = B; A->query = '( ' . B->query . ' )';}
+groupConditionX(A) ::= var(B). { A = B; }
 
-havingClause(A) ::= HAVING constraintX(B).
-constraintX(A) ::= constraintX(B) LPARENTHESE expression(C) RPARENTHESE.
-constraintX(A) ::= constraintX(B) builtInCall(C).
-constraintX(A) ::= constraintX(B) functionCall(C).
-constraintX(A) ::= LPARENTHESE expression(B) RPARENTHESE.
-constraintX(A) ::= builtInCall(B).
-constraintX(A) ::= functionCall(B).
+havingClause(A) ::= HAVING constraintX(B). { A = B; A->query = 'HAVING ' . B->query;}
+constraintX(A) ::= constraintX(B) LPARENTHESE expression(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' (' . C->query . ' )'; }
+constraintX(A) ::= constraintX(B) builtInCall(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
+constraintX(A) ::= constraintX(B) functionCall(C). { A = new NTToken(); A->hasFNC = true; A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
+constraintX(A) ::= LPARENTHESE expression(B) RPARENTHESE. { A = B; A->query = '( ' . B->query . ' )';}
+constraintX(A) ::= builtInCall(B). { A = B; }
+constraintX(A) ::= functionCall(B). { A = B; A->hasFNC = true;}
 
-orderClause(A) ::= ORDER BY orderConditionX(B).
-orderConditionX(A) ::= orderConditionX(B) orderCondition(C).
-orderConditionX(A) ::= orderCondition(B).
+orderClause(A) ::= ORDER BY orderConditionX(B). { A = B; A->query = 'ORDER BY ' . B->query;}
+orderConditionX(A) ::= orderConditionX(B) orderCondition(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
+orderConditionX(A) ::= orderCondition(B). { A = B; }
 
-orderCondition(A) ::= ASC LPARENTHESE expression(B) RPARENTHESE.
-orderCondition(A) ::= DESC LPARENTHESE expression(B) RPARENTHESE.
-orderCondition(A) ::= LPARENTHESE expression(B) RPARENTHESE.
-orderCondition(A) ::= builtInCall(B).
-orderCondition(A) ::= functionCall(B).
-orderCondition(A) ::= var(B).
+orderCondition(A) ::= ASC LPARENTHESE expression(B) RPARENTHESE. { A = B; A->query = 'ASC( ' . B->query . ' )';}
+orderCondition(A) ::= DESC LPARENTHESE expression(B) RPARENTHESE. { A = B; A->query = 'DESC( ' . B->query . ' )';}
+orderCondition(A) ::= LPARENTHESE expression(B) RPARENTHESE. { A = B; A->query = '( ' . B->query . ' )';}
+orderCondition(A) ::= builtInCall(B). { A = B; }
+orderCondition(A) ::= functionCall(B). { A = B; }
+orderCondition(A) ::= var(B). { A = B; }
 
-limitOffsetClauses(A) ::= limitClause(B) offsetClause(C).
-limitOffsetClauses(A) ::= offsetClause(B) limitClause(C).
+limitOffsetClauses(A) ::= limitClause(B) offsetClause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->query = B->query . PHP_EOL . C->query; }
+limitOffsetClauses(A) ::= offsetClause(B) limitClause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->query = B->query . PHP_EOL . C->query; }
 limitOffsetClauses(A) ::= limitClause(B). { A = B; }
 limitOffsetClauses(A) ::= offsetClause(B). { A = B; }
 
-limitClause(A) ::= LIMIT INTEGER(B). { A = new NTToken(); A->query = 'LIMIT ' . B->value; }
+limitClause(A) ::= LIMIT INTEGER(B). { A = B; A->query = 'LIMIT ' . B->value; }
 
-offsetClause(A) ::= OFFSET INTEGER(B). { A = new NTToken(); A->query = 'OFFSET ' . B->value; }
+offsetClause(A) ::= OFFSET INTEGER(B). { A = B; A->query = 'OFFSET ' . B->value; }
 
 valuesClause(A) ::= VALUES dataBlock(B). { A = B; A->query = 'VALUES ' . B->query;}
 
@@ -324,20 +324,20 @@ drop(A) ::= DROP graphRefAll(B). { A = B; A->query = 'DROP ' . B->query; }
 create(A) ::= CREATE SILENT graphRef(B). { A = B; A->query = 'CREATE SILENT ' . B->query; }
 create(A) ::= CREATE graphRef(B). { A = B; A->query = 'CREATE ' . B->query; }
 
-add(A) ::= ADD SILENT graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'ADD TO ' B->query . ' TO ' . C->query; }
-add(A) ::= ADD graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'ADD ' B->query . ' TO ' . C->query; }
+add(A) ::= ADD SILENT graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'ADD ' . B->query . ' TO ' . C->query; }
+add(A) ::= ADD graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'ADD ' . B->query . ' TO ' . C->query; }
 
-move(A) ::= MOVE SILENT graphOrDefault(C) TO graphOrDefault(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'MOVE SILENT ' B->query . ' TO ' . C->query; }
-move(A) ::= MOVE graphOrDefault(B) TO graphOrDefault(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'MOVE ' B->query . ' TO ' . C->query; }
+move(A) ::= MOVE SILENT graphOrDefault(C) TO graphOrDefault(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'MOVE SILENT ' . B->query . ' TO ' . C->query; }
+move(A) ::= MOVE graphOrDefault(B) TO graphOrDefault(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'MOVE ' . B->query . ' TO ' . C->query; }
 
-copy(A) ::= COPY SILENT graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'COPY SILENT ' B->query . ' TO ' . C->query; }
-copy(A) ::= COPY graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'COPY ' B->query . ' TO ' . C->query; }
+copy(A) ::= COPY SILENT graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'COPY SILENT ' . B->query . ' TO ' . C->query; }
+copy(A) ::= COPY graphOrDefault(B) TO graphOrDefault(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'COPY ' . B->query . ' TO ' . C->query; }
 
 insertData(A) ::= INSERTDATA quadData(B). { A = B; A->query = 'DELETE DATA ' . B->query; }
 
-deleteData(A) ::= DELETEDATA quadData(B). { if(!empty(B->bNodes){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE DATA" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE DATA ' . B->query; }
+deleteData(A) ::= DELETEDATA quadData(B). { if(B->hasBN){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE DATA" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE DATA ' . B->query; }
 
-deletewhere(A) ::= DELETEWHERE quadPattern(B). { if(!empty(B->bNodes){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE WHERE" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE WHERE ' . B->query; }
+deletewhere(A) ::= DELETEWHERE quadPattern(B). { if(B->hasBN){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE WHERE" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE WHERE ' . B->query; }
 
 modify(A) ::= WITH iri(B) deleteClause(C) insertClause(D) usingClauseX(E) WHERE groupGraphPattern(F). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->copyBools(F); A->ssVars = F->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars + F->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes + F->bNodes; A->query = 'WITH ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query . PHP_EOL . 'WHERE' . PHP_EOL . F->query; }
 modify(A) ::= WITH iri(B) deleteClause(C) usingClauseX(D) WHERE groupGraphPattern(E).{ A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = E->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes; A->query = 'WITH ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . 'WHERE' . PHP_EOL . E->query; }
@@ -354,7 +354,7 @@ modify(A) ::= insertClause(B) WHERE groupGraphPattern(C). { A = new NTToken(); A
 usingClauseX(A) ::= usingClauseX(B) usingClause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->query = B->query . PHP_EOL . C->query; }
 usingClauseX(A) ::= usingClause(B). {A = B;}
 
-deleteClause(A) ::= DELETE quadPattern(B). { if(!empty(B->bNodes){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE ' . B->query; }
+deleteClause(A) ::= DELETE quadPattern(B). { if(B->hasBN){$this->main->error = "A Deleteclause is not allowed to contain Blanknodesyntax: DELETE" . B->query; yy_parse_failed();} A = B; A->query = 'DELETE ' . B->query; }
 
 insertClause(A) ::= INSERT quadPattern(B). { A = B; A->query = 'INSERT ' . B->query; }
 
