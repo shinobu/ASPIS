@@ -164,43 +164,43 @@ subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D).
 subSelect(A) ::= selectClause(B) whereclause(C).
 
 
-selectClause(A) ::= SELECT DISTINCT selectClauseX(B).
-selectClause(A) ::= SELECT REDUCED selectClauseX(B).
-selectClause(A) ::= SELECT STAR selectClauseX(B).
-selectClause(A) ::= SELECT DISTINCT STAR.
-selectClause(A) ::= SELECT REDUCED STAR.
-selectClause(A) ::= SELECT selectClauseX(B).
-selectClause(A) ::= SELECT STAR.
-selectClauseX(A) ::= selectClauseX(B) LPARENTHESE expression(C) AS var(D) RPARENTHESE.
-selectClauseX(A) ::= selectClauseX(B) LPARENTHESE expression(C) RPARENTHESE.
-selectClauseX(A) ::= selectClauseX(B) builtInCall(C).
-selectClauseX(A) ::= selectClauseX(B) rdfLiteral(C).
-selectClauseX(A) ::= selectClauseX(B) numericLiteral(C).
-selectClauseX(A) ::= selectClauseX(B) booleanLiteral(C).
-selectClauseX(A) ::= selectClauseX(B) var(C).
-selectClauseX(A) ::= selectClauseX(B) functionCall(C).
-selectClauseX(A) ::= LPARENTHESE expression(B) AS var(C) RPARENTHESE.
-selectClauseX(A) ::= LPARENTHESE expression(B) RPARENTHESE.
-selectClauseX(A) ::= builtInCall(B).
-selectClauseX(A) ::= rdfLiteral(B).
-selectClauseX(A) ::= numericLiteral(B).
-selectClauseX(A) ::= booleanLiteral(B).
-selectClauseX(A) ::= var(B).
-selectClauseX(A) ::= functionCall(B).
+selectClause(A) ::= SELECT DISTINCT selectClauseX(B). { A = B; A->query = 'SELECT DISTINCT' . B->query}
+selectClause(A) ::= SELECT REDUCED selectClauseX(B). { A = B; A->query = 'SELECT REDUCED' . B->query}
+selectClause(A) ::= SELECT STAR selectClauseX(B). { A = B; A->query = 'SELECT *' . B->query}
+selectClause(A) ::= SELECT DISTINCT STAR. 'SELECT DISTINCT *'; }
+selectClause(A) ::= SELECT REDUCED STAR. 'SELECT REDUCED *'; }
+selectClause(A) ::= SELECT selectClauseX(B). { A = B; A->query = 'SELECT ' . B->query}
+selectClause(A) ::= SELECT STAR. { A = B; A->query = 'SELECT *'; }
+selectClauseX(A) ::= selectClauseX(B) LPARENTHESE expression(C) AS var(D) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . '( ' . C->query . ' AS ' . C->query . ' )'; }
+selectClauseX(A) ::= selectClauseX(B) LPARENTHESE expression(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . '( ' . C->query . ' )'; }
+selectClauseX(A) ::= selectClauseX(B) builtInCall(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+selectClauseX(A) ::= selectClauseX(B) rdfLiteral(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+selectClauseX(A) ::= selectClauseX(B) numericLiteral(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+selectClauseX(A) ::= selectClauseX(B) booleanLiteral(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+selectClauseX(A) ::= selectClauseX(B) var(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+selectClauseX(A) ::= selectClauseX(B) functionCall(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
+selectClauseX(A) ::= LPARENTHESE expression(B) AS var(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = '( ' . B->query . ' AS ' . C->query . ' )'; }
+selectClauseX(A) ::= LPARENTHESE expression(B) RPARENTHESE. { A = B; A->query = '( ' . B->query . ' )'; }
+selectClauseX(A) ::= builtInCall(B). { A = B; }
+selectClauseX(A) ::= rdfLiteral(B). { A = B; }
+selectClauseX(A) ::= numericLiteral(B). { A = B; }
+selectClauseX(A) ::= booleanLiteral(B). { A = B; }
+selectClauseX(A) ::= var(B). { A = B; }
+selectClauseX(A) ::= functionCall(B). { A = B; }
 
-constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE datasetClauseX(C) whereclause(D) solutionModifier(E).
-constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(C) whereclause(D) solutionModifier(E).
-constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE triplesTemplate(C) RBRACE solutionModifier(D).
-constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE RBRACE solutionModifier(C).
-constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE whereclause(C) solutionModifier(D).
-constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(C) solutionModifier(D).
-constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE whereclause(C).
-constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(C).
-constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE datasetClauseX(C) whereclause(D).
-constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(C) whereclause(D).
-constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE triplesTemplate(C) RBRACE.
-constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE  RBRACE.
-constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE solutionModifier(C).
+constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE datasetClauseX(C) whereclause(D) solutionModifier(E). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . '{' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL. C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(B) whereclause(C) solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT { }' . PHP_EOL . B->query . PHP_EOL. C->query . PHP_EOL . D->query; }
+constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE triplesTemplate(C) RBRACE solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . B->query . PHP_EOL . 'WHERE' . PHP_EOL . '{' . PHP_EOL . C->query . PHP_EOL . '}' . PHP_EOL. D->query; }
+constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE RBRACE solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . B->query . PHP_EOL ' WHERE' . PHP_EOL . '{' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL . C->query; }
+constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE whereclause(C) solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT {' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL. C->query . PHP_EOL . D->query; }
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(B) solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT { }' . PHP_EOL . B->query . PHP_EOL . C->query; }
+constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE whereclause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT {' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL . C->query; }
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(B). { A = B; A->query = 'CONSTRUCT { }' . PHP_EOL B->query; }
+constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE datasetClauseX(C) whereclause(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT {' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL. C->query . PHP_EOL . D->query; }
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(B) whereclause(C).{ A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT { }' . PHP_EOL . B->query . PHP_EOL . C->query; }
+constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE triplesTemplate(C) RBRACE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . B->query . PHP_EOL . 'WHERE {' . PHP_EOL . C->query . PHP_EOL . '}'; }
+constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE  RBRACE. { A = B; A->query = 'CONSTRUCT' . PHP_EOL . B->query . 'WHERE { }'; }
+constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT WHERE {' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL . C->query; }
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE solutionModifier(B). { A = B; A->query = 'CONSTRUCT WHERE { }' . PHP_EOL . B->query; }
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE. { A = B; A->query = 'CONSTRUCT WHERE {' . PHP_EOL B->query . PHP_EOL . '}'; }
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE. { A = new NTToken(); A->query = 'CONSTRUCT WHERE { }'; }
