@@ -1,3 +1,4 @@
+#define TK_FAIL                           -1
 #define TK_PRAGMA                          1
 #define TK_BASE                            2
 #define TK_IRIREF                          3
