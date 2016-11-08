@@ -100,6 +100,40 @@ class SparqlPHPParser {
 
   var $yyTraceFILE = null;
   var $yyTracePrompt = null;
+  
+  public $main;
+  public $base = null;
+  public $allNS = array();
+  
+  function __construct ($parent) {
+      $this->main = $parent;
+  }
+  
+  function addNS($alias, $iri) {
+      $this->allNS[$alias] = $iri;
+  }
+  
+  function checkNS($alias) {
+      if ($alias == null) {
+          return false;
+      }
+      if (isset($allNS[$alias])) {
+          return true;
+      }
+      return false;
+  }
+  
+  function checkBase($alias) {
+      if (strcmp(substr($alias,1,7),'http://') == 0 || strcmp(substr($alias,1,8),'https://') == 0) {
+          return true;
+      } else {
+          if(isset($this->base)) {
+              return true;
+          } else {
+              return false;
+          }
+      }
+  }
 
 
 
@@ -4225,6 +4259,30 @@ private function yy_reduce(
   */
       case 0:
       case 1:
+#line 123 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $this->main = $yygotominor; }
+#line 4062 "sparql.php"
+        break;
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+#line 126 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4070 "sparql.php"
+        break;
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+      case 10:
+      case 11:
+      case 12:
+      case 13:
+#line 130 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4082 "sparql.php"
+        break;
       case 14:
       case 15:
       case 16:
@@ -4269,147 +4327,127 @@ private function yy_reduce(
       case 530:
       case 531:
       case 532:
-#line 122 "sparql.y"
+#line 138 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; }
-#line 4106 "sparql.php"
-        break;
-      case 2:
-      case 3:
-      case 4:
-      case 5:
-#line 125 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4114 "sparql.php"
-        break;
-      case 6:
-      case 7:
-      case 8:
-      case 9:
-      case 10:
-      case 11:
-      case 12:
-      case 13:
-#line 129 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4126 "sparql.php"
+#line 4130 "sparql.php"
         break;
       case 18:
-#line 142 "sparql.y"
+#line 143 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4131 "sparql.php"
+#line 4135 "sparql.php"
         break;
       case 19:
       case 20:
       case 22:
       case 32:
-#line 143 "sparql.y"
+#line 144 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4139 "sparql.php"
+#line 4143 "sparql.php"
         break;
       case 21:
       case 23:
       case 549:
-#line 145 "sparql.y"
+#line 146 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4146 "sparql.php"
+#line 4150 "sparql.php"
         break;
       case 24:
-#line 149 "sparql.y"
+#line 150 "sparql.y"
 { $this->base = $this->yystack[$this->yyidx + -1]->minor->value; $yygotominor = new NTToken(); $yygotominor->query = 'BASE ' . $this->yystack[$this->yyidx + -1]->minor->value . ' .';}
-#line 4151 "sparql.php"
+#line 4155 "sparql.php"
         break;
       case 25:
-#line 150 "sparql.y"
+#line 151 "sparql.y"
 { $this->base = $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor = new NTToken(); $yygotominor->query = 'BASE ' . $this->yystack[$this->yyidx + 0]->minor->value;}
-#line 4156 "sparql.php"
+#line 4160 "sparql.php"
         break;
       case 26:
-#line 152 "sparql.y"
+#line 153 "sparql.y"
 { $this->addNS($this->yystack[$this->yyidx + -2]->minor->value, $this->yystack[$this->yyidx + -1]->minor->value); $yygotominor = new NTToken(); $yygotominor->query = 'PREFIX ' . $this->yystack[$this->yyidx + -2]->minor->value . $this->yystack[$this->yyidx + -1]->minor->value . ' .';}
-#line 4161 "sparql.php"
+#line 4165 "sparql.php"
         break;
       case 27:
-#line 153 "sparql.y"
+#line 154 "sparql.y"
 { $this->addNS($this->yystack[$this->yyidx + -1]->minor->value, $this->yystack[$this->yyidx + 0]->minor->value); $yygotominor = new NTToken(); $yygotominor->query = 'PREFIX ' . $this->yystack[$this->yyidx + -1]->minor->value . $this->yystack[$this->yyidx + 0]->minor->value;}
-#line 4166 "sparql.php"
+#line 4170 "sparql.php"
         break;
       case 28:
-#line 155 "sparql.y"
-{ $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4171 "sparql.php"
+#line 156 "sparql.y"
+{ $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4175 "sparql.php"
         break;
       case 29:
-#line 156 "sparql.y"
-{ $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4176 "sparql.php"
+#line 157 "sparql.y"
+{ $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4180 "sparql.php"
         break;
       case 30:
       case 35:
       case 36:
-#line 157 "sparql.y"
-{ $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4183 "sparql.php"
+#line 158 "sparql.y"
+{ $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4187 "sparql.php"
         break;
       case 31:
       case 37:
-#line 158 "sparql.y"
-{ $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4189 "sparql.php"
+#line 159 "sparql.y"
+{ $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4193 "sparql.php"
         break;
       case 33:
-#line 160 "sparql.y"
-{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor}
-#line 4194 "sparql.php"
+#line 161 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor;}
+#line 4198 "sparql.php"
         break;
       case 34:
-#line 163 "sparql.y"
-{ $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4199 "sparql.php"
+#line 164 "sparql.y"
+{ $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4203 "sparql.php"
         break;
       case 38:
-#line 168 "sparql.y"
-{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'SELECT DISTINCT' . $this->yystack[$this->yyidx + 0]->minor->query}
-#line 4204 "sparql.php"
+#line 169 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'SELECT DISTINCT' . $this->yystack[$this->yyidx + 0]->minor->query;}
+#line 4208 "sparql.php"
         break;
       case 39:
-#line 169 "sparql.y"
-{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'SELECT REDUCED' . $this->yystack[$this->yyidx + 0]->minor->query}
-#line 4209 "sparql.php"
+#line 170 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'SELECT REDUCED' . $this->yystack[$this->yyidx + 0]->minor->query;}
+#line 4213 "sparql.php"
         break;
       case 40:
-#line 170 "sparql.y"
-{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'SELECT *' . $this->yystack[$this->yyidx + 0]->minor->query}
-#line 4214 "sparql.php"
+#line 171 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'SELECT *' . $this->yystack[$this->yyidx + 0]->minor->query;}
+#line 4218 "sparql.php"
         break;
       case 41:
-#line 171 "sparql.y"
+#line 172 "sparql.y"
 { $yygotominor = B; $yygotominor->query = 'SELECT DISTINCT *'; }
-#line 4219 "sparql.php"
+#line 4223 "sparql.php"
         break;
       case 42:
-#line 172 "sparql.y"
+#line 173 "sparql.y"
 { $yygotominor = B; $yygotominor->query = 'SELECT REDUCED *'; }
-#line 4224 "sparql.php"
+#line 4228 "sparql.php"
         break;
       case 43:
-#line 173 "sparql.y"
-{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'SELECT ' . $this->yystack[$this->yyidx + 0]->minor->query}
-#line 4229 "sparql.php"
+#line 174 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'SELECT ' . $this->yystack[$this->yyidx + 0]->minor->query;}
+#line 4233 "sparql.php"
         break;
       case 44:
-#line 174 "sparql.y"
+#line 175 "sparql.y"
 { $yygotominor = B; $yygotominor->query = 'SELECT *'; }
-#line 4234 "sparql.php"
+#line 4238 "sparql.php"
         break;
       case 45:
-#line 175 "sparql.y"
+#line 176 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -5]->minor->ssVars + $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -5]->minor->query . '( ' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 4239 "sparql.php"
+#line 4243 "sparql.php"
         break;
       case 46:
-#line 176 "sparql.y"
+#line 177 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 4244 "sparql.php"
+#line 4248 "sparql.php"
         break;
       case 47:
       case 48:
@@ -4418,139 +4456,139 @@ private function yy_reduce(
       case 51:
       case 52:
       case 292:
-#line 177 "sparql.y"
+#line 178 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4255 "sparql.php"
+#line 4259 "sparql.php"
         break;
       case 53:
-#line 183 "sparql.y"
+#line 184 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 4260 "sparql.php"
+#line 4264 "sparql.php"
         break;
       case 54:
-#line 184 "sparql.y"
+#line 185 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 4265 "sparql.php"
+#line 4269 "sparql.php"
         break;
       case 61:
-#line 192 "sparql.y"
+#line 193 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -4]->minor->ssVars + $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . '{' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . '}' . PHP_EOL. $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4270 "sparql.php"
+#line 4274 "sparql.php"
         break;
       case 62:
-#line 193 "sparql.y"
+#line 194 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT { }' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL. $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4275 "sparql.php"
+#line 4279 "sparql.php"
         break;
       case 63:
-#line 194 "sparql.y"
+#line 195 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -5]->minor->ssVars + $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -5]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . '{' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . '}' . PHP_EOL. $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4280 "sparql.php"
+#line 4284 "sparql.php"
         break;
       case 64:
-#line 195 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -4]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL ' WHERE' . PHP_EOL . '{' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . '}' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4285 "sparql.php"
+#line 196 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -4]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . ' WHERE' . PHP_EOL . '{' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . '}' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4289 "sparql.php"
         break;
       case 65:
       case 69:
-#line 196 "sparql.y"
+#line 197 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT {' . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '}' . PHP_EOL. $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4291 "sparql.php"
+#line 4295 "sparql.php"
         break;
       case 66:
       case 70:
-#line 197 "sparql.y"
+#line 198 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT { }' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4297 "sparql.php"
+#line 4301 "sparql.php"
         break;
       case 67:
-#line 198 "sparql.y"
+#line 199 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT {' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . '}' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4302 "sparql.php"
+#line 4306 "sparql.php"
         break;
       case 68:
-#line 199 "sparql.y"
-{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'CONSTRUCT { }' . PHP_EOL $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4307 "sparql.php"
+#line 200 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'CONSTRUCT { }' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4311 "sparql.php"
         break;
       case 71:
-#line 202 "sparql.y"
+#line 203 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -4]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . 'WHERE {' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . '}'; }
-#line 4312 "sparql.php"
+#line 4316 "sparql.php"
         break;
       case 72:
-#line 203 "sparql.y"
+#line 204 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + -3]->minor; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . 'WHERE { }'; }
-#line 4317 "sparql.php"
+#line 4321 "sparql.php"
         break;
       case 73:
-#line 204 "sparql.y"
+#line 205 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT WHERE {' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . '}' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4322 "sparql.php"
+#line 4326 "sparql.php"
         break;
       case 74:
-#line 205 "sparql.y"
+#line 206 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'CONSTRUCT WHERE { }' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4327 "sparql.php"
+#line 4331 "sparql.php"
         break;
       case 75:
-#line 206 "sparql.y"
-{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = 'CONSTRUCT WHERE {' . PHP_EOL $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . '}'; }
-#line 4332 "sparql.php"
+#line 207 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = 'CONSTRUCT WHERE {' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . '}'; }
+#line 4336 "sparql.php"
         break;
       case 76:
-#line 207 "sparql.y"
+#line 208 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'CONSTRUCT WHERE { }'; }
-#line 4337 "sparql.php"
+#line 4341 "sparql.php"
         break;
       case 77:
-#line 209 "sparql.y"
+#line 210 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4342 "sparql.php"
+#line 4346 "sparql.php"
         break;
       case 78:
       case 79:
       case 80:
-#line 210 "sparql.y"
+#line 211 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4349 "sparql.php"
+#line 4353 "sparql.php"
         break;
       case 81:
       case 82:
       case 83:
-#line 213 "sparql.y"
+#line 214 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4356 "sparql.php"
+#line 4360 "sparql.php"
         break;
       case 84:
-#line 216 "sparql.y"
+#line 217 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4361 "sparql.php"
+#line 4365 "sparql.php"
         break;
       case 85:
-#line 217 "sparql.y"
+#line 218 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE *' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4366 "sparql.php"
+#line 4370 "sparql.php"
         break;
       case 86:
       case 87:
       case 88:
-#line 218 "sparql.y"
+#line 219 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE *' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4373 "sparql.php"
+#line 4377 "sparql.php"
         break;
       case 89:
       case 90:
       case 91:
-#line 221 "sparql.y"
+#line 222 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'DESCRIBE *' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4380 "sparql.php"
+#line 4384 "sparql.php"
         break;
       case 92:
-#line 224 "sparql.y"
+#line 225 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'DESCRIBE *'; }
-#line 4385 "sparql.php"
+#line 4389 "sparql.php"
         break;
       case 93:
       case 111:
@@ -4559,118 +4597,118 @@ private function yy_reduce(
       case 154:
       case 222:
       case 224:
-#line 225 "sparql.y"
+#line 226 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4396 "sparql.php"
+#line 4400 "sparql.php"
         break;
       case 95:
-#line 228 "sparql.y"
+#line 229 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'ASK' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4401 "sparql.php"
+#line 4405 "sparql.php"
         break;
       case 96:
       case 97:
-#line 229 "sparql.y"
+#line 230 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'ASK' . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4407 "sparql.php"
+#line 4411 "sparql.php"
         break;
       case 98:
-#line 231 "sparql.y"
+#line 232 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'ASK ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4412 "sparql.php"
+#line 4416 "sparql.php"
         break;
       case 99:
-#line 233 "sparql.y"
+#line 234 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'FROM NAMED ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4417 "sparql.php"
+#line 4421 "sparql.php"
         break;
       case 100:
-#line 234 "sparql.y"
+#line 235 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'FROM ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4422 "sparql.php"
+#line 4426 "sparql.php"
         break;
       case 101:
-#line 236 "sparql.y"
+#line 237 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'WHERE ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4427 "sparql.php"
+#line 4431 "sparql.php"
         break;
       case 103:
-#line 239 "sparql.y"
+#line 240 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4432 "sparql.php"
+#line 4436 "sparql.php"
         break;
       case 104:
-#line 240 "sparql.y"
+#line 241 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4437 "sparql.php"
+#line 4441 "sparql.php"
         break;
       case 105:
       case 106:
       case 107:
-#line 241 "sparql.y"
+#line 242 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4444 "sparql.php"
+#line 4448 "sparql.php"
         break;
       case 108:
       case 109:
       case 110:
       case 246:
-#line 244 "sparql.y"
+#line 245 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4452 "sparql.php"
+#line 4456 "sparql.php"
         break;
       case 118:
-#line 255 "sparql.y"
+#line 256 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'GROUP BY ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4457 "sparql.php"
+#line 4461 "sparql.php"
         break;
       case 119:
-#line 256 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -5]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -5]->minor->query . ' (' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}
-#line 4462 "sparql.php"
+#line 257 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -5]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -5]->minor->query . ' (' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}
+#line 4466 "sparql.php"
         break;
       case 120:
       case 123:
-#line 257 "sparql.y"
+#line 258 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4468 "sparql.php"
+#line 4472 "sparql.php"
         break;
       case 121:
-#line 258 "sparql.y"
+#line 259 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasFNC = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4473 "sparql.php"
+#line 4477 "sparql.php"
         break;
       case 122:
-#line 259 "sparql.y"
+#line 260 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' (' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}
-#line 4478 "sparql.php"
+#line 4482 "sparql.php"
         break;
       case 124:
-#line 261 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query ' )';}
-#line 4483 "sparql.php"
+#line 262 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}
+#line 4487 "sparql.php"
         break;
       case 126:
-#line 263 "sparql.y"
+#line 264 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->hasFNC = true; }
-#line 4488 "sparql.php"
+#line 4492 "sparql.php"
         break;
       case 127:
       case 133:
       case 141:
-#line 264 "sparql.y"
+#line 265 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}
-#line 4495 "sparql.php"
+#line 4499 "sparql.php"
         break;
       case 129:
-#line 267 "sparql.y"
+#line 268 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'HAVING ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4500 "sparql.php"
+#line 4504 "sparql.php"
         break;
       case 130:
-#line 268 "sparql.y"
+#line 269 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' (' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 4505 "sparql.php"
+#line 4509 "sparql.php"
         break;
       case 131:
       case 137:
@@ -4683,321 +4721,321 @@ private function yy_reduce(
       case 327:
       case 375:
       case 378:
-#line 269 "sparql.y"
+#line 270 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4520 "sparql.php"
+#line 4524 "sparql.php"
         break;
       case 132:
-#line 270 "sparql.y"
+#line 271 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasFNC = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4525 "sparql.php"
+#line 4529 "sparql.php"
         break;
       case 135:
-#line 273 "sparql.y"
+#line 274 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->hasFNC = true;}
-#line 4530 "sparql.php"
+#line 4534 "sparql.php"
         break;
       case 136:
-#line 275 "sparql.y"
+#line 276 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'ORDER BY ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4535 "sparql.php"
+#line 4539 "sparql.php"
         break;
       case 139:
-#line 279 "sparql.y"
+#line 280 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = 'ASC( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}
-#line 4540 "sparql.php"
+#line 4544 "sparql.php"
         break;
       case 140:
-#line 280 "sparql.y"
+#line 281 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = 'DESC( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}
-#line 4545 "sparql.php"
+#line 4549 "sparql.php"
         break;
       case 145:
       case 146:
-#line 286 "sparql.y"
+#line 287 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4551 "sparql.php"
+#line 4555 "sparql.php"
         break;
       case 149:
-#line 291 "sparql.y"
+#line 292 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'LIMIT ' . $this->yystack[$this->yyidx + 0]->minor->value; }
-#line 4556 "sparql.php"
+#line 4560 "sparql.php"
         break;
       case 150:
-#line 293 "sparql.y"
+#line 294 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'OFFSET ' . $this->yystack[$this->yyidx + 0]->minor->value; }
-#line 4561 "sparql.php"
+#line 4565 "sparql.php"
         break;
       case 151:
-#line 295 "sparql.y"
+#line 296 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'VALUES ' . $this->yystack[$this->yyidx + 0]->minor->query;}
-#line 4566 "sparql.php"
+#line 4570 "sparql.php"
         break;
       case 152:
-#line 297 "sparql.y"
+#line 298 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . ' ;' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4571 "sparql.php"
+#line 4575 "sparql.php"
         break;
       case 153:
-#line 298 "sparql.y"
+#line 299 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ;' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4576 "sparql.php"
+#line 4580 "sparql.php"
         break;
       case 167:
-#line 314 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'LOAD SILENT ' $this->yystack[$this->yyidx + -2]->minor->query . ' INTO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4581 "sparql.php"
+#line 315 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'LOAD SILENT ' . $this->yystack[$this->yyidx + -2]->minor->query . ' INTO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4585 "sparql.php"
         break;
       case 168:
-#line 315 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'LOAD ' $this->yystack[$this->yyidx + -2]->minor->query . ' INTO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4586 "sparql.php"
+#line 316 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'LOAD ' . $this->yystack[$this->yyidx + -2]->minor->query . ' INTO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4590 "sparql.php"
         break;
       case 169:
-#line 316 "sparql.y"
+#line 317 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'LOAD SILENT ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4591 "sparql.php"
+#line 4595 "sparql.php"
         break;
       case 170:
-#line 317 "sparql.y"
+#line 318 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'LOAD ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4596 "sparql.php"
+#line 4600 "sparql.php"
         break;
       case 171:
-#line 319 "sparql.y"
+#line 320 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'CLEAR SILENT ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4601 "sparql.php"
+#line 4605 "sparql.php"
         break;
       case 172:
-#line 320 "sparql.y"
+#line 321 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'CLEAR ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4606 "sparql.php"
+#line 4610 "sparql.php"
         break;
       case 173:
-#line 322 "sparql.y"
+#line 323 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'DROP SILENT ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4611 "sparql.php"
+#line 4615 "sparql.php"
         break;
       case 174:
-#line 323 "sparql.y"
+#line 324 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'DROP ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4616 "sparql.php"
+#line 4620 "sparql.php"
         break;
       case 175:
-#line 325 "sparql.y"
+#line 326 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'CREATE SILENT ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4621 "sparql.php"
+#line 4625 "sparql.php"
         break;
       case 176:
-#line 326 "sparql.y"
+#line 327 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'CREATE ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4626 "sparql.php"
+#line 4630 "sparql.php"
         break;
       case 177:
       case 178:
-#line 328 "sparql.y"
+#line 329 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'ADD ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4632 "sparql.php"
+#line 4636 "sparql.php"
         break;
       case 179:
-#line 331 "sparql.y"
+#line 332 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'MOVE SILENT ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4637 "sparql.php"
+#line 4641 "sparql.php"
         break;
       case 180:
-#line 332 "sparql.y"
+#line 333 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'MOVE ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4642 "sparql.php"
+#line 4646 "sparql.php"
         break;
       case 181:
-#line 334 "sparql.y"
+#line 335 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'COPY SILENT ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4647 "sparql.php"
+#line 4651 "sparql.php"
         break;
       case 182:
-#line 335 "sparql.y"
+#line 336 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'COPY ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4652 "sparql.php"
+#line 4656 "sparql.php"
         break;
       case 183:
-#line 337 "sparql.y"
+#line 338 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'DELETE DATA ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4657 "sparql.php"
+#line 4661 "sparql.php"
         break;
       case 184:
-#line 339 "sparql.y"
+#line 340 "sparql.y"
 { if($this->yystack[$this->yyidx + 0]->minor->hasBN){ throw new Exception("Deleteclause is not allowed to contain Blanknodesyntax: DELETE DATA" . $this->yystack[$this->yyidx + 0]->minor->query); } $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'DELETE DATA ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4662 "sparql.php"
+#line 4666 "sparql.php"
         break;
       case 185:
-#line 341 "sparql.y"
+#line 342 "sparql.y"
 { if($this->yystack[$this->yyidx + 0]->minor->hasBN){throw new Exception("Deleteclause is not allowed to contain Blanknodesyntax: DELETE WHERE" . $this->yystack[$this->yyidx + 0]->minor->query);} $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'DELETE WHERE ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4667 "sparql.php"
+#line 4671 "sparql.php"
         break;
       case 186:
-#line 343 "sparql.y"
+#line 344 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'WITH ' . $this->yystack[$this->yyidx + -5]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4672 "sparql.php"
+#line 4676 "sparql.php"
         break;
       case 187:
       case 188:
       case 189:
-#line 344 "sparql.y"
+#line 345 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'WITH ' . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4679 "sparql.php"
+#line 4683 "sparql.php"
         break;
       case 190:
       case 191:
-#line 347 "sparql.y"
+#line 348 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'WITH ' . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4685 "sparql.php"
+#line 4689 "sparql.php"
         break;
       case 192:
-#line 349 "sparql.y"
+#line 350 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4690 "sparql.php"
+#line 4694 "sparql.php"
         break;
       case 193:
       case 194:
       case 195:
-#line 350 "sparql.y"
+#line 351 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4697 "sparql.php"
+#line 4701 "sparql.php"
         break;
       case 196:
       case 197:
-#line 353 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = D->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4703 "sparql.php"
+#line 354 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 4707 "sparql.php"
         break;
       case 198:
-#line 355 "sparql.y"
+#line 356 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4708 "sparql.php"
+#line 4712 "sparql.php"
         break;
       case 199:
       case 206:
       case 240:
-#line 356 "sparql.y"
+#line 357 "sparql.y"
 {$yygotominor = $this->yystack[$this->yyidx + 0]->minor;}
-#line 4715 "sparql.php"
+#line 4719 "sparql.php"
         break;
       case 200:
-#line 358 "sparql.y"
+#line 359 "sparql.y"
 { if($this->yystack[$this->yyidx + 0]->minor->hasBN){throw new Exception("Deleteclause is not allowed to contain Blanknodesyntax: DELETE" . $this->yystack[$this->yyidx + 0]->minor->query);} $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'DELETE ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4720 "sparql.php"
+#line 4724 "sparql.php"
         break;
       case 201:
-#line 360 "sparql.y"
+#line 361 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'INSERT ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4725 "sparql.php"
+#line 4729 "sparql.php"
         break;
       case 202:
-#line 362 "sparql.y"
+#line 363 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'USING NAMED ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4730 "sparql.php"
+#line 4734 "sparql.php"
         break;
       case 203:
-#line 363 "sparql.y"
+#line 364 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'USING ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4735 "sparql.php"
+#line 4739 "sparql.php"
         break;
       case 204:
       case 207:
-#line 365 "sparql.y"
+#line 366 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4741 "sparql.php"
+#line 4745 "sparql.php"
         break;
       case 205:
       case 209:
-#line 366 "sparql.y"
+#line 367 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'DEFAULT';}
-#line 4747 "sparql.php"
+#line 4751 "sparql.php"
         break;
       case 210:
-#line 373 "sparql.y"
+#line 374 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'NAMED';}
-#line 4752 "sparql.php"
+#line 4756 "sparql.php"
         break;
       case 211:
-#line 374 "sparql.y"
+#line 375 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'ALL';}
-#line 4757 "sparql.php"
+#line 4761 "sparql.php"
         break;
       case 212:
       case 235:
       case 236:
-#line 376 "sparql.y"
+#line 377 "sparql.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = '{ ' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; }
-#line 4764 "sparql.php"
+#line 4768 "sparql.php"
         break;
       case 213:
       case 215:
       case 237:
-#line 377 "sparql.y"
-{$yygotominor = new NTToken(); $yygotominor->query = '{ }'}
-#line 4771 "sparql.php"
+#line 378 "sparql.y"
+{$yygotominor = new NTToken(); $yygotominor->query = '{ }';}
+#line 4775 "sparql.php"
         break;
       case 214:
-#line 379 "sparql.y"
-{ if(!empty($this->yystack[$this->yyidx + -1]->minor->vars)){throw new Exception("QuadPattern arent allowed to contain variables: " . $this->yystack[$this->yyidx + -1]->minor->query;} $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = '{ ' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; }
-#line 4776 "sparql.php"
+#line 380 "sparql.y"
+{ if(!empty($this->yystack[$this->yyidx + -1]->minor->vars)){throw new Exception("QuadPattern arent allowed to contain variables: " . $this->yystack[$this->yyidx + -1]->minor->query);} $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = '{ ' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; }
+#line 4780 "sparql.php"
         break;
       case 216:
-#line 382 "sparql.y"
+#line 383 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4781 "sparql.php"
+#line 4785 "sparql.php"
         break;
       case 219:
-#line 385 "sparql.y"
+#line 386 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4786 "sparql.php"
+#line 4790 "sparql.php"
         break;
       case 220:
-#line 386 "sparql.y"
+#line 387 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4791 "sparql.php"
+#line 4795 "sparql.php"
         break;
       case 221:
-#line 387 "sparql.y"
+#line 388 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query; }
-#line 4796 "sparql.php"
+#line 4800 "sparql.php"
         break;
       case 223:
       case 230:
       case 233:
       case 250:
       case 253:
-#line 389 "sparql.y"
+#line 390 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4805 "sparql.php"
+#line 4809 "sparql.php"
         break;
       case 225:
-#line 391 "sparql.y"
-{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .'}
-#line 4810 "sparql.php"
+#line 392 "sparql.y"
+{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .';}
+#line 4814 "sparql.php"
         break;
       case 227:
-#line 394 "sparql.y"
+#line 395 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . ' { ' .  PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; }
-#line 4815 "sparql.php"
+#line 4819 "sparql.php"
         break;
       case 228:
-#line 395 "sparql.y"
+#line 396 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + -2]->minor->query . ' { }'; }
-#line 4820 "sparql.php"
+#line 4824 "sparql.php"
         break;
       case 229:
       case 249:
-#line 397 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query ' .'; }
-#line 4826 "sparql.php"
+#line 398 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' .'; }
+#line 4830 "sparql.php"
         break;
       case 231:
       case 251:
-#line 399 "sparql.y"
+#line 400 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .'; }
-#line 4832 "sparql.php"
+#line 4836 "sparql.php"
         break;
       case 232:
       case 234:
@@ -5027,49 +5065,49 @@ private function yy_reduce(
       case 447:
       case 464:
       case 466:
-#line 400 "sparql.y"
+#line 401 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4864 "sparql.php"
+#line 4868 "sparql.php"
         break;
       case 238:
-#line 408 "sparql.y"
+#line 409 "sparql.y"
 { if(!empty($this->yystack[$this->yyidx + 0]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->bindVar, $this->yystack[$this->yyidx + -1]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + 0]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4869 "sparql.php"
+#line 4873 "sparql.php"
         break;
       case 239:
-#line 409 "sparql.y"
-{$yygotominor = $this->yystack[$this->yyidx + 0]->minor}
-#line 4874 "sparql.php"
+#line 410 "sparql.y"
+{$yygotominor = $this->yystack[$this->yyidx + 0]->minor;}
+#line 4878 "sparql.php"
         break;
       case 241:
-#line 411 "sparql.y"
+#line 412 "sparql.y"
 { $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + -3]->minor->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty($this->yystack[$this->yyidx + -2]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->bindVar, $this->yystack[$this->yyidx + -3]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + -3]->minor->bindVar + $this->yystack[$this->yyidx + -2]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4879 "sparql.php"
+#line 4883 "sparql.php"
         break;
       case 242:
-#line 412 "sparql.y"
+#line 413 "sparql.y"
 { $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty($this->yystack[$this->yyidx + -1]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->bindVar, $this->yystack[$this->yyidx + -2]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + -2]->minor->bindVar + $this->yystack[$this->yyidx + -1]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4884 "sparql.php"
+#line 4888 "sparql.php"
         break;
       case 243:
-#line 413 "sparql.y"
+#line 414 "sparql.y"
 { $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty($this->yystack[$this->yyidx + -1]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->bindVar, $this->yystack[$this->yyidx + -2]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + -2]->minor->bindVar + $this->yystack[$this->yyidx + -1]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' .'; }
-#line 4889 "sparql.php"
+#line 4893 "sparql.php"
         break;
       case 244:
-#line 414 "sparql.y"
+#line 415 "sparql.y"
 { $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty($this->yystack[$this->yyidx + 0]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->bindVar, $this->yystack[$this->yyidx + -1]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + -1]->minor->bindVar + $this->yystack[$this->yyidx + 0]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4894 "sparql.php"
+#line 4898 "sparql.php"
         break;
       case 245:
-#line 415 "sparql.y"
+#line 416 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4899 "sparql.php"
+#line 4903 "sparql.php"
         break;
       case 247:
-#line 417 "sparql.y"
+#line 418 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .'; }
-#line 4904 "sparql.php"
+#line 4908 "sparql.php"
         break;
       case 248:
       case 255:
@@ -5087,39 +5125,39 @@ private function yy_reduce(
       case 439:
       case 448:
       case 449:
-#line 418 "sparql.y"
+#line 419 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4924 "sparql.php"
+#line 4928 "sparql.php"
         break;
       case 261:
-#line 433 "sparql.y"
+#line 434 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + 0]->minor->bindVar; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4929 "sparql.php"
+#line 4933 "sparql.php"
         break;
       case 263:
-#line 436 "sparql.y"
+#line 437 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'OPTIONAL ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4934 "sparql.php"
+#line 4938 "sparql.php"
         break;
       case 264:
-#line 438 "sparql.y"
+#line 439 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4939 "sparql.php"
+#line 4943 "sparql.php"
         break;
       case 265:
-#line 440 "sparql.y"
+#line 441 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'SERVICE SILENT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4944 "sparql.php"
+#line 4948 "sparql.php"
         break;
       case 266:
-#line 441 "sparql.y"
+#line 442 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'SERVICE ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4949 "sparql.php"
+#line 4953 "sparql.php"
         break;
       case 267:
-#line 443 "sparql.y"
+#line 444 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->ssVars[$this->yystack[$this->yyidx + -1]->minor->query] = 1; $yygotominor->bindVar[$this->yystack[$this->yyidx + -1]->minor->query] = 1; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query; }
-#line 4954 "sparql.php"
+#line 4958 "sparql.php"
         break;
       case 268:
       case 269:
@@ -5128,82 +5166,82 @@ private function yy_reduce(
       case 384:
       case 386:
       case 445:
-#line 445 "sparql.y"
+#line 446 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4965 "sparql.php"
+#line 4969 "sparql.php"
         break;
       case 271:
-#line 450 "sparql.y"
+#line 451 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' { ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' }'; }
-#line 4970 "sparql.php"
+#line 4974 "sparql.php"
         break;
       case 272:
-#line 451 "sparql.y"
+#line 452 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . '{ }'; }
-#line 4975 "sparql.php"
+#line 4979 "sparql.php"
         break;
       case 273:
-#line 452 "sparql.y"
+#line 453 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->count = $this->yystack[$this->yyidx + -1]->minor->count + 1; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4980 "sparql.php"
+#line 4984 "sparql.php"
         break;
       case 274:
-#line 453 "sparql.y"
+#line 454 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->count = 1; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 4985 "sparql.php"
+#line 4989 "sparql.php"
         break;
       case 275:
-#line 455 "sparql.y"
+#line 456 "sparql.y"
 {if($this->yystack[$this->yyidx + -1]->minor->count > 0 ){if($this->yystack[$this->yyidx + -4]->minor->count == $this->yystack[$this->yyidx + -1]->minor->count){ $yygotominor = new NTToken(); $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -4]->minor->query . ' ) {' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' }';}else{throw new Exception("Different Amount of Variables and Values for Value Clause : " . $this->yystack[$this->yyidx + -4]->minor->query . ' and ' . $this->yystack[$this->yyidx + -1]->minor->query);}}else{$yygotominor = new NTToken(); $yygotominor->addVars($this->yystack[$this->yyidx + -4]->minor->vars); $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -4]->minor->query . ' ) {' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' }';}}
-#line 4990 "sparql.php"
+#line 4994 "sparql.php"
         break;
       case 276:
-#line 456 "sparql.y"
+#line 457 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = '( ) { ' . $this->yystack[$this->yyidx + -1]->minor->query . ' }'; }
-#line 4995 "sparql.php"
+#line 4999 "sparql.php"
         break;
       case 277:
-#line 457 "sparql.y"
+#line 458 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = '( ) { }'; }
-#line 5000 "sparql.php"
+#line 5004 "sparql.php"
         break;
       case 278:
-#line 458 "sparql.y"
+#line 459 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ( )'; }
-#line 5005 "sparql.php"
+#line 5009 "sparql.php"
         break;
       case 279:
       case 285:
       case 360:
       case 395:
-#line 459 "sparql.y"
+#line 460 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = '( )'; }
-#line 5013 "sparql.php"
+#line 5017 "sparql.php"
         break;
       case 280:
-#line 460 "sparql.y"
+#line 461 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->count = $this->yystack[$this->yyidx + -1]->minor->count + 1; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5018 "sparql.php"
+#line 5022 "sparql.php"
         break;
       case 281:
-#line 461 "sparql.y"
+#line 462 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->addVars($this->yystack[$this->yyidx + 0]->minor->vars); $yygotominor->count = 1; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5023 "sparql.php"
+#line 5027 "sparql.php"
         break;
       case 282:
-#line 462 "sparql.y"
+#line 463 "sparql.y"
 {if($this->yystack[$this->yyidx + -3]->minor->count > 0 ){if($this->yystack[$this->yyidx + -3]->minor->count == $this->yystack[$this->yyidx + -1]->minor->count){ $yygotominor = new NTToken(); $yygotominor->count = $this->yystack[$this->yyidx + -3]->minor->count; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}else{throw new Exception("Different Amount of Values for Value Clause : " . $this->yystack[$this->yyidx + -3]->minor->query . ' and ' . $this->yystack[$this->yyidx + -1]->minor->query);}}else{$yygotominor = new NTToken(); $yygotominor->count = $this->yystack[$this->yyidx + -1]->minor->count; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}}
-#line 5028 "sparql.php"
+#line 5032 "sparql.php"
         break;
       case 283:
-#line 463 "sparql.y"
+#line 464 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . '( )'; }
-#line 5033 "sparql.php"
+#line 5037 "sparql.php"
         break;
       case 284:
-#line 464 "sparql.y"
+#line 465 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->count = $this->yystack[$this->yyidx + -1]->minor->count; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5038 "sparql.php"
+#line 5042 "sparql.php"
         break;
       case 286:
       case 287:
@@ -5222,788 +5260,788 @@ private function yy_reduce(
       case 443:
       case 444:
       case 529:
-#line 467 "sparql.y"
+#line 468 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5059 "sparql.php"
+#line 5063 "sparql.php"
         break;
       case 290:
-#line 471 "sparql.y"
+#line 472 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'UNDEF'; }
-#line 5064 "sparql.php"
+#line 5068 "sparql.php"
         break;
       case 291:
-#line 473 "sparql.y"
+#line 474 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'MINUS ' . PHP_EOL .  $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5069 "sparql.php"
+#line 5073 "sparql.php"
         break;
       case 294:
-#line 477 "sparql.y"
+#line 478 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . ' UNION ' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5074 "sparql.php"
+#line 5078 "sparql.php"
         break;
       case 295:
-#line 478 "sparql.y"
+#line 479 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'UNION ' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5079 "sparql.php"
+#line 5083 "sparql.php"
         break;
       case 296:
-#line 480 "sparql.y"
+#line 481 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'FILTER ( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5084 "sparql.php"
+#line 5088 "sparql.php"
         break;
       case 297:
       case 298:
-#line 481 "sparql.y"
+#line 482 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'FILTER ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5090 "sparql.php"
+#line 5094 "sparql.php"
         break;
       case 299:
-#line 484 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->hasFNC = true, $yygotominor->hasAGG = true; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5095 "sparql.php"
+#line 485 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->hasFNC = true; $yygotominor->hasAGG = true; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 5099 "sparql.php"
         break;
       case 300:
-#line 486 "sparql.y"
+#line 487 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes; $yygotominor->query = '( DISTINCT' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5100 "sparql.php"
+#line 5104 "sparql.php"
         break;
       case 301:
-#line 487 "sparql.y"
+#line 488 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5105 "sparql.php"
+#line 5109 "sparql.php"
         break;
       case 302:
       case 306:
-#line 488 "sparql.y"
+#line 489 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = '( )' . PHP_EOL; }
-#line 5111 "sparql.php"
+#line 5115 "sparql.php"
         break;
       case 303:
-#line 489 "sparql.y"
+#line 490 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ', ' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5116 "sparql.php"
+#line 5120 "sparql.php"
         break;
       case 304:
-#line 490 "sparql.y"
+#line 491 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = ', ' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5121 "sparql.php"
+#line 5125 "sparql.php"
         break;
       case 305:
-#line 492 "sparql.y"
+#line 493 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5126 "sparql.php"
+#line 5130 "sparql.php"
         break;
       case 310:
-#line 499 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5131 "sparql.php"
+#line 500 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 5135 "sparql.php"
         break;
       case 312:
       case 329:
-#line 501 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5137 "sparql.php"
+#line 502 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 5141 "sparql.php"
         break;
       case 313:
       case 331:
-#line 502 "sparql.y"
+#line 503 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query. ';'; }
-#line 5143 "sparql.php"
+#line 5147 "sparql.php"
         break;
       case 314:
       case 332:
-#line 503 "sparql.y"
+#line 504 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5149 "sparql.php"
+#line 5153 "sparql.php"
         break;
       case 315:
       case 334:
-#line 504 "sparql.y"
+#line 505 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = ';'; }
-#line 5155 "sparql.php"
+#line 5159 "sparql.php"
         break;
       case 317:
       case 356:
       case 366:
-#line 507 "sparql.y"
+#line 508 "sparql.y"
 { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->query = 'rdf:type'; }
-#line 5162 "sparql.php"
+#line 5166 "sparql.php"
         break;
       case 320:
       case 337:
-#line 511 "sparql.y"
+#line 512 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ', ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5168 "sparql.php"
+#line 5172 "sparql.php"
         break;
       case 321:
       case 338:
-#line 512 "sparql.y"
+#line 513 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = ', ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5174 "sparql.php"
+#line 5178 "sparql.php"
         break;
       case 325:
-#line 518 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5179 "sparql.php"
+#line 519 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 5183 "sparql.php"
         break;
       case 326:
-#line 519 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5184 "sparql.php"
+#line 520 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 5188 "sparql.php"
         break;
       case 328:
-#line 521 "sparql.y"
+#line 522 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5189 "sparql.php"
+#line 5193 "sparql.php"
         break;
       case 330:
-#line 523 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5194 "sparql.php"
+#line 524 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 5198 "sparql.php"
         break;
       case 333:
-#line 526 "sparql.y"
+#line 527 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '; ' . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5199 "sparql.php"
+#line 5203 "sparql.php"
         break;
       case 335:
       case 339:
       case 343:
-#line 529 "sparql.y"
+#line 530 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5206 "sparql.php"
+#line 5210 "sparql.php"
         break;
       case 341:
-#line 536 "sparql.y"
+#line 537 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . '|' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5211 "sparql.php"
+#line 5215 "sparql.php"
         break;
       case 342:
-#line 537 "sparql.y"
+#line 538 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '|' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5216 "sparql.php"
+#line 5220 "sparql.php"
         break;
       case 345:
-#line 541 "sparql.y"
+#line 542 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . '/' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5221 "sparql.php"
+#line 5225 "sparql.php"
         break;
       case 346:
-#line 542 "sparql.y"
+#line 543 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '/' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5226 "sparql.php"
+#line 5230 "sparql.php"
         break;
       case 347:
-#line 544 "sparql.y"
+#line 545 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5231 "sparql.php"
+#line 5235 "sparql.php"
         break;
       case 349:
-#line 547 "sparql.y"
+#line 548 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '^' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5236 "sparql.php"
+#line 5240 "sparql.php"
         break;
       case 351:
-#line 550 "sparql.y"
+#line 551 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = '*'; }
-#line 5241 "sparql.php"
+#line 5245 "sparql.php"
         break;
       case 352:
-#line 551 "sparql.y"
+#line 552 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = '+'; }
-#line 5246 "sparql.php"
+#line 5250 "sparql.php"
         break;
       case 353:
-#line 552 "sparql.y"
+#line 553 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = '?'; }
-#line 5251 "sparql.php"
+#line 5255 "sparql.php"
         break;
       case 354:
       case 359:
       case 374:
       case 377:
-#line 554 "sparql.y"
+#line 555 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5259 "sparql.php"
+#line 5263 "sparql.php"
         break;
       case 355:
-#line 555 "sparql.y"
+#line 556 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '!' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5264 "sparql.php"
+#line 5268 "sparql.php"
         break;
       case 358:
-#line 559 "sparql.y"
+#line 560 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query; }
-#line 5269 "sparql.php"
+#line 5273 "sparql.php"
         break;
       case 361:
-#line 562 "sparql.y"
+#line 563 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->addVars($this->yystack[$this->yyidx + 0]->minor->vars); $yygotominor->addBNodes($this->yystack[$this->yyidx + 0]->minor->bNodes); $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5274 "sparql.php"
+#line 5278 "sparql.php"
         break;
       case 362:
-#line 563 "sparql.y"
+#line 564 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' | ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5279 "sparql.php"
+#line 5283 "sparql.php"
         break;
       case 363:
-#line 564 "sparql.y"
+#line 565 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '| ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5284 "sparql.php"
+#line 5288 "sparql.php"
         break;
       case 364:
-#line 566 "sparql.y"
+#line 567 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = '^' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5289 "sparql.php"
+#line 5293 "sparql.php"
         break;
       case 365:
-#line 567 "sparql.y"
+#line 568 "sparql.y"
 { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); ; $yygotominor->query = '^rdf:type'; }
-#line 5294 "sparql.php"
+#line 5298 "sparql.php"
         break;
       case 370:
       case 373:
-#line 574 "sparql.y"
+#line 575 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasBN = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '[ ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ]'; }
-#line 5300 "sparql.php"
+#line 5304 "sparql.php"
         break;
       case 385:
       case 394:
-#line 596 "sparql.y"
+#line 597 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5306 "sparql.php"
+#line 5310 "sparql.php"
         break;
       case 388:
       case 389:
-#line 601 "sparql.y"
+#line 602 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->vars = array(); $yygotominor->vars[$this->yystack[$this->yyidx + 0]->minor->value] = 1; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value; }
-#line 5312 "sparql.php"
+#line 5316 "sparql.php"
         break;
       case 396:
       case 400:
       case 404:
       case 414:
       case 432:
-#line 611 "sparql.y"
+#line 612 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5321 "sparql.php"
+#line 5325 "sparql.php"
         break;
       case 397:
-#line 612 "sparql.y"
+#line 613 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor);$yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5326 "sparql.php"
+#line 5330 "sparql.php"
         break;
       case 398:
-#line 613 "sparql.y"
+#line 614 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' || ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5331 "sparql.php"
+#line 5335 "sparql.php"
         break;
       case 399:
-#line 614 "sparql.y"
+#line 615 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '|| ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5336 "sparql.php"
+#line 5340 "sparql.php"
         break;
       case 402:
-#line 618 "sparql.y"
+#line 619 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' && ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5341 "sparql.php"
+#line 5345 "sparql.php"
         break;
       case 403:
-#line 619 "sparql.y"
+#line 620 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '&& ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5346 "sparql.php"
+#line 5350 "sparql.php"
         break;
       case 406:
-#line 623 "sparql.y"
+#line 624 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '= ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5351 "sparql.php"
+#line 5355 "sparql.php"
         break;
       case 407:
-#line 624 "sparql.y"
+#line 625 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '!= ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5356 "sparql.php"
+#line 5360 "sparql.php"
         break;
       case 408:
-#line 625 "sparql.y"
+#line 626 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '< ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5361 "sparql.php"
+#line 5365 "sparql.php"
         break;
       case 409:
-#line 626 "sparql.y"
+#line 627 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '> ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5366 "sparql.php"
+#line 5370 "sparql.php"
         break;
       case 410:
-#line 627 "sparql.y"
+#line 628 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '<= ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5371 "sparql.php"
+#line 5375 "sparql.php"
         break;
       case 411:
-#line 628 "sparql.y"
+#line 629 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '>= ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5376 "sparql.php"
+#line 5380 "sparql.php"
         break;
       case 412:
-#line 629 "sparql.y"
+#line 630 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'IN' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5381 "sparql.php"
+#line 5385 "sparql.php"
         break;
       case 413:
-#line 630 "sparql.y"
+#line 631 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'NOT IN' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5386 "sparql.php"
+#line 5390 "sparql.php"
         break;
       case 416:
       case 417:
-#line 634 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5392 "sparql.php"
+#line 635 "sparql.y"
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
+#line 5396 "sparql.php"
         break;
       case 418:
       case 419:
-#line 636 "sparql.y"
+#line 637 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5398 "sparql.php"
+#line 5402 "sparql.php"
         break;
       case 420:
-#line 638 "sparql.y"
+#line 639 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' + ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5403 "sparql.php"
+#line 5407 "sparql.php"
         break;
       case 421:
-#line 639 "sparql.y"
+#line 640 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' - ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5408 "sparql.php"
+#line 5412 "sparql.php"
         break;
       case 422:
       case 423:
-#line 640 "sparql.y"
+#line 641 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5414 "sparql.php"
+#line 5418 "sparql.php"
         break;
       case 426:
       case 435:
-#line 644 "sparql.y"
+#line 645 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '+ ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5420 "sparql.php"
+#line 5424 "sparql.php"
         break;
       case 427:
       case 436:
-#line 645 "sparql.y"
+#line 646 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '- ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5426 "sparql.php"
+#line 5430 "sparql.php"
         break;
       case 428:
       case 429:
-#line 646 "sparql.y"
+#line 647 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' * ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5432 "sparql.php"
+#line 5436 "sparql.php"
         break;
       case 430:
-#line 648 "sparql.y"
+#line 649 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '* ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5437 "sparql.php"
+#line 5441 "sparql.php"
         break;
       case 431:
-#line 649 "sparql.y"
+#line 650 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '/ ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5442 "sparql.php"
+#line 5446 "sparql.php"
         break;
       case 434:
-#line 654 "sparql.y"
+#line 655 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '! ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5447 "sparql.php"
+#line 5451 "sparql.php"
         break;
       case 438:
-#line 659 "sparql.y"
+#line 660 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5452 "sparql.php"
+#line 5456 "sparql.php"
         break;
       case 441:
-#line 662 "sparql.y"
+#line 663 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasFNC = true; $yygotominor->hasAGG = true; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5457 "sparql.php"
+#line 5461 "sparql.php"
         break;
       case 450:
       case 451:
-#line 672 "sparql.y"
+#line 673 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STR( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5463 "sparql.php"
+#line 5467 "sparql.php"
         break;
       case 452:
-#line 674 "sparql.y"
+#line 675 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); copyBools($this->yystack[$this->yyidx + -1]->minor) $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'LANGMATCHES( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5468 "sparql.php"
+#line 5472 "sparql.php"
         break;
       case 453:
-#line 675 "sparql.y"
+#line 676 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'DATATYPE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5473 "sparql.php"
+#line 5477 "sparql.php"
         break;
       case 454:
-#line 676 "sparql.y"
+#line 677 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->query = 'BOUND( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5478 "sparql.php"
+#line 5482 "sparql.php"
         break;
       case 455:
-#line 677 "sparql.y"
+#line 678 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'URI( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5483 "sparql.php"
+#line 5487 "sparql.php"
         break;
       case 456:
-#line 678 "sparql.y"
+#line 679 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasBN = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes[$this->yystack[$this->yyidx + -1]->minor->query] = 1; $yygotominor->addBNodes($this->yystack[$this->yyidx + -1]->minor->bNodes); $yygotominor->query = 'BNODE( ' $this->yystack[$this->yyidx + -1]->minor->query; ' )'; }
-#line 5488 "sparql.php"
+#line 5492 "sparql.php"
         break;
       case 457:
-#line 679 "sparql.y"
+#line 680 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasBN = true; $yygotominor->query = 'BNODE( )'; }
-#line 5493 "sparql.php"
+#line 5497 "sparql.php"
         break;
       case 458:
-#line 680 "sparql.y"
+#line 681 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'RAND( )'; }
-#line 5498 "sparql.php"
+#line 5502 "sparql.php"
         break;
       case 459:
-#line 681 "sparql.y"
+#line 682 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ABS(' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5503 "sparql.php"
+#line 5507 "sparql.php"
         break;
       case 460:
-#line 682 "sparql.y"
+#line 683 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars;$yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'CEIL(' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5508 "sparql.php"
+#line 5512 "sparql.php"
         break;
       case 461:
-#line 683 "sparql.y"
+#line 684 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'FLOOR(' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5513 "sparql.php"
+#line 5517 "sparql.php"
         break;
       case 462:
-#line 684 "sparql.y"
+#line 685 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ROUND(' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5518 "sparql.php"
+#line 5522 "sparql.php"
         break;
       case 463:
-#line 685 "sparql.y"
+#line 686 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars;$yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONCAT' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5523 "sparql.php"
+#line 5527 "sparql.php"
         break;
       case 465:
-#line 687 "sparql.y"
+#line 688 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRLEN( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5528 "sparql.php"
+#line 5532 "sparql.php"
         break;
       case 467:
-#line 689 "sparql.y"
+#line 690 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'UCASE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5533 "sparql.php"
+#line 5537 "sparql.php"
         break;
       case 468:
-#line 690 "sparql.y"
+#line 691 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query =  'LCASE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5538 "sparql.php"
+#line 5542 "sparql.php"
         break;
       case 469:
-#line 691 "sparql.y"
+#line 692 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ENCODE_FOR_URI( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5543 "sparql.php"
+#line 5547 "sparql.php"
         break;
       case 470:
-#line 692 "sparql.y"
+#line 693 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'CONTAINS( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5548 "sparql.php"
+#line 5552 "sparql.php"
         break;
       case 471:
-#line 693 "sparql.y"
+#line 694 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRSTARTS( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5553 "sparql.php"
+#line 5557 "sparql.php"
         break;
       case 472:
-#line 694 "sparql.y"
+#line 695 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRENDS( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5558 "sparql.php"
+#line 5562 "sparql.php"
         break;
       case 473:
-#line 695 "sparql.y"
+#line 696 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STBEFORE( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5563 "sparql.php"
+#line 5567 "sparql.php"
         break;
       case 474:
-#line 696 "sparql.y"
+#line 697 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRAFTER( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5568 "sparql.php"
+#line 5572 "sparql.php"
         break;
       case 475:
-#line 697 "sparql.y"
+#line 698 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'YEAR( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5573 "sparql.php"
+#line 5577 "sparql.php"
         break;
       case 476:
-#line 698 "sparql.y"
+#line 699 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'MONTH( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5578 "sparql.php"
+#line 5582 "sparql.php"
         break;
       case 477:
-#line 699 "sparql.y"
+#line 700 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'DAY( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5583 "sparql.php"
+#line 5587 "sparql.php"
         break;
       case 478:
-#line 700 "sparql.y"
+#line 701 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'HOURS( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5588 "sparql.php"
+#line 5592 "sparql.php"
         break;
       case 479:
-#line 701 "sparql.y"
+#line 702 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'MINUTES( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5593 "sparql.php"
+#line 5597 "sparql.php"
         break;
       case 480:
-#line 702 "sparql.y"
+#line 703 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SECONDS( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5598 "sparql.php"
+#line 5602 "sparql.php"
         break;
       case 481:
-#line 703 "sparql.y"
+#line 704 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'TIMEZONE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5603 "sparql.php"
+#line 5607 "sparql.php"
         break;
       case 482:
-#line 704 "sparql.y"
+#line 705 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'TZ( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5608 "sparql.php"
+#line 5612 "sparql.php"
         break;
       case 483:
-#line 705 "sparql.y"
+#line 706 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'NOW( )'; }
-#line 5613 "sparql.php"
+#line 5617 "sparql.php"
         break;
       case 484:
-#line 706 "sparql.y"
+#line 707 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'UUID( )'; }
-#line 5618 "sparql.php"
+#line 5622 "sparql.php"
         break;
       case 485:
-#line 707 "sparql.y"
+#line 708 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = 'STRUUID( )'; }
-#line 5623 "sparql.php"
+#line 5627 "sparql.php"
         break;
       case 486:
-#line 708 "sparql.y"
+#line 709 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'MD5( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5628 "sparql.php"
+#line 5632 "sparql.php"
         break;
       case 487:
-#line 709 "sparql.y"
+#line 710 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SHA1( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5633 "sparql.php"
+#line 5637 "sparql.php"
         break;
       case 488:
-#line 710 "sparql.y"
+#line 711 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SHA256( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5638 "sparql.php"
+#line 5642 "sparql.php"
         break;
       case 489:
-#line 711 "sparql.y"
+#line 712 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SHA384( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5643 "sparql.php"
+#line 5647 "sparql.php"
         break;
       case 490:
-#line 712 "sparql.y"
+#line 713 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SHA512( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5648 "sparql.php"
+#line 5652 "sparql.php"
         break;
       case 491:
-#line 713 "sparql.y"
+#line 714 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'COALESCE' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5653 "sparql.php"
+#line 5657 "sparql.php"
         break;
       case 492:
-#line 714 "sparql.y"
+#line 715 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'IF( ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query .  ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5658 "sparql.php"
+#line 5662 "sparql.php"
         break;
       case 493:
-#line 715 "sparql.y"
+#line 716 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->addVars($this->yystack[$this->yyidx + -3]->minor->vars); $yygotominor->addVars($this->yystack[$this->yyidx + -1]->minor->vars); $yygotominor->addBNodes($this->yystack[$this->yyidx + -3]->minor->bNodes); $yygotominor->addBNodes($this->yystack[$this->yyidx + -1]->minor->bNodes); $yygotominor->query = 'STRLANG( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5663 "sparql.php"
+#line 5667 "sparql.php"
         break;
       case 494:
-#line 716 "sparql.y"
+#line 717 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRDT( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5668 "sparql.php"
+#line 5672 "sparql.php"
         break;
       case 495:
-#line 717 "sparql.y"
+#line 718 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SAMETERM( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; }
-#line 5673 "sparql.php"
+#line 5677 "sparql.php"
         break;
       case 496:
-#line 718 "sparql.y"
+#line 719 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISIRI( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5678 "sparql.php"
+#line 5682 "sparql.php"
         break;
       case 497:
-#line 719 "sparql.y"
+#line 720 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISURI( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5683 "sparql.php"
+#line 5687 "sparql.php"
         break;
       case 498:
-#line 720 "sparql.y"
+#line 721 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISBLANK( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5688 "sparql.php"
+#line 5692 "sparql.php"
         break;
       case 499:
-#line 721 "sparql.y"
+#line 722 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISLITERAL( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5693 "sparql.php"
+#line 5697 "sparql.php"
         break;
       case 500:
-#line 722 "sparql.y"
+#line 723 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISNUMERIC( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5698 "sparql.php"
+#line 5702 "sparql.php"
         break;
       case 501:
-#line 724 "sparql.y"
+#line 725 "sparql.y"
 { $yygotominor = new NTToken; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'REGEX( ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5703 "sparql.php"
+#line 5707 "sparql.php"
         break;
       case 502:
-#line 725 "sparql.y"
+#line 726 "sparql.y"
 { $yygotominor = new NTToken; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'REGEX( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5708 "sparql.php"
+#line 5712 "sparql.php"
         break;
       case 503:
-#line 727 "sparql.y"
+#line 728 "sparql.y"
 { $yygotominor = new NTToken; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SUBSTR( ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5713 "sparql.php"
+#line 5717 "sparql.php"
         break;
       case 504:
-#line 728 "sparql.y"
+#line 729 "sparql.y"
 { $yygotominor = new NTToken; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SUBSTR( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5718 "sparql.php"
+#line 5722 "sparql.php"
         break;
       case 505:
-#line 730 "sparql.y"
+#line 731 "sparql.y"
 { $yygotominor = new NTToken; $yygotominor->copyBools($this->yystack[$this->yyidx + -7]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -7]->minor->vars + $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -7]->minor->bNodes + $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'REPLACE( ' . $this->yystack[$this->yyidx + -7]->minor->query . ', ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5723 "sparql.php"
+#line 5727 "sparql.php"
         break;
       case 506:
-#line 731 "sparql.y"
+#line 732 "sparql.y"
 { $yygotominor = new NTToken; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'REPLACE( ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
-#line 5728 "sparql.php"
+#line 5732 "sparql.php"
         break;
       case 507:
-#line 733 "sparql.y"
+#line 734 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'EXISTS ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5733 "sparql.php"
+#line 5737 "sparql.php"
         break;
       case 508:
-#line 735 "sparql.y"
+#line 736 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'NOT EXISTS ' . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5738 "sparql.php"
+#line 5742 "sparql.php"
         break;
       case 509:
-#line 737 "sparql.y"
+#line 738 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'COUNT( DISTINCT * )'; }
-#line 5743 "sparql.php"
+#line 5747 "sparql.php"
         break;
       case 510:
-#line 738 "sparql.y"
+#line 739 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'COUNT( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5748 "sparql.php"
+#line 5752 "sparql.php"
         break;
       case 511:
-#line 739 "sparql.y"
+#line 740 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'COUNT( * )'; }
-#line 5753 "sparql.php"
+#line 5757 "sparql.php"
         break;
       case 512:
-#line 740 "sparql.y"
+#line 741 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'COUNT( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5758 "sparql.php"
+#line 5762 "sparql.php"
         break;
       case 513:
-#line 741 "sparql.y"
+#line 742 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'SUM( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5763 "sparql.php"
+#line 5767 "sparql.php"
         break;
       case 514:
-#line 742 "sparql.y"
+#line 743 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'MIN( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5768 "sparql.php"
+#line 5772 "sparql.php"
         break;
       case 515:
-#line 743 "sparql.y"
+#line 744 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'MAX( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5773 "sparql.php"
+#line 5777 "sparql.php"
         break;
       case 516:
-#line 744 "sparql.y"
+#line 745 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'AVG( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5778 "sparql.php"
+#line 5782 "sparql.php"
         break;
       case 517:
-#line 745 "sparql.y"
+#line 746 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'SAMPLE( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes); }
-#line 5783 "sparql.php"
+#line 5787 "sparql.php"
         break;
       case 518:
-#line 746 "sparql.y"
+#line 747 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'SUM( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5788 "sparql.php"
+#line 5792 "sparql.php"
         break;
       case 519:
-#line 747 "sparql.y"
+#line 748 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'MIN( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5793 "sparql.php"
+#line 5797 "sparql.php"
         break;
       case 520:
-#line 748 "sparql.y"
+#line 749 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'MAX( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5798 "sparql.php"
+#line 5802 "sparql.php"
         break;
       case 521:
-#line 749 "sparql.y"
+#line 750 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'AVG( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5803 "sparql.php"
+#line 5807 "sparql.php"
         break;
       case 522:
-#line 750 "sparql.y"
+#line 751 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'SAMPLE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5808 "sparql.php"
+#line 5812 "sparql.php"
         break;
       case 523:
-#line 751 "sparql.y"
+#line 752 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'GROUP_CONCAT( DISTINCT ' . $this->yystack[$this->yyidx + -5]->minor->query . ' ; SEPARATOR = ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes; }
-#line 5813 "sparql.php"
+#line 5817 "sparql.php"
         break;
       case 524:
-#line 752 "sparql.y"
+#line 753 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'GROUP_CONCAT( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5818 "sparql.php"
+#line 5822 "sparql.php"
         break;
       case 525:
-#line 753 "sparql.y"
+#line 754 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'GROUP_CONCAT( ' . $this->yystack[$this->yyidx + -5]->minor->query . ' ; SEPARATOR = ' $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes; }
-#line 5823 "sparql.php"
+#line 5827 "sparql.php"
         break;
       case 526:
-#line 754 "sparql.y"
+#line 755 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'GROUP_CONCAT( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
-#line 5828 "sparql.php"
+#line 5832 "sparql.php"
         break;
       case 527:
-#line 756 "sparql.y"
+#line 757 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->value; }
-#line 5833 "sparql.php"
+#line 5837 "sparql.php"
         break;
       case 528:
-#line 757 "sparql.y"
+#line 758 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . $this->yystack[$this->yyidx + -1]->minor->value . $this->yystack[$this->yyidx + 0]->minor->query; }
-#line 5838 "sparql.php"
+#line 5842 "sparql.php"
         break;
       case 533:
       case 534:
@@ -6011,55 +6049,55 @@ private function yy_reduce(
       case 536:
       case 537:
       case 538:
-#line 764 "sparql.y"
+#line 765 "sparql.y"
 {$yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value; }
-#line 5848 "sparql.php"
+#line 5852 "sparql.php"
         break;
       case 539:
       case 540:
       case 541:
-#line 772 "sparql.y"
+#line 773 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value; }
-#line 5855 "sparql.php"
+#line 5859 "sparql.php"
         break;
       case 542:
-#line 776 "sparql.y"
+#line 777 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = "true";}
-#line 5860 "sparql.php"
+#line 5864 "sparql.php"
         break;
       case 543:
-#line 777 "sparql.y"
+#line 778 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = "false";}
-#line 5865 "sparql.php"
+#line 5869 "sparql.php"
         break;
       case 544:
       case 545:
       case 546:
       case 547:
-#line 779 "sparql.y"
+#line 780 "sparql.y"
 { $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value;}
-#line 5873 "sparql.php"
+#line 5877 "sparql.php"
         break;
       case 548:
-#line 784 "sparql.y"
+#line 785 "sparql.y"
 { if(!$this->checkBase($this->yystack[$this->yyidx + 0]->minor->value)){throw new Exception("Missing Base for " . $this->yystack[$this->yyidx + 0]->minor->value);} $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value;}
-#line 5878 "sparql.php"
+#line 5882 "sparql.php"
         break;
       case 550:
       case 551:
-#line 787 "sparql.y"
+#line 788 "sparql.y"
 {if(!$this->checkNS($this->yystack[$this->yyidx + 0]->minor->value)){$throw new Exception("Missing Prefix for " . $this->yystack[$this->yyidx + 0]->minor->value);} $yygotominor = new NTToken(); $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value;}
-#line 5884 "sparql.php"
+#line 5888 "sparql.php"
         break;
       case 552:
-#line 790 "sparql.y"
+#line 791 "sparql.y"
 {$yygotominor = new NTToken(); $yygotominor->hasBN = true; $yygotominor->bNodes[$this->yystack[$this->yyidx + 0]->minor->value] = 1;}
-#line 5889 "sparql.php"
+#line 5893 "sparql.php"
         break;
       case 553:
-#line 791 "sparql.y"
+#line 792 "sparql.y"
 {$yygotominor = new NTToken(); $yygotominor->hasBN = true;}
-#line 5894 "sparql.php"
+#line 5898 "sparql.php"
         break;
   };
   $yygoto = self::$yyRuleInfo[2*$yyruleno];
@@ -6087,10 +6125,10 @@ private function yy_parse_failed(
   while( $this->yyidx>=0 ) $this->yy_pop_parser_stack();
   /* Here code is inserted which will be executed whenever the
   ** parser fails */
-#line 115 "sparql.y"
+#line 116 "sparql.y"
 
     /*transfer somehow execution class and write the error into it maybe? maybe as fourth parameter (kinda wasteful as every token will throw it in the parser again)*/
-#line 5926 "sparql.php"
+#line 5930 "sparql.php"
 }
 
 /*
@@ -6115,8 +6153,9 @@ private function yy_accept(
   ** parser accepts */
 #line 111 "sparql.y"
 
-    /*add a function to print a clean version of query (or a sparql algebra version)*/
-#line 5953 "sparql.php"
+print('Success');
+
+#line 5958 "sparql.php"
 }
 
 /* The main parser program.

@@ -109,7 +109,8 @@ class NTToken {
 }
 
 %parse_accept {
-    /*add a function to print a clean version of query (or a sparql algebra version)*/
+print('Success');
+
 }
 
 %parse_failure {
@@ -119,8 +120,8 @@ class NTToken {
 /* this defines a symbol for the lexer */
 %nonassoc PRAGMA.
 
-start(A) ::= query(B). { A = B; }
-start(A) ::= update(B). { A = B; }
+start(A) ::= query(B). { A = B; $this->main = A; }
+start(A) ::= update(B). { A = B; $this->main = A; }
 
 query(A) ::= prologue(B) selectQuery(C) valuesClause(D). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
 query(A) ::= prologue(B) constructQuery(C) valuesClause(D). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
@@ -152,25 +153,25 @@ baseDecl(A) ::= BASE IRIREF(B). { $this->base = B->value; A = new NTToken(); A->
 prefixDecl(A) ::= PREFIX PNAME_NS(B) IRIREF(C) DOT. { $this->addNS(B->value, C->value); A = new NTToken(); A->query = 'PREFIX ' . B->value . C->value . ' .';}
 prefixDecl(A) ::= PREFIX PNAME_NS(B) IRIREF(C). { $this->addNS(B->value, C->value); A = new NTToken(); A->query = 'PREFIX ' . B->value . C->value;}
 
-selectQuery(A) ::= selectClause(B) datasetClauseX(C) whereclause(D) solutionModifier(E). { $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(B->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(D->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
-selectQuery(A) ::= selectClause(B) datasetClauseX(C) whereclause(D). { $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
-selectQuery(A) ::= selectClause(B) whereclause(C) solutionModifier(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
-selectQuery(A) ::= selectClause(B) whereclause(C). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query; }
+selectQuery(A) ::= selectClause(B) datasetClauseX(C) whereclause(D) solutionModifier(E). { $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
+selectQuery(A) ::= selectClause(B) datasetClauseX(C) whereclause(D). { $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+selectQuery(A) ::= selectClause(B) whereclause(C) solutionModifier(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+selectQuery(A) ::= selectClause(B) whereclause(C). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query; }
 datasetClauseX(A) ::= datasetClauseX(B) datasetClause(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query;}
-datasetClauseX(A) ::= datasetClause(B). { A = B}
+datasetClauseX(A) ::= datasetClause(B). { A = B;}
 
 
-subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D) valuesClause(E). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(B->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(E->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(D->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
-subSelect(A) ::= selectClause(B) whereclause(C) valuesClause(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
-subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
-subSelect(A) ::= selectClause(B) whereclause(C). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1)} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query; }
+subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D) valuesClause(E). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(E->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
+subSelect(A) ::= selectClause(B) whereclause(C) valuesClause(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
+subSelect(A) ::= selectClause(B) whereclause(C). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query; }
 
-selectClause(A) ::= SELECT DISTINCT selectClauseX(B). { A = B; A->query = 'SELECT DISTINCT' . B->query}
-selectClause(A) ::= SELECT REDUCED selectClauseX(B). { A = B; A->query = 'SELECT REDUCED' . B->query}
-selectClause(A) ::= SELECT STAR selectClauseX(B). { A = B; A->query = 'SELECT *' . B->query}
+selectClause(A) ::= SELECT DISTINCT selectClauseX(B). { A = B; A->query = 'SELECT DISTINCT' . B->query;}
+selectClause(A) ::= SELECT REDUCED selectClauseX(B). { A = B; A->query = 'SELECT REDUCED' . B->query;}
+selectClause(A) ::= SELECT STAR selectClauseX(B). { A = B; A->query = 'SELECT *' . B->query;}
 selectClause(A) ::= SELECT DISTINCT STAR. { A = B; A->query = 'SELECT DISTINCT *'; }
 selectClause(A) ::= SELECT REDUCED STAR. { A = B; A->query = 'SELECT REDUCED *'; }
-selectClause(A) ::= SELECT selectClauseX(B). { A = B; A->query = 'SELECT ' . B->query}
+selectClause(A) ::= SELECT selectClauseX(B). { A = B; A->query = 'SELECT ' . B->query;}
 selectClause(A) ::= SELECT STAR. { A = B; A->query = 'SELECT *'; }
 selectClauseX(A) ::= selectClauseX(B) LPARENTHESE expression(C) AS var(D) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . '( ' . C->query . ' AS ' . D->query . ' )'; }
 selectClauseX(A) ::= selectClauseX(B) LPARENTHESE expression(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . '( ' . C->query . ' )'; }
@@ -192,18 +193,18 @@ selectClauseX(A) ::= functionCall(B). { A = B; }
 constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE datasetClauseX(C) whereclause(D) solutionModifier(E). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . '{' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL. C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
 constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(B) whereclause(C) solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT { }' . PHP_EOL . B->query . PHP_EOL. C->query . PHP_EOL . D->query; }
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE triplesTemplate(C) RBRACE solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . B->query . PHP_EOL . 'WHERE' . PHP_EOL . '{' . PHP_EOL . C->query . PHP_EOL . '}' . PHP_EOL. D->query; }
-constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE RBRACE solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . B->query . PHP_EOL ' WHERE' . PHP_EOL . '{' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL . C->query; }
+constructQuery(A) ::= CONSTRUCT datasetClauseX(B) WHERE LBRACE RBRACE solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . B->query . PHP_EOL . ' WHERE' . PHP_EOL . '{' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL . C->query; }
 constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE whereclause(C) solutionModifier(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT {' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL. C->query . PHP_EOL . D->query; }
 constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(B) solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT { }' . PHP_EOL . B->query . PHP_EOL . C->query; }
 constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE whereclause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT {' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL . C->query; }
-constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(B). { A = B; A->query = 'CONSTRUCT { }' . PHP_EOL B->query; }
+constructQuery(A) ::= CONSTRUCT LBRACE RBRACE whereclause(B). { A = B; A->query = 'CONSTRUCT { }' . PHP_EOL . B->query; }
 constructQuery(A) ::= CONSTRUCT LBRACE triplesTemplate(B) RBRACE datasetClauseX(C) whereclause(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + C->ssVars + D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = 'CONSTRUCT {' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL. C->query . PHP_EOL . D->query; }
 constructQuery(A) ::= CONSTRUCT LBRACE RBRACE datasetClauseX(B) whereclause(C).{ A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT { }' . PHP_EOL . B->query . PHP_EOL . C->query; }
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE triplesTemplate(C) RBRACE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . B->query . PHP_EOL . 'WHERE {' . PHP_EOL . C->query . PHP_EOL . '}'; }
 constructQuery(A) ::= CONSTRUCT datasetClauseX(B)  WHERE LBRACE  RBRACE. { A = B; A->query = 'CONSTRUCT' . PHP_EOL . B->query . 'WHERE { }'; }
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE solutionModifier(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'CONSTRUCT WHERE {' . PHP_EOL . B->query . PHP_EOL . '}' . PHP_EOL . C->query; }
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE solutionModifier(B). { A = B; A->query = 'CONSTRUCT WHERE { }' . PHP_EOL . B->query; }
-constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE. { A = B; A->query = 'CONSTRUCT WHERE {' . PHP_EOL B->query . PHP_EOL . '}'; }
+constructQuery(A) ::= CONSTRUCT WHERE LBRACE triplesTemplate(B) RBRACE. { A = B; A->query = 'CONSTRUCT WHERE {' . PHP_EOL . B->query . PHP_EOL . '}'; }
 constructQuery(A) ::= CONSTRUCT WHERE LBRACE RBRACE. { A = new NTToken(); A->query = 'CONSTRUCT WHERE { }'; }
 
 describeQuery(A) ::= DESCRIBE varOrIriX(B) datasetClauseX(C) whereclause(D) solutionModifier(E). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = B->ssVars + C->ssVars + D->ssVars + E->ssVars; A->vars = B->vars + C->vars + D->vars + E->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes + E->bNodes; A->query = 'DESCRIBE ' . B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
@@ -253,12 +254,12 @@ solutionModifier(A) ::= orderClause(B). { A = B; }
 solutionModifier(A) ::= limitOffsetClauses(B). { A = B; }
 
 groupClause(A) ::= GROUP BY groupConditionX(B). { A = B; A->query = 'GROUP BY ' . B->query;}
-groupConditionX(A) ::= groupConditionX(B) LPARENTHESE expression(C) AS var(D) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + D->query; A->vars = B->vars + C->vars D->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' (' . C->query . ' AS ' . D->query . ' )';}
+groupConditionX(A) ::= groupConditionX(B) LPARENTHESE expression(C) AS var(D) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars + D->query; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' (' . C->query . ' AS ' . D->query . ' )';}
 groupConditionX(A) ::= groupConditionX(B) builtInCall(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query;}
 groupConditionX(A) ::= groupConditionX(B) functionCall(C). { A = new NTToken(); A->hasFNC = true; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query;}
 groupConditionX(A) ::= groupConditionX(B) LPARENTHESE expression(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' (' . C->query . ' )';}
 groupConditionX(A) ::= groupConditionX(B) var(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query;}
-groupConditionX(A) ::= LPARENTHESE expression(B) AS var(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = C->query; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = '( ' . B->query . ' AS ' . C->query ' )';}
+groupConditionX(A) ::= LPARENTHESE expression(B) AS var(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = C->query; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = '( ' . B->query . ' AS ' . C->query . ' )';}
 groupConditionX(A) ::= builtInCall(B). { A = B; }
 groupConditionX(A) ::= functionCall(B). { A = B; A->hasFNC = true; }
 groupConditionX(A) ::= LPARENTHESE expression(B) RPARENTHESE. { A = B; A->query = '( ' . B->query . ' )';}
@@ -311,8 +312,8 @@ update1(A) ::= deleteData(B). { A = B; }
 update1(A) ::= deletewhere(B). { A = B; }
 update1(A) ::= modify(B). { A = B; }
 
-load(A) ::= LOAD SILENT iri(B) INTO graphRef(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'LOAD SILENT ' B->query . ' INTO ' . C->query; }
-load(A) ::= LOAD iri(B) INTO graphRef(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'LOAD ' B->query . ' INTO ' . C->query; }
+load(A) ::= LOAD SILENT iri(B) INTO graphRef(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'LOAD SILENT ' . B->query . ' INTO ' . C->query; }
+load(A) ::= LOAD iri(B) INTO graphRef(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'LOAD ' . B->query . ' INTO ' . C->query; }
 load(A) ::= LOAD SILENT iri(B). { A = B; A->query = 'LOAD SILENT ' . B->query; }
 load(A) ::= LOAD iri(B). { A = B; A->query = 'LOAD ' . B->query; }
 
@@ -350,7 +351,7 @@ modify(A) ::= deleteClause(B) insertClause(C) usingClauseX(D) WHERE groupGraphPa
 modify(A) ::= deleteClause(B) usingClauseX(C) WHERE groupGraphPattern(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . 'WHERE' . PHP_EOL . D->query; }
 modify(A) ::= insertClause(B) usingClauseX(C) WHERE groupGraphPattern(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . 'WHERE' . PHP_EOL . D->query; }
 modify(A) ::= deleteClause(B) insertClause(C) WHERE groupGraphPattern(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = D->ssVars; A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . 'WHERE' . PHP_EOL . D->query; }
-modify(A) ::= deleteClause(B) WHERE groupGraphPattern(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = D->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . 'WHERE' . PHP_EOL . C->query; }
+modify(A) ::= deleteClause(B) WHERE groupGraphPattern(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . 'WHERE' . PHP_EOL . C->query; }
 modify(A) ::= insertClause(B) WHERE groupGraphPattern(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = D->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . 'WHERE' . PHP_EOL . C->query; }
 usingClauseX(A) ::= usingClauseX(B) usingClause(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->query = B->query . PHP_EOL . C->query; }
 usingClauseX(A) ::= usingClause(B). {A = B;}
@@ -374,9 +375,9 @@ graphRefAll(A) ::= NAMED. { A = new NTToken(); A->query = 'NAMED';}
 graphRefAll(A) ::= ALL. { A = new NTToken(); A->query = 'ALL';}
 
 quadPattern(A) ::= LBRACE quads(B) RBRACE. { A = B; A->query = '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
-quadPattern(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }'}
+quadPattern(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }';}
 
-quadData(A) ::= LBRACE quads(B) RBRACE. { if(!empty(B->vars)){throw new Exception("QuadPattern arent allowed to contain variables: " . B->query;} A = B; A->query = '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
+quadData(A) ::= LBRACE quads(B) RBRACE. { if(!empty(B->vars)){throw new Exception("QuadPattern arent allowed to contain variables: " . B->query);} A = B; A->query = '{ ' . PHP_EOL . B->query . PHP_EOL . ' }'; }
 quadData(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }'}
 
 quads(A) ::= triplesTemplate(B) quadsX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
@@ -388,13 +389,13 @@ quadsX(A) ::= quadsX(B) quadsNotTriples(C) DOT. { A = new NTToken(); A->copyBool
 quadsX(A) ::= quadsX(B) quadsNotTriples(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
 quadsX(A) ::= quadsNotTriples(B) DOT triplesTemplate(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
 quadsX(A) ::= quadsNotTriples(B) triplesTemplate(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
-quadsX(A) ::= quadsNotTriples(B) DOT. { A = B; A->query = B->query . ' .'}
+quadsX(A) ::= quadsNotTriples(B) DOT. { A = B; A->query = B->query . ' .';}
 quadsX(A) ::= quadsNotTriples(B). { A = B; }
 
 quadsNotTriples(A) ::= GRAPH varOrIri(B) LBRACE triplesTemplate(C) RBRACE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'GRAPH ' . B->query . PHP_EOL . ' { ' .  PHP_EOL . C->query . PHP_EOL . ' }'; }
 quadsNotTriples(A) ::= GRAPH varOrIri(B) LBRACE RBRACE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->query = 'GRAPH ' . B->query . ' { }'; }
 
-triplesTemplate(A) ::= triplesSameSubject(B) DOT triplesTemplateX(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query ' .'; }
+triplesTemplate(A) ::= triplesSameSubject(B) DOT triplesTemplateX(C) DOT. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query . ' .'; }
 triplesTemplate(A) ::= triplesSameSubject(B) DOT triplesTemplateX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' .' . PHP_EOL . C->query; }
 triplesTemplate(A) ::= triplesSameSubject(B) DOT. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query . ' .'; }
 triplesTemplate(A) ::= triplesSameSubject(B). { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
@@ -406,7 +407,7 @@ groupGraphPattern(A) ::= LBRACE subSelect(B) RBRACE. { A = B; A->query = '{ ' . 
 groupGraphPattern(A) ::= LBRACE RBRACE. {A = new NTToken(); A->query = '{ }'}
 
 groupGraphPatternSub(A) ::= triplesBlock(B) groupGraphPatternSubX(C). { if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = C->ssVars; A->bindVar = C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; }
-groupGraphPatternSub(A) ::= triplesBlock(B). {A = B}
+groupGraphPatternSub(A) ::= triplesBlock(B). {A = B;}
 groupGraphPatternSub(A) ::= groupGraphPatternSubX(B). {A = B;}
 groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) DOT triplesBlock(D). { $tmp = B->noDuplicates(C->ssVars, B->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->bindVar = B->bindVar + C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query . ' .' . PHP_EOL . D->query; }
 groupGraphPatternSubX(A) ::= groupGraphPatternSubX(B) graphPatternNotTriples(C) triplesBlock(D). { $tmp = B->noDuplicates(C->ssVars, B->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty(C->bindVar)){ $tmp = B->noDuplicates(C->bindVar, B->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->bindVar = B->bindVar + C->bindVar; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
@@ -481,7 +482,7 @@ filter(A) ::= FILTER LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken();
 filter(A) ::= FILTER builtInCall(B). { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'FILTER ' . B->query; }
 filter(A) ::= FILTER functionCall(B). { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'FILTER ' . B->query; }
 
-functionCall(A) ::= iri(B) argList(C). { A = new NTToken(); A->hasFNC = true, A->hasAGG = true; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = B->query . C->query; }
+functionCall(A) ::= iri(B) argList(C). { A = new NTToken(); A->hasFNC = true; A->hasAGG = true; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = B->query . C->query; }
 
 argList(A) ::= LPARENTHESE DISTINCT expression(B) argListX(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = '( DISTINCT' . B->query . PHP_EOL . C->query .  ' )'; }
 argList(A) ::= LPARENTHESE expression(B) argListX(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = '( ' . B->query . PHP_EOL . C->query .  ' )'; }
@@ -496,9 +497,9 @@ triplesSameSubject(A) ::= varOrTerm(B) propertyListNotEmpty(C). { A = new NTToke
 triplesSameSubject(A) ::= triplesNode(B) propertyListNotEmpty(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
 triplesSameSubject(A) ::= triplesNode(B). { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
 
-propertyListNotEmpty(A) ::= verb(B) objectList(C) propertyListNotEmptyX(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + C->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' D->query; }
+propertyListNotEmpty(A) ::= verb(B) objectList(C) propertyListNotEmptyX(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + C->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' . D->query; }
 propertyListNotEmpty(A) ::= verb(B) objectList(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
-propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON verb(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . '; ' . C->query . ' ' D->query; }
+propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON verb(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . '; ' . C->query . ' ' . D->query; }
 propertyListNotEmptyX(A) ::= propertyListNotEmptyX(B) SEMICOLON. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query. ';'; }
 propertyListNotEmptyX(A) ::= SEMICOLON verb(B) objectList(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = '; ' . B->query . ' ' . C->query; }
 propertyListNotEmptyX(A) ::= SEMICOLON. { A = new NTToken(); A->query = ';'; }
@@ -515,12 +516,12 @@ triplesSameSubjectPath(A) ::= varOrTerm(B) propertyListPathNotEmpty(C). { A = ne
 triplesSameSubjectPath(A) ::= triplesNodePath(B) propertyListPathNotEmpty(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
 triplesSameSubjectPath(A) ::= triplesNodePath(B). { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
 
-propertyListPathNotEmpty(A) ::= pathAlternative(B) objectListPath(C) propertyListPathNotEmptyX(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' D->query; }
-propertyListPathNotEmpty(A) ::= var(B) objectListPath(C) propertyListPathNotEmptyX(D). { A = new NTToken(); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = C->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' D->query; }
+propertyListPathNotEmpty(A) ::= pathAlternative(B) objectListPath(C) propertyListPathNotEmptyX(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' . D->query; }
+propertyListPathNotEmpty(A) ::= var(B) objectListPath(C) propertyListPathNotEmptyX(D). { A = new NTToken(); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = C->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' . D->query; }
 propertyListPathNotEmpty(A) ::= pathAlternative(B) objectListPath(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
 propertyListPathNotEmpty(A) ::= var(B) objectListPath(C). { A = new NTToken(); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = C->bNodes; A->query = B->query . ' ' . C->query; }
-propertyListPathNotEmptyX(A) ::= propertyListPathNotEmptyX(B) SEMICOLON pathAlternative(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . '; ' . C->query . ' ' D->query; }
-propertyListPathNotEmptyX(A) ::= propertyListPathNotEmptyX(B) SEMICOLON var(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . '; ' . C->query . ' ' D->query; }
+propertyListPathNotEmptyX(A) ::= propertyListPathNotEmptyX(B) SEMICOLON pathAlternative(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + C->bNodes + D->bNodes; A->query = B->query . '; ' . C->query . ' ' . D->query; }
+propertyListPathNotEmptyX(A) ::= propertyListPathNotEmptyX(B) SEMICOLON var(C) objectList(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->vars = B->vars + C->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . '; ' . C->query . ' ' . D->query; }
 propertyListPathNotEmptyX(A) ::= propertyListPathNotEmptyX(B) SEMICOLON. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query. ';'; }
 propertyListPathNotEmptyX(A) ::= SEMICOLON pathAlternative(B) objectList(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = '; ' . B->query . ' ' . C->query; }
 propertyListPathNotEmptyX(A) ::= SEMICOLON var(B) objectList(C). { A = new NTToken(); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = '; ' . ' ' . B->query . C->query; }
@@ -631,8 +632,8 @@ relationalExpressionX(A) ::= NOT IN expressionList(B). { A = new NTToken(); A->c
 
 additiveExpression(A) ::= multiplicativeExpression(B) additiveExpressionX(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; }
 additiveExpression(A) ::= multiplicativeExpression(B). { A = new NTToken(); A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
-additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralPositive(C) additiveExpressionY(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' D->query; }
-additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralNegative(C) additiveExpressionY(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' D->query; }
+additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralPositive(C) additiveExpressionY(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' . D->query; }
+additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralNegative(C) additiveExpressionY(D). { A = new NTToken(); A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ' ' . C->query . ' ' . D->query; }
 additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralPositive(C). { A = new NTToken(); A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query . ' ' . C->query; }
 additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralNegative(C). { A = new NTToken(); A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query . ' ' . C->query; }
 additiveExpressionX(A) ::= additiveExpressionX(B) PLUS multiplicativeExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' + ' . C->query; }
