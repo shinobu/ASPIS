@@ -1,13 +1,12 @@
-#define TK_FAIL                           -1
-#define TK_PRAGMA                          1
-#define TK_BASE                            2
-#define TK_IRIREF                          3
-#define TK_DOT                             4
-#define TK_PREFIX                          5
-#define TK_PNAME_NS                        6
-#define TK_SELECT                          7
-#define TK_DISTINCT                        8
-#define TK_REDUCED                         9
+#define TK_PRAGMA                         1
+#define TK_BASE                           2
+#define TK_IRIREF                         3
+#define TK_DOT                            4
+#define TK_PREFIX                         5
+#define TK_PNAME_NS                       6
+#define TK_SELECT                         7
+#define TK_DISTINCT                       8
+#define TK_REDUCED                        9
 #define TK_STAR                           10
 #define TK_LPARENTHESE                    11
 #define TK_AS                             12
@@ -162,9 +161,4 @@
 #define TK_PNAME_LN                       161
 #define TK_BLANK_NODE_LABEL               162
 #define TK_ANON                           163
-
-struct Test {
-  const char *z; 
-  int test;
-  unsigned abc;
-};
+#define TK_FAIL                           164

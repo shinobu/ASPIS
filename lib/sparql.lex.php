@@ -6492,7 +6492,7 @@ array(
 						case -3:
 							break;
 						case 3:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -4:
 							break;
 						case 4:
@@ -7140,7 +7140,7 @@ array(
 						case -165:
 							break;
 						case 166:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -166:
 							break;
 						case 167:
@@ -7172,7 +7172,7 @@ array(
 						case -173:
 							break;
 						case 175:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -174:
 							break;
 						case 176:
@@ -7180,7 +7180,7 @@ array(
 						case -175:
 							break;
 						case 178:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -176:
 							break;
 						case 179:
@@ -7188,43 +7188,43 @@ array(
 						case -177:
 							break;
 						case 181:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -178:
 							break;
 						case 183:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -179:
 							break;
 						case 185:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -180:
 							break;
 						case 187:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -181:
 							break;
 						case 189:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -182:
 							break;
 						case 191:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -183:
 							break;
 						case 193:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -184:
 							break;
 						case 195:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -185:
 							break;
 						case 197:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -186:
 							break;
 						case 199:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -187:
 							break;
 						case 335:
@@ -7236,7 +7236,7 @@ array(
 						case -189:
 							break;
 						case 337:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -190:
 							break;
 						case 343:
@@ -7244,19 +7244,19 @@ array(
 						case -191:
 							break;
 						case 344:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -192:
 							break;
 						case 347:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -193:
 							break;
 						case 349:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -194:
 							break;
 						case 351:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -195:
 							break;
 						case 433:
@@ -7264,7 +7264,7 @@ array(
 						case -196:
 							break;
 						case 434:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -197:
 							break;
 						case 437:
@@ -7272,23 +7272,23 @@ array(
 						case -198:
 							break;
 						case 438:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -199:
 							break;
 						case 440:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -200:
 							break;
 						case 442:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -201:
 							break;
 						case 444:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -202:
 							break;
 						case 446:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -203:
 							break;
 						case 500:
@@ -7296,15 +7296,15 @@ array(
 						case -204:
 							break;
 						case 501:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -205:
 							break;
 						case 503:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -206:
 							break;
 						case 505:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -207:
 							break;
 						case 537:
@@ -7312,15 +7312,15 @@ array(
 						case -208:
 							break;
 						case 538:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -209:
 							break;
 						case 540:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -210:
 							break;
 						case 542:
-							{ /* unmatchable Character */ return $this->createToken(SparqlPHPParser::TK_FAIL); }
+							{ /* unmatchable Character */ return $this->createToken(-1); }
 						case -211:
 							break;
 						default:

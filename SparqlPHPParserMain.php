@@ -10,19 +10,19 @@ class SparqlPHPParserMain {
 
   private function parse($fp) {
 		if (!isset($parser)) {
-			$this->parser = new SparqlPHPParserParser($this);
+			$this->parser = new SparqlPHPParser($this);
 		}
     $scanner = new SparqlLexer($fp);
 	    while ($x = $scanner->nextToken())
 		  {
-		    if($x->type != SparqlPHPParser::TK_FAIL) {
-					$this->parser->SparqlPHP($x->type, $x);
+		    if($x->type != -1) {
+					$this->parser->doParse($x->type, $x);
 				} else {
 					$err = 'Invalid Input in line ' . $x->line . '. Problem with: ' . $x->value . fgets($fp, 15);
-					throw Exception($err);
+					throw new Exception($err);
 				}
 		  }
-			$this->parser->SparqlPHP(0);
+			$this->parser->doParse(0);
 			
   }
 
