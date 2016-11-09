@@ -5616,7 +5616,7 @@ private function yy_reduce(
       case 422:
       case 423:
 #line 641 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' $this->yystack[$this->yyidx + 0]->minor->query; }
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; }
 #line 5418 "sparql.php"
         break;
       case 426:
@@ -5670,7 +5670,7 @@ private function yy_reduce(
         break;
       case 452:
 #line 675 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); copyBools($this->yystack[$this->yyidx + -1]->minor) $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'LANGMATCHES( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
+{ $yygotominor = new NTToken(); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'LANGMATCHES( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
 #line 5472 "sparql.php"
         break;
       case 453:
@@ -5690,7 +5690,7 @@ private function yy_reduce(
         break;
       case 456:
 #line 679 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->hasBN = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes[$this->yystack[$this->yyidx + -1]->minor->query] = 1; $yygotominor->addBNodes($this->yystack[$this->yyidx + -1]->minor->bNodes); $yygotominor->query = 'BNODE( ' $this->yystack[$this->yyidx + -1]->minor->query; ' )'; }
+{ $yygotominor = new NTToken(); $yygotominor->hasBN = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes[$this->yystack[$this->yyidx + -1]->minor->query] = 1; $yygotominor->addBNodes($this->yystack[$this->yyidx + -1]->minor->bNodes); $yygotominor->query = 'BNODE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; }
 #line 5492 "sparql.php"
         break;
       case 457:
@@ -5985,7 +5985,7 @@ private function yy_reduce(
         break;
       case 517:
 #line 746 "sparql.y"
-{ $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'SAMPLE( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes); }
+{ $yygotominor = new NTToken(); $yygotominor->hasAGG = true; $yygotominor->query = 'SAMPLE( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; }
 #line 5787 "sparql.php"
         break;
       case 518:

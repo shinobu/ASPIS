@@ -638,7 +638,7 @@ additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralPositive(C). { A
 additiveExpressionX(A) ::= additiveExpressionX(B) numericLiteralNegative(C). { A = new NTToken(); A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query . ' ' . C->query; }
 additiveExpressionX(A) ::= additiveExpressionX(B) PLUS multiplicativeExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' + ' . C->query; }
 additiveExpressionX(A) ::= additiveExpressionX(B) MINUS multiplicativeExpression(C). { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' - ' . C->query; }
-additiveExpressionX(A) ::= numericLiteralPositive(B) additiveExpressionY(C). { A = new NTToken(); A->copyBools(C); A->ssVars = B->ssVars; A->vars = C->vars; A->bNodes = C->bNodes; A->query = B->query . ' ' C->query; }
+additiveExpressionX(A) ::= numericLiteralPositive(B) additiveExpressionY(C). { A = new NTToken(); A->copyBools(C); A->ssVars = B->ssVars; A->vars = C->vars; A->bNodes = C->bNodes; A->query = B->query . ' ' . C->query; }
 additiveExpressionX(A) ::= numericLiteralNegative(B) additiveExpressionY(C). { A = new NTToken(); A->copyBools(C); A->ssVars = B->ssVars; A->vars = C->vars; A->bNodes = C->bNodes; A->query = B->query . ' ' C->query; }
 additiveExpressionX(A) ::= numericLiteralPositive(B). { A = new NTToken(); A->query = B->query; }
 additiveExpressionX(A) ::= numericLiteralNegative(B). { A = new NTToken(); A->query = B->query; }
@@ -672,11 +672,11 @@ builtInCall(A) ::= existsFunc(B). { A = new NTToken(); A->copyBools(B); A->ssVar
 builtInCall(A) ::= notExistsFunc(B). { A = new NTToken(); A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; }
 builtInCall(A) ::= STR LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'STR( ' . B->query . ' )'; }
 builtInCall(A) ::= LANG LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'STR( ' . B->query . ' )'; }
-builtInCall(A) ::= LANGMATCHES LPARENTHESE expression(B) COMMA expression(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); copyBools(C) A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'LANGMATCHES( ' . B->query . ', ' . C->query . ' )'; }
+builtInCall(A) ::= LANGMATCHES LPARENTHESE expression(B) COMMA expression(C) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = 'LANGMATCHES( ' . B->query . ', ' . C->query . ' )'; }
 builtInCall(A) ::= DATATYPE LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'DATATYPE( ' . B->query . ' )'; }
 builtInCall(A) ::= BOUND LPARENTHESE var(B) RPARENTHESE. { A = new NTToken(); A->vars = B->vars; A->query = 'BOUND( ' . B->query . ' )'; }
 builtInCall(A) ::= URI LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'URI( ' . B->query . ' )'; }
-builtInCall(A) ::= BNODE LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->hasBN = true; A->copyBools(B); A->vars = B->vars; A->bNodes[B->query] = 1; A->addBNodes(B->bNodes); A->query = 'BNODE( ' B->query; ' )'; }
+builtInCall(A) ::= BNODE LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->hasBN = true; A->copyBools(B); A->vars = B->vars; A->bNodes[B->query] = 1; A->addBNodes(B->bNodes); A->query = 'BNODE( ' . B->query . ' )'; }
 builtInCall(A) ::= BNODE NIL. { A = new NTToken(); A->hasBN = true; A->query = 'BNODE( )'; }
 builtInCall(A) ::= RAND NIL. { A = new NTToken(); A->query = 'RAND( )'; }
 builtInCall(A) ::= ABS LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = 'ABS(' . B->query . ' )'; }
@@ -743,7 +743,7 @@ aggregate(A) ::= SUM LPARENTHESE DISTINCT expression(B) RPARENTHESE. { A = new N
 aggregate(A) ::= MIN LPARENTHESE DISTINCT expression(B) RPARENTHESE. { A = new NTToken(); A->hasAGG = true; A->query = 'MIN( DISTINCT ' . B->query . ' )'; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; }
 aggregate(A) ::= MAX LPARENTHESE DISTINCT expression(B) RPARENTHESE. { A = new NTToken(); A->hasAGG = true; A->query = 'MAX( DISTINCT ' . B->query . ' )'; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; }
 aggregate(A) ::= AVG LPARENTHESE DISTINCT expression(B) RPARENTHESE. { A = new NTToken(); A->hasAGG = true; A->query = 'AVG( DISTINCT ' . B->query . ' )'; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; }
-aggregate(A) ::= SAMPLE LPARENTHESE DISTINCT expression(B) RPARENTHESE. { A = new NTToken(); A->hasAGG = true; A->query = 'SAMPLE( DISTINCT ' . B->query . ' )'; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes); }
+aggregate(A) ::= SAMPLE LPARENTHESE DISTINCT expression(B) RPARENTHESE. { A = new NTToken(); A->hasAGG = true; A->query = 'SAMPLE( DISTINCT ' . B->query . ' )'; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; }
 aggregate(A) ::= SUM LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->hasAGG = true; A->query = 'SUM( ' . B->query . ' )'; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; }
 aggregate(A) ::= MIN LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->hasAGG = true; A->query = 'MIN( ' . B->query . ' )'; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; }
 aggregate(A) ::= MAX LPARENTHESE expression(B) RPARENTHESE. { A = new NTToken(); A->hasAGG = true; A->query = 'MAX( ' . B->query . ' )'; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; }
