@@ -144,14 +144,15 @@ prologue(A) ::= prefixDeclX(B) baseDecl(C) prefixDeclX(D). { A = new NTToken(); 
 prologue(A) ::= baseDecl(B) prefixDeclX(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query;}
 prologue(A) ::= prefixDeclX(B) baseDecl(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query;}
 prologue(A) ::= baseDecl(B). { A = new NTToken(); A->query = B->query;}
+prologue(A) ::= prefixDeclX(B). { A = new NTToken(); A->query = B->query;}
 prefixDeclX(A) ::= prefixDeclX(B) prefixDecl(C). { A = new NTToken(); A->query = B->query . PHP_EOL . C->query;}
 prefixDeclX(A) ::= prefixDecl(B). { A = new NTToken(); A->query = B->query;}
 
-baseDecl(A) ::= BASE(B) IRIREF(C) DOT. { $this->base = C->value; A = new NTToken(); A->query = B->value . ' ' . C->value . ' .';}
-baseDecl(A) ::= BASE(B) IRIREF(C). { $this->base = C->value; A = new NTToken(); A->query = B->value . ' ' . C->value;}
+baseDecl(A) ::= BASE(B) IRIREF(C) DOT. { $this->base = C->value; A = new NTToken(); A->query = strtoupper(B->value) . ' ' . C->value . ' .';}
+baseDecl(A) ::= BASE(B) IRIREF(C). { $this->base = C->value; A = new NTToken(); A->query = strtoupper(B->value) . ' ' . C->value;}
 
-prefixDecl(A) ::= PREFIX(B) PNAME_NS(C) IRIREF(D) DOT. { $this->addNS(C->value, D->value); A = new NTToken(); A->query = B->value . ' ' . C->value . D->value . ' .';}
-prefixDecl(A) ::= PREFIX(B) PNAME_NS(C) IRIREF(D). { $this->addNS(C->value, D->value); A = new NTToken(); A->query = B->value . ' ' . C->value . D->value;}
+prefixDecl(A) ::= PREFIX(B) PNAME_NS(C) IRIREF(D) DOT. { $this->addNS(C->value, D->value); A = new NTToken(); A->query = strtoupper(B->value) . ' ' . C->value . D->value . ' .';}
+prefixDecl(A) ::= PREFIX(B) PNAME_NS(C) IRIREF(D). { $this->addNS(C->value, D->value); A = new NTToken(); A->query = strtoupper(B->value) . ' ' . C->value . D->value;}
 
 selectQuery(A) ::= selectClause(B) datasetClauseX(C) whereclause(D) solutionModifier(E). { $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->copyBools(E); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; }
 selectQuery(A) ::= selectClause(B) datasetClauseX(C) whereclause(D). { $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; }
