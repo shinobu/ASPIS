@@ -1,8 +1,7 @@
 <?php
-use PHPUnit\Framework\TestCase;
 require_once 'vendor/autoload.php';
 require(__DIR__ . '/../SparqlPHPParserMain.php');
-class SparqlPHPParserMainTest extends TestCase
+class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBasicQueryAndPHP()
