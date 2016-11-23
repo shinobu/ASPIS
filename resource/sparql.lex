@@ -5,7 +5,7 @@ include 'jlex.php';
 /*UNICODE WITH >4 HEX DIGITS ARE NOT SUPPORTED IN JLEX --[\u10000-\uEFFFF]-- is removed for now from the PN_CHARS_BASE MAKRO
 /*normal unicode characters don't seem to work correct either -> needs testing sooner or later -->seems to be related to the use of makros (maybe they somehow concat wrong) --> makros will be expanded, though this leads to extremely long lines of hard to follow regex
 /*changed uri regex, should still be correct and now correct regex...
-/* Base and Prefix Prior to LANGTAG because the are equivalent --base and prefix are no longer legal langtags--
+/* Base and Prefix Prior to LANGTAG because the are equivalent if i allow @Prefix and @Base -->base and prefix are no longer legal langtags--
 */
 %%
 %{
