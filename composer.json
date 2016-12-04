@@ -10,10 +10,37 @@
             "homepage": "https://www.github.com/shinobu"
         }
     ],
+    "repositories": [
+    {
+        "type": "package",
+        "package": {
+            "name": "shinobu/JLexPHP",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shinobu/JLexPHP.git",
+                "reference": "master"
+            }
+        }
+    },
+    {
+        "type": "package",
+        "package": {
+            "name": "shinobu/lemon-php",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shinobu/lemon-php.git",
+                "reference": "master"
+            }
+        }
+    }
+    ],
     "require": {
         "php": ">=5.4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "5.6.*"
+        "phpunit/phpunit": "5.6.*",
+        "shinobu/JLexPHP": "1.0"
     }
 }
