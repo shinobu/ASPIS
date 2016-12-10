@@ -30,8 +30,11 @@ class NTToken {
     public $counter = 0;
     //NTToken Type to differentiate different Tokens in the Syntax Tree, starts at 500 (TTokens use 1-164 right now, up to 500 is just a buffer)
     public $type = -1;
+<<<<<<< HEAD
     //Childs of the NTToken to create the parse tree
     public $childs = array();
+=======
+>>>>>>> 6b2697e... adds types, still need to add root, corrected a few things, shoved the things that needed to be copy pasted into the %include_class option, that indeyets fork enables
     /* booleans */
     public $hasSS = false;
     public $hasBN = false;
