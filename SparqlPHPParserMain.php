@@ -25,6 +25,10 @@ class SparqlPHPParserMain
             }
         }
         $this->parser->doParse(0);
+        if ($this->root == null) {
+            $err = 'Could not finish Parsing';
+            throw new Exception($err);
+        }
     }
 
     public function parseString($string)
