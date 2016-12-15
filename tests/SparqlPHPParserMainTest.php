@@ -48,46 +48,55 @@ class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
         //enable second parameter to only get syntax manifest paths
         $manifestIncludes = $this->importFromManifest($manifestAllPath, true);
         foreach($manifestIncludes as $manifest) {
-            //the substr removes file:// from the filepath
-            $manifestTestNames = $this->importFromManifest(substr($manifest, 7));
+            $manifestTestNames = importFromManifest($manifest);
+            $manifestGraph = new EasyRdf_Graph();
+            $manifestGraph->parseFile($manifest);
+            $resource = $manifestGraph->toRdfPhp();
             foreach($manifestTestNames as $testName) {
-                $manifestGraph = new EasyRdf_Graph();
-                $manifestGraph->parseFile($manifest);
-                $resource = $manifestGraph->toRdfPhp();
                 $typeUri = $resource[$testName]["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"][0]['value'];
                 $typeBool = strpos($typeUri,'Positive');
+                $type = false;
                 if ($typeBool !== false) {
                     $type = 'positiveTest';
                 } else {
                     $type = 'negativeTest';
                 }
                 $testFile = $resource[$testName]["http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#action"][0]['value'];
+                //remove double file:// from the queryFilePaths
+                $testFile = substr($testFile, 14);
                 //adding the testName as name for the key, makes it easy to see which s11ts testcases fail.
-                $parseArray[$testName] = array('type' => $type, 'file' => $file);
+                $parseArray[$testName] = array('type' => $type, 'file' => $testFile);
             }
         }
         return $parseArray;
     }
 
-    public function importFromManifest($filename, $onlySyntax = null)
+    public function importFromManifest($filename, $onlySyntax = false)
     {
         $graph = new EasyRdf_Graph();
         $graph->parseFile($fileName, 'turtle');
         $resource = $graph->toRdfPhp();
         $counter = 1;
         $manifestPaths = array();
-        $s ='_:genid';
+        $countString ='_:genid';
         while(true) {
-           if(!isset($resource[$s . $counter])) {
-               break;
-           }
-           if (isset($resource[$s . $counter]["http://www.w3.org/1999/02/22-rdf-syntax-ns#first"][0]['value'])) {
-               $manifestPath = ($resource[$s . $counter]["http://www.w3.org/1999/02/22-rdf-syntax-ns#first"][0]['value']);
-               //only adds parser relevant(syntax) tests into the array with test manifests
-               $isSyntaxTest = strpos($manifestPath,'syntax');
-               if ( $onlySyntax != true || $isSyntaxTest !== false) {
-                   $manifestPaths[] = $manifestPath;
-               }
+            if(!isset($resource[$countString . $counter])) {
+                break;
+            }
+            if (isset($resource[$countString . $counter]["http://www.w3.org/1999/02/22-rdf-syntax-ns#first"][0]['value'])) {
+                $manifestPath = null;
+                if ($onlySyntax) {
+                    //Strip file:// for filePaths
+                    $manifestPath = ($resource[$s . $counter]["http://www.w3.org/1999/02/22-rdf-syntax-ns#first"][0]['value']);
+                    $manifestPath = substr($manifestPath, 7);
+                } else {
+                    $manifestPath = ($resource[$s . $counter]["http://www.w3.org/1999/02/22-rdf-syntax-ns#first"][0]['value']);
+                }
+                //only adds parser relevant(syntax) tests into the array with test manifests, otherwise adds all Testcases
+                $isSyntaxTest = strpos($manifestPath,'syntax');
+                if ( $onlySyntax != true || $isSyntaxTest !== false) {
+                    $manifestPaths[] = $manifestPath;
+                }
            }
            $counter++;
        }
