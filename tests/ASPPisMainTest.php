@@ -1,12 +1,14 @@
 <?php
-require(__DIR__ . '/../SparqlPHPParserMain.php');
-class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
+namespace aSPPis\tests;
+use asPPis\ASPPisMain;
+use EasyRdf\Graph;
+class ASPPisMainTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBasicQueryAndPHP()
     {
         // Arrange
-        $parser = new SparqlPHPParserMain();
+        $parser = new ASPPisMain();
 
         // Act
         $parser->parseString('BASE <http://www.url.com/> PREFIX abc:<https://test.com/>
@@ -23,7 +25,7 @@ class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
      */
     public function testW3CQueries($type, $testFile)
     {
-        $parser = new SparqlPHPParserMain();
+        $parser = new ASPPisMain();
         try {
             $parser->parseFile($testFile);
             if($type === 'negativeTest') {

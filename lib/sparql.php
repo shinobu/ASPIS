@@ -2,7 +2,7 @@
 
 #line 11 "resource/sparql.y"
  /* this will be copied blindly */
-
+namespace aSPPis\lib;
 class NTToken {
     /* arrays, the array will be considered as sets, as only a few situations need an actual check for duplicates. 
      * This is achieved in PHP with using the value as key and a uniformed value for all keys. 

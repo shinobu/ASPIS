@@ -1,9 +1,8 @@
 <?php
+namespace aSPPis;
+require_once('vendor/autoload.php');
 
-include 'lib/sparql.lex.php';
-include 'lib/sparql.php';
-
-class SparqlPHPParserMain
+class ASPPisMain
 {
     //root gets set in the parser
     public $root = null;
