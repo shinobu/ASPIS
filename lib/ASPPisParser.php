@@ -1,8 +1,10 @@
 <?php
 
-#line 11 "resource/sparql.y"
+#line 11 "resource/ASPPisParser.y"
  /* this will be copied blindly */
 namespace aSPPis\lib;
+use \stdClass;
+use \Exception;
 class NTToken {
     /* arrays, the array will be considered as sets, as only a few situations need an actual check for duplicates. 
      * This is achieved in PHP with using the value as key and a uniformed value for all keys. 
@@ -65,16 +67,16 @@ class NTToken {
     }
 	}
 }  
-#line 69 "resource/sparql.php"
+#line 71 "resource/ASPPisParser.php"
 
-class SparqlPHPParser {
+class aSPPisParser {
   private $yyidx = -1;               /* Index of top element in stack */
   private $yyerrcnt;                 /* Shifts left before out of the error */
   private $yystack = array();
   private $yyTraceFILE = null;
   private $yyTracePrompt = null;
 
-#line 77 "resource/sparql.y"
+#line 79 "resource/ASPPisParser.y"
 
 /* putting the ns and base information in the parser class and adding access to the SparqlPHPParserMain.php, removes the necessity to use 
  * global variables/add another parameter to the parse function.
@@ -112,7 +114,7 @@ function checkBase($alias) {
         }
     }
 }
-#line 116 "resource/sparql.php"
+#line 118 "resource/ASPPisParser.php"
 
   const TK_PRAGMA =  1;
   const TK_BASE =  2;
@@ -3370,7 +3372,7 @@ static $yy_default = array(
 
           return $this->yy_find_shift_action($iFallback);
         }
-        if (defined('SparqlPHPParser::YYWILDCARD'))
+        if (defined('aSPPisParser::YYWILDCARD'))
         {
           $j = $i - $iLookAhead + self::YYWILDCARD;
           if ($j >= 0 && $j < count(self::$yy_action) && self::$yy_lookahead[$j] == self::YYWILDCARD)
@@ -4022,17 +4024,17 @@ static $yy_default = array(
     {
       case 0: /* start ::= query */
       case 1: /* start ::= update */
-#line 128 "resource/sparql.y"
+#line 129 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $this->main->root = $this->yystack[$this->yyidx + 0]->minor; }
-#line 3861 "resource/sparql.php"
+#line 3863 "resource/ASPPisParser.php"
         break;
       case 2: /* query ::= prologue selectQuery valuesClause */
       case 3: /* query ::= prologue constructQuery valuesClause */
       case 4: /* query ::= prologue describeQuery valuesClause */
       case 5: /* query ::= prologue askQuery valuesClause */
-#line 131 "resource/sparql.y"
+#line 132 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 500; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3869 "resource/sparql.php"
+#line 3871 "resource/ASPPisParser.php"
         break;
       case 6: /* query ::= selectQuery valuesClause */
       case 7: /* query ::= constructQuery valuesClause */
@@ -4042,179 +4044,179 @@ static $yy_default = array(
       case 11: /* query ::= prologue constructQuery */
       case 12: /* query ::= prologue describeQuery */
       case 13: /* query ::= prologue askQuery */
-#line 135 "resource/sparql.y"
+#line 136 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 500; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3881 "resource/sparql.php"
+#line 3883 "resource/ASPPisParser.php"
         break;
       case 14: /* query ::= selectQuery */
       case 15: /* query ::= constructQuery */
       case 16: /* query ::= describeQuery */
       case 17: /* query ::= askQuery */
-#line 143 "resource/sparql.y"
+#line 144 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor;  $yygotominor->type = 500; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 3889 "resource/sparql.php"
+#line 3891 "resource/ASPPisParser.php"
         break;
       case 18: /* prologue ::= prefixDeclX baseDecl prefixDeclX */
-#line 148 "resource/sparql.y"
+#line 149 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 501; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3894 "resource/sparql.php"
+#line 3896 "resource/ASPPisParser.php"
         break;
       case 19: /* prologue ::= baseDecl prefixDeclX */
       case 20: /* prologue ::= prefixDeclX baseDecl */
-#line 149 "resource/sparql.y"
+#line 150 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 501; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3900 "resource/sparql.php"
+#line 3902 "resource/ASPPisParser.php"
         break;
       case 21: /* prologue ::= baseDecl */
       case 22: /* prologue ::= prefixDeclX */
-#line 151 "resource/sparql.y"
+#line 152 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 501; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 3906 "resource/sparql.php"
+#line 3908 "resource/ASPPisParser.php"
         break;
       case 23: /* prefixDeclX ::= prefixDeclX prefixDecl */
-#line 153 "resource/sparql.y"
+#line 154 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 502; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3911 "resource/sparql.php"
+#line 3913 "resource/ASPPisParser.php"
         break;
       case 24: /* prefixDeclX ::= prefixDecl */
-#line 154 "resource/sparql.y"
+#line 155 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 502; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 3916 "resource/sparql.php"
+#line 3918 "resource/ASPPisParser.php"
         break;
       case 25: /* baseDecl ::= BASE IRIREF DOT */
-#line 156 "resource/sparql.y"
+#line 157 "resource/ASPPisParser.y"
 { $this->base = $this->yystack[$this->yyidx + -1]->minor->value; $yygotominor = new NTToken(); $yygotominor->type = 503; $yygotominor->query = strtoupper($this->yystack[$this->yyidx + -2]->minor->value) . ' ' . $this->yystack[$this->yyidx + -1]->minor->value . ' .'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3921 "resource/sparql.php"
+#line 3923 "resource/ASPPisParser.php"
         break;
       case 26: /* baseDecl ::= BASE IRIREF */
-#line 157 "resource/sparql.y"
+#line 158 "resource/ASPPisParser.y"
 { $this->base = $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor = new NTToken(); $yygotominor->type = 503; $yygotominor->query = strtoupper($this->yystack[$this->yyidx + -1]->minor->value) . ' ' . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3926 "resource/sparql.php"
+#line 3928 "resource/ASPPisParser.php"
         break;
       case 27: /* prefixDecl ::= PREFIX PNAME_NS IRIREF DOT */
-#line 159 "resource/sparql.y"
+#line 160 "resource/ASPPisParser.y"
 { $this->addNS($this->yystack[$this->yyidx + -2]->minor->value, $this->yystack[$this->yyidx + -1]->minor->value); $yygotominor = new NTToken(); $yygotominor->type = 504; $yygotominor->query = strtoupper($this->yystack[$this->yyidx + -3]->minor->value) . ' ' . $this->yystack[$this->yyidx + -2]->minor->value . $this->yystack[$this->yyidx + -1]->minor->value . ' .'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3931 "resource/sparql.php"
+#line 3933 "resource/ASPPisParser.php"
         break;
       case 28: /* prefixDecl ::= PREFIX PNAME_NS IRIREF */
-#line 160 "resource/sparql.y"
+#line 161 "resource/ASPPisParser.y"
 { $this->addNS($this->yystack[$this->yyidx + -1]->minor->value, $this->yystack[$this->yyidx + 0]->minor->value); $yygotominor = new NTToken(); $yygotominor->type = 504; $yygotominor->query = strtoupper($this->yystack[$this->yyidx + -2]->minor->value) . ' ' . $this->yystack[$this->yyidx + -1]->minor->value . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3936 "resource/sparql.php"
+#line 3938 "resource/ASPPisParser.php"
         break;
       case 29: /* selectQuery ::= selectClause datasetClauseX whereclause solutionModifier */
-#line 162 "resource/sparql.y"
+#line 163 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->type = 505; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3941 "resource/sparql.php"
+#line 3943 "resource/ASPPisParser.php"
         break;
       case 30: /* selectQuery ::= selectClause datasetClauseX whereclause */
-#line 163 "resource/sparql.y"
+#line 164 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->type = 505; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3946 "resource/sparql.php"
+#line 3948 "resource/ASPPisParser.php"
         break;
       case 31: /* selectQuery ::= selectClause whereclause solutionModifier */
-#line 164 "resource/sparql.y"
+#line 165 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->type = 505; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3951 "resource/sparql.php"
+#line 3953 "resource/ASPPisParser.php"
         break;
       case 32: /* selectQuery ::= selectClause whereclause */
-#line 165 "resource/sparql.y"
+#line 166 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->type = 505; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3956 "resource/sparql.php"
+#line 3958 "resource/ASPPisParser.php"
         break;
       case 33: /* datasetClauseX ::= datasetClauseX datasetClause */
-#line 166 "resource/sparql.y"
+#line 167 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 506; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3961 "resource/sparql.php"
+#line 3963 "resource/ASPPisParser.php"
         break;
       case 34: /* datasetClauseX ::= datasetClause */
-#line 167 "resource/sparql.y"
+#line 168 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor;  $yygotominor->type = 506;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 3966 "resource/sparql.php"
+#line 3968 "resource/ASPPisParser.php"
         break;
       case 35: /* subSelect ::= selectClause whereclause solutionModifier valuesClause */
-#line 170 "resource/sparql.y"
+#line 171 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -3]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->type = 507; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3971 "resource/sparql.php"
+#line 3973 "resource/ASPPisParser.php"
         break;
       case 36: /* subSelect ::= selectClause whereclause valuesClause */
       case 37: /* subSelect ::= selectClause whereclause solutionModifier */
-#line 171 "resource/sparql.y"
+#line 172 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->type = 507; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3977 "resource/sparql.php"
+#line 3979 "resource/ASPPisParser.php"
         break;
       case 38: /* subSelect ::= selectClause whereclause */
-#line 173 "resource/sparql.y"
+#line 174 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + 0]->minor->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $yygotominor = new NTToken(); $yygotominor->type = 507; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3982 "resource/sparql.php"
+#line 3984 "resource/ASPPisParser.php"
         break;
       case 39: /* selectClause ::= SELECT DISTINCT selectClauseX */
-#line 175 "resource/sparql.y"
+#line 176 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 508; $yygotominor->query = 'SELECT DISTINCT' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3987 "resource/sparql.php"
+#line 3989 "resource/ASPPisParser.php"
         break;
       case 40: /* selectClause ::= SELECT REDUCED selectClauseX */
-#line 176 "resource/sparql.y"
+#line 177 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 508; $yygotominor->query = 'SELECT REDUCED' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3992 "resource/sparql.php"
+#line 3994 "resource/ASPPisParser.php"
         break;
       case 41: /* selectClause ::= SELECT STAR selectClauseX */
-#line 177 "resource/sparql.y"
+#line 178 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 508; $yygotominor->query = 'SELECT *' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 3997 "resource/sparql.php"
+#line 3999 "resource/ASPPisParser.php"
         break;
       case 42: /* selectClause ::= SELECT DISTINCT STAR */
-#line 178 "resource/sparql.y"
+#line 179 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 508; $yygotominor->query = 'SELECT DISTINCT *'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4002 "resource/sparql.php"
+#line 4004 "resource/ASPPisParser.php"
         break;
       case 43: /* selectClause ::= SELECT REDUCED STAR */
-#line 179 "resource/sparql.y"
+#line 180 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 508; $yygotominor->query = 'SELECT REDUCED *'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4007 "resource/sparql.php"
+#line 4009 "resource/ASPPisParser.php"
         break;
       case 44: /* selectClause ::= SELECT selectClauseX */
-#line 180 "resource/sparql.y"
+#line 181 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 508; $yygotominor->query = 'SELECT ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4012 "resource/sparql.php"
+#line 4014 "resource/ASPPisParser.php"
         break;
       case 45: /* selectClause ::= SELECT STAR */
-#line 181 "resource/sparql.y"
+#line 182 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 508; $yygotominor->query = 'SELECT *'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4017 "resource/sparql.php"
+#line 4019 "resource/ASPPisParser.php"
         break;
       case 46: /* selectClauseX ::= selectClauseX LPARENTHESE expression AS var RPARENTHESE */
-#line 182 "resource/sparql.y"
+#line 183 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 509; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -5]->minor->ssVars + $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -5]->minor->query . '( ' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4022 "resource/sparql.php"
+#line 4024 "resource/ASPPisParser.php"
         break;
       case 47: /* selectClauseX ::= selectClauseX LPARENTHESE expression RPARENTHESE */
-#line 183 "resource/sparql.y"
+#line 184 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 509; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4027 "resource/sparql.php"
+#line 4029 "resource/ASPPisParser.php"
         break;
       case 48: /* selectClauseX ::= selectClauseX builtInCall */
       case 49: /* selectClauseX ::= selectClauseX rdfLiteral */
       case 50: /* selectClauseX ::= selectClauseX numericLiteral */
       case 51: /* selectClauseX ::= selectClauseX booleanLiteral */
       case 53: /* selectClauseX ::= selectClauseX functionCall */
-#line 184 "resource/sparql.y"
+#line 185 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 509; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4036 "resource/sparql.php"
+#line 4038 "resource/ASPPisParser.php"
         break;
       case 52: /* selectClauseX ::= selectClauseX var */
-#line 188 "resource/sparql.y"
+#line 189 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 509; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4041 "resource/sparql.php"
+#line 4043 "resource/ASPPisParser.php"
         break;
       case 54: /* selectClauseX ::= LPARENTHESE expression AS var RPARENTHESE */
-#line 190 "resource/sparql.y"
+#line 191 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 509; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4046 "resource/sparql.php"
+#line 4048 "resource/ASPPisParser.php"
         break;
       case 55: /* selectClauseX ::= LPARENTHESE expression RPARENTHESE */
-#line 191 "resource/sparql.y"
+#line 192 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 509; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4051 "resource/sparql.php"
+#line 4053 "resource/ASPPisParser.php"
         break;
       case 56: /* selectClauseX ::= builtInCall */
       case 57: /* selectClauseX ::= rdfLiteral */
@@ -4222,428 +4224,428 @@ static $yy_default = array(
       case 59: /* selectClauseX ::= booleanLiteral */
       case 60: /* selectClauseX ::= var */
       case 61: /* selectClauseX ::= functionCall */
-#line 192 "resource/sparql.y"
+#line 193 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 509; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4061 "resource/sparql.php"
+#line 4063 "resource/ASPPisParser.php"
         break;
       case 62: /* constructQuery ::= CONSTRUCT LBRACE triplesTemplate RBRACE datasetClauseX whereclause solutionModifier */
-#line 199 "resource/sparql.y"
+#line 200 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -4]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . '{' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . '}' . PHP_EOL. $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4066 "resource/sparql.php"
+#line 4068 "resource/ASPPisParser.php"
         break;
       case 63: /* constructQuery ::= CONSTRUCT LBRACE RBRACE datasetClauseX whereclause solutionModifier */
-#line 200 "resource/sparql.y"
+#line 201 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT { }' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL. $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4071 "resource/sparql.php"
+#line 4073 "resource/ASPPisParser.php"
         break;
       case 64: /* constructQuery ::= CONSTRUCT datasetClauseX WHERE LBRACE triplesTemplate RBRACE solutionModifier */
-#line 201 "resource/sparql.y"
+#line 202 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -5]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . '{' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . '}' . PHP_EOL. $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4076 "resource/sparql.php"
+#line 4078 "resource/ASPPisParser.php"
         break;
       case 65: /* constructQuery ::= CONSTRUCT datasetClauseX WHERE LBRACE RBRACE solutionModifier */
-#line 202 "resource/sparql.y"
+#line 203 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . ' WHERE' . PHP_EOL . '{ }' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4081 "resource/sparql.php"
+#line 4083 "resource/ASPPisParser.php"
         break;
       case 66: /* constructQuery ::= CONSTRUCT LBRACE triplesTemplate RBRACE whereclause solutionModifier */
-#line 203 "resource/sparql.y"
+#line 204 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT {' . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '}' . PHP_EOL. $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4086 "resource/sparql.php"
+#line 4088 "resource/ASPPisParser.php"
         break;
       case 67: /* constructQuery ::= CONSTRUCT LBRACE RBRACE whereclause solutionModifier */
-#line 204 "resource/sparql.y"
+#line 205 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT { }' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4091 "resource/sparql.php"
+#line 4093 "resource/ASPPisParser.php"
         break;
       case 68: /* constructQuery ::= CONSTRUCT LBRACE triplesTemplate RBRACE whereclause */
-#line 205 "resource/sparql.y"
+#line 206 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT {' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . '}' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4096 "resource/sparql.php"
+#line 4098 "resource/ASPPisParser.php"
         break;
       case 69: /* constructQuery ::= CONSTRUCT LBRACE RBRACE whereclause */
-#line 206 "resource/sparql.y"
+#line 207 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 510; $yygotominor->query = 'CONSTRUCT { }' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4101 "resource/sparql.php"
+#line 4103 "resource/ASPPisParser.php"
         break;
       case 70: /* constructQuery ::= CONSTRUCT LBRACE triplesTemplate RBRACE datasetClauseX whereclause */
-#line 207 "resource/sparql.y"
+#line 208 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT {' . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '}' . PHP_EOL. $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4106 "resource/sparql.php"
+#line 4108 "resource/ASPPisParser.php"
         break;
       case 71: /* constructQuery ::= CONSTRUCT LBRACE RBRACE datasetClauseX whereclause */
-#line 208 "resource/sparql.y"
+#line 209 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT { }' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4111 "resource/sparql.php"
+#line 4113 "resource/ASPPisParser.php"
         break;
       case 72: /* constructQuery ::= CONSTRUCT datasetClauseX WHERE LBRACE triplesTemplate RBRACE */
-#line 209 "resource/sparql.y"
+#line 210 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . 'WHERE {' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . '}'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4116 "resource/sparql.php"
+#line 4118 "resource/ASPPisParser.php"
         break;
       case 73: /* constructQuery ::= CONSTRUCT datasetClauseX WHERE LBRACE RBRACE */
-#line 210 "resource/sparql.y"
+#line 211 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -3]->minor; $yygotominor->type = 510; $yygotominor->query = 'CONSTRUCT' . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . 'WHERE { }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4121 "resource/sparql.php"
+#line 4123 "resource/ASPPisParser.php"
         break;
       case 74: /* constructQuery ::= CONSTRUCT WHERE LBRACE triplesTemplate RBRACE solutionModifier */
-#line 211 "resource/sparql.y"
+#line 212 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONSTRUCT WHERE {' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . '}' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4126 "resource/sparql.php"
+#line 4128 "resource/ASPPisParser.php"
         break;
       case 75: /* constructQuery ::= CONSTRUCT WHERE LBRACE RBRACE solutionModifier */
-#line 212 "resource/sparql.y"
+#line 213 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 510; $yygotominor->query = 'CONSTRUCT WHERE { }' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4131 "resource/sparql.php"
+#line 4133 "resource/ASPPisParser.php"
         break;
       case 76: /* constructQuery ::= CONSTRUCT WHERE LBRACE triplesTemplate RBRACE */
-#line 213 "resource/sparql.y"
+#line 214 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 510; $yygotominor->query = 'CONSTRUCT WHERE {' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . '}'; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4136 "resource/sparql.php"
+#line 4138 "resource/ASPPisParser.php"
         break;
       case 77: /* constructQuery ::= CONSTRUCT WHERE LBRACE RBRACE */
-#line 214 "resource/sparql.y"
+#line 215 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 510; $yygotominor->query = 'CONSTRUCT WHERE { }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4141 "resource/sparql.php"
+#line 4143 "resource/ASPPisParser.php"
         break;
       case 78: /* describeQuery ::= DESCRIBE varOrIriX datasetClauseX whereclause solutionModifier */
-#line 216 "resource/sparql.y"
+#line 217 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4146 "resource/sparql.php"
+#line 4148 "resource/ASPPisParser.php"
         break;
       case 79: /* describeQuery ::= DESCRIBE varOrIriX whereclause solutionModifier */
-#line 217 "resource/sparql.y"
+#line 218 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4151 "resource/sparql.php"
+#line 4153 "resource/ASPPisParser.php"
         break;
       case 80: /* describeQuery ::= DESCRIBE varOrIriX datasetClauseX solutionModifier */
       case 81: /* describeQuery ::= DESCRIBE varOrIriX datasetClauseX whereclause */
-#line 218 "resource/sparql.y"
+#line 219 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4157 "resource/sparql.php"
+#line 4159 "resource/ASPPisParser.php"
         break;
       case 82: /* describeQuery ::= DESCRIBE varOrIriX solutionModifier */
       case 83: /* describeQuery ::= DESCRIBE varOrIriX whereclause */
-#line 220 "resource/sparql.y"
+#line 221 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4163 "resource/sparql.php"
+#line 4165 "resource/ASPPisParser.php"
         break;
       case 84: /* describeQuery ::= DESCRIBE varOrIriX datasetClauseX */
-#line 222 "resource/sparql.y"
+#line 223 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4168 "resource/sparql.php"
+#line 4170 "resource/ASPPisParser.php"
         break;
       case 85: /* describeQuery ::= DESCRIBE varOrIriX */
-#line 223 "resource/sparql.y"
+#line 224 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 511; $yygotominor->query = 'DESCRIBE ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4173 "resource/sparql.php"
+#line 4175 "resource/ASPPisParser.php"
         break;
       case 86: /* describeQuery ::= DESCRIBE STAR datasetClauseX whereclause solutionModifier */
-#line 224 "resource/sparql.y"
+#line 225 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE *' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4178 "resource/sparql.php"
+#line 4180 "resource/ASPPisParser.php"
         break;
       case 87: /* describeQuery ::= DESCRIBE STAR whereclause solutionModifier */
       case 89: /* describeQuery ::= DESCRIBE STAR datasetClauseX whereclause */
-#line 225 "resource/sparql.y"
+#line 226 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE *' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4184 "resource/sparql.php"
+#line 4186 "resource/ASPPisParser.php"
         break;
       case 88: /* describeQuery ::= DESCRIBE STAR datasetClauseX solutionModifier */
-#line 226 "resource/sparql.y"
+#line 227 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'DESCRIBE *' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4189 "resource/sparql.php"
+#line 4191 "resource/ASPPisParser.php"
         break;
       case 90: /* describeQuery ::= DESCRIBE STAR solutionModifier */
       case 91: /* describeQuery ::= DESCRIBE STAR whereclause */
       case 92: /* describeQuery ::= DESCRIBE STAR datasetClauseX */
-#line 228 "resource/sparql.y"
+#line 229 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 511; $yygotominor->query = 'DESCRIBE *' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4196 "resource/sparql.php"
+#line 4198 "resource/ASPPisParser.php"
         break;
       case 93: /* describeQuery ::= DESCRIBE STAR */
-#line 231 "resource/sparql.y"
+#line 232 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 511; $yygotominor->query = 'DESCRIBE *'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4201 "resource/sparql.php"
+#line 4203 "resource/ASPPisParser.php"
         break;
       case 94: /* varOrIriX ::= varOrIriX varOrIri */
-#line 232 "resource/sparql.y"
+#line 233 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 512; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4206 "resource/sparql.php"
+#line 4208 "resource/ASPPisParser.php"
         break;
       case 95: /* varOrIriX ::= varOrIri */
-#line 233 "resource/sparql.y"
+#line 234 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 512; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4211 "resource/sparql.php"
+#line 4213 "resource/ASPPisParser.php"
         break;
       case 96: /* askQuery ::= ASK datasetClauseX whereclause solutionModifier */
-#line 235 "resource/sparql.y"
+#line 236 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 513; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'ASK' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4216 "resource/sparql.php"
+#line 4218 "resource/ASPPisParser.php"
         break;
       case 97: /* askQuery ::= ASK datasetClauseX whereclause */
-#line 236 "resource/sparql.y"
+#line 237 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 513; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'ASK' . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4221 "resource/sparql.php"
+#line 4223 "resource/ASPPisParser.php"
         break;
       case 98: /* askQuery ::= ASK whereclause solutionModifier */
-#line 237 "resource/sparql.y"
+#line 238 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 513; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'ASK' . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4226 "resource/sparql.php"
+#line 4228 "resource/ASPPisParser.php"
         break;
       case 99: /* askQuery ::= ASK whereclause */
-#line 238 "resource/sparql.y"
+#line 239 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 513; $yygotominor->query = 'ASK ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4231 "resource/sparql.php"
+#line 4233 "resource/ASPPisParser.php"
         break;
       case 100: /* datasetClause ::= FROM NAMED iri */
-#line 240 "resource/sparql.y"
+#line 241 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 514; $yygotominor->query = 'FROM NAMED ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4236 "resource/sparql.php"
+#line 4238 "resource/ASPPisParser.php"
         break;
       case 101: /* datasetClause ::= FROM iri */
-#line 241 "resource/sparql.y"
+#line 242 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 514; $yygotominor->query = 'FROM ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4241 "resource/sparql.php"
+#line 4243 "resource/ASPPisParser.php"
         break;
       case 102: /* whereclause ::= WHERE groupGraphPattern */
-#line 243 "resource/sparql.y"
+#line 244 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 515; $yygotominor->query = 'WHERE ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4246 "resource/sparql.php"
+#line 4248 "resource/ASPPisParser.php"
         break;
       case 103: /* whereclause ::= groupGraphPattern */
-#line 244 "resource/sparql.y"
+#line 245 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 515; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4251 "resource/sparql.php"
+#line 4253 "resource/ASPPisParser.php"
         break;
       case 104: /* solutionModifier ::= groupClause havingClause orderClause limitOffsetClauses */
-#line 246 "resource/sparql.y"
+#line 247 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 516; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4256 "resource/sparql.php"
+#line 4258 "resource/ASPPisParser.php"
         break;
       case 105: /* solutionModifier ::= havingClause orderClause limitOffsetClauses */
-#line 247 "resource/sparql.y"
+#line 248 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 516; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4261 "resource/sparql.php"
+#line 4263 "resource/ASPPisParser.php"
         break;
       case 106: /* solutionModifier ::= groupClause orderClause limitOffsetClauses */
       case 107: /* solutionModifier ::= groupClause havingClause limitOffsetClauses */
-#line 248 "resource/sparql.y"
+#line 249 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 516; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4267 "resource/sparql.php"
+#line 4269 "resource/ASPPisParser.php"
         break;
       case 108: /* solutionModifier ::= groupClause havingClause orderClause */
-#line 250 "resource/sparql.y"
+#line 251 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 516; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor); }
-#line 4272 "resource/sparql.php"
+#line 4274 "resource/ASPPisParser.php"
         break;
       case 109: /* solutionModifier ::= groupClause havingClause */
       case 110: /* solutionModifier ::= groupClause orderClause */
       case 111: /* solutionModifier ::= groupClause limitOffsetClauses */
-#line 251 "resource/sparql.y"
+#line 252 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 516; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4279 "resource/sparql.php"
+#line 4281 "resource/ASPPisParser.php"
         break;
       case 112: /* solutionModifier ::= orderClause limitOffsetClauses */
       case 113: /* solutionModifier ::= havingClause limitOffsetClauses */
       case 114: /* solutionModifier ::= havingClause orderClause */
-#line 254 "resource/sparql.y"
+#line 255 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 516; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4286 "resource/sparql.php"
+#line 4288 "resource/ASPPisParser.php"
         break;
       case 115: /* solutionModifier ::= groupClause */
       case 116: /* solutionModifier ::= havingClause */
       case 117: /* solutionModifier ::= orderClause */
       case 118: /* solutionModifier ::= limitOffsetClauses */
-#line 257 "resource/sparql.y"
+#line 258 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 516; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4294 "resource/sparql.php"
+#line 4296 "resource/ASPPisParser.php"
         break;
       case 119: /* groupClause ::= GROUP BY groupConditionX */
-#line 262 "resource/sparql.y"
+#line 263 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 517; $yygotominor->query = 'GROUP BY ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4299 "resource/sparql.php"
+#line 4301 "resource/ASPPisParser.php"
         break;
       case 120: /* groupConditionX ::= groupConditionX LPARENTHESE expression AS var RPARENTHESE */
-#line 263 "resource/sparql.y"
+#line 264 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 518; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -5]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -5]->minor->query . ' (' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';$yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4304 "resource/sparql.php"
+#line 4306 "resource/ASPPisParser.php"
         break;
       case 121: /* groupConditionX ::= groupConditionX builtInCall */
       case 124: /* groupConditionX ::= groupConditionX var */
-#line 264 "resource/sparql.y"
+#line 265 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 518; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4310 "resource/sparql.php"
+#line 4312 "resource/ASPPisParser.php"
         break;
       case 122: /* groupConditionX ::= groupConditionX functionCall */
-#line 265 "resource/sparql.y"
+#line 266 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 518; $yygotominor->hasFNC = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4315 "resource/sparql.php"
+#line 4317 "resource/ASPPisParser.php"
         break;
       case 123: /* groupConditionX ::= groupConditionX LPARENTHESE expression RPARENTHESE */
-#line 266 "resource/sparql.y"
+#line 267 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 518; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';$yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4320 "resource/sparql.php"
+#line 4322 "resource/ASPPisParser.php"
         break;
       case 125: /* groupConditionX ::= LPARENTHESE expression AS var RPARENTHESE */
-#line 268 "resource/sparql.y"
+#line 269 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 518; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';$yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4325 "resource/sparql.php"
+#line 4327 "resource/ASPPisParser.php"
         break;
       case 126: /* groupConditionX ::= builtInCall */
       case 129: /* groupConditionX ::= var */
-#line 269 "resource/sparql.y"
+#line 270 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 518; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4331 "resource/sparql.php"
+#line 4333 "resource/ASPPisParser.php"
         break;
       case 127: /* groupConditionX ::= functionCall */
-#line 270 "resource/sparql.y"
+#line 271 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 518; $yygotominor->hasFNC = true; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4336 "resource/sparql.php"
+#line 4338 "resource/ASPPisParser.php"
         break;
       case 128: /* groupConditionX ::= LPARENTHESE expression RPARENTHESE */
-#line 271 "resource/sparql.y"
+#line 272 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 518; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4341 "resource/sparql.php"
+#line 4343 "resource/ASPPisParser.php"
         break;
       case 130: /* havingClause ::= HAVING constraintX */
-#line 274 "resource/sparql.y"
+#line 275 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 519; $yygotominor->query = 'HAVING ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4346 "resource/sparql.php"
+#line 4348 "resource/ASPPisParser.php"
         break;
       case 131: /* constraintX ::= constraintX LPARENTHESE expression RPARENTHESE */
-#line 275 "resource/sparql.y"
+#line 276 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 520; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' (' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4351 "resource/sparql.php"
+#line 4353 "resource/ASPPisParser.php"
         break;
       case 132: /* constraintX ::= constraintX builtInCall */
-#line 276 "resource/sparql.y"
+#line 277 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 520; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4356 "resource/sparql.php"
+#line 4358 "resource/ASPPisParser.php"
         break;
       case 133: /* constraintX ::= constraintX functionCall */
-#line 277 "resource/sparql.y"
+#line 278 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 520; $yygotominor->hasFNC = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4361 "resource/sparql.php"
+#line 4363 "resource/ASPPisParser.php"
         break;
       case 134: /* constraintX ::= LPARENTHESE expression RPARENTHESE */
-#line 278 "resource/sparql.y"
+#line 279 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 520; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4366 "resource/sparql.php"
+#line 4368 "resource/ASPPisParser.php"
         break;
       case 135: /* constraintX ::= builtInCall */
-#line 279 "resource/sparql.y"
+#line 280 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 520; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4371 "resource/sparql.php"
+#line 4373 "resource/ASPPisParser.php"
         break;
       case 136: /* constraintX ::= functionCall */
-#line 280 "resource/sparql.y"
+#line 281 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 520; $yygotominor->hasFNC = true;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4376 "resource/sparql.php"
+#line 4378 "resource/ASPPisParser.php"
         break;
       case 137: /* orderClause ::= ORDER BY orderConditionX */
-#line 282 "resource/sparql.y"
+#line 283 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 521; $yygotominor->query = 'ORDER BY ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4381 "resource/sparql.php"
+#line 4383 "resource/ASPPisParser.php"
         break;
       case 138: /* orderConditionX ::= orderConditionX orderCondition */
-#line 283 "resource/sparql.y"
+#line 284 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 522; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4386 "resource/sparql.php"
+#line 4388 "resource/ASPPisParser.php"
         break;
       case 139: /* orderConditionX ::= orderCondition */
-#line 284 "resource/sparql.y"
+#line 285 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 522; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4391 "resource/sparql.php"
+#line 4393 "resource/ASPPisParser.php"
         break;
       case 140: /* orderCondition ::= ASC LPARENTHESE expression RPARENTHESE */
-#line 286 "resource/sparql.y"
+#line 287 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 523; $yygotominor->query = 'ASC( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';$yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4396 "resource/sparql.php"
+#line 4398 "resource/ASPPisParser.php"
         break;
       case 141: /* orderCondition ::= DESC LPARENTHESE expression RPARENTHESE */
-#line 287 "resource/sparql.y"
+#line 288 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 523; $yygotominor->query = 'DESC( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';$yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4401 "resource/sparql.php"
+#line 4403 "resource/ASPPisParser.php"
         break;
       case 142: /* orderCondition ::= LPARENTHESE expression RPARENTHESE */
-#line 288 "resource/sparql.y"
+#line 289 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 523; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';$yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4406 "resource/sparql.php"
+#line 4408 "resource/ASPPisParser.php"
         break;
       case 143: /* orderCondition ::= builtInCall */
       case 144: /* orderCondition ::= functionCall */
       case 145: /* orderCondition ::= var */
-#line 289 "resource/sparql.y"
+#line 290 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 523; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4413 "resource/sparql.php"
+#line 4415 "resource/ASPPisParser.php"
         break;
       case 146: /* limitOffsetClauses ::= limitClause offsetClause */
       case 147: /* limitOffsetClauses ::= offsetClause limitClause */
-#line 293 "resource/sparql.y"
+#line 294 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 524; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4419 "resource/sparql.php"
+#line 4421 "resource/ASPPisParser.php"
         break;
       case 148: /* limitOffsetClauses ::= limitClause */
       case 149: /* limitOffsetClauses ::= offsetClause */
-#line 295 "resource/sparql.y"
+#line 296 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 524; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4425 "resource/sparql.php"
+#line 4427 "resource/ASPPisParser.php"
         break;
       case 150: /* limitClause ::= LIMIT INTEGER */
-#line 298 "resource/sparql.y"
+#line 299 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 525; $yygotominor->query = 'LIMIT ' . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4430 "resource/sparql.php"
+#line 4432 "resource/ASPPisParser.php"
         break;
       case 151: /* offsetClause ::= OFFSET INTEGER */
-#line 300 "resource/sparql.y"
+#line 301 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 526; $yygotominor->query = 'OFFSET ' . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4435 "resource/sparql.php"
+#line 4437 "resource/ASPPisParser.php"
         break;
       case 152: /* valuesClause ::= VALUES dataBlock */
-#line 302 "resource/sparql.y"
+#line 303 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 527; $yygotominor->query = 'VALUES ' . $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4440 "resource/sparql.php"
+#line 4442 "resource/ASPPisParser.php"
         break;
       case 153: /* update ::= prologue update1 updateX */
-#line 304 "resource/sparql.y"
+#line 305 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 528; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4445 "resource/sparql.php"
+#line 4447 "resource/ASPPisParser.php"
         break;
       case 154: /* update ::= update1 updateX */
-#line 305 "resource/sparql.y"
+#line 306 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 528; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4450 "resource/sparql.php"
+#line 4452 "resource/ASPPisParser.php"
         break;
       case 155: /* update ::= prologue update1 */
-#line 306 "resource/sparql.y"
+#line 307 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 528; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4455 "resource/sparql.php"
+#line 4457 "resource/ASPPisParser.php"
         break;
       case 156: /* update ::= update1 */
-#line 307 "resource/sparql.y"
+#line 308 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 528; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4460 "resource/sparql.php"
+#line 4462 "resource/ASPPisParser.php"
         break;
       case 157: /* updateX ::= updateX SEMICOLON prologue update1 */
-#line 308 "resource/sparql.y"
+#line 309 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 529; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' ;' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4465 "resource/sparql.php"
+#line 4467 "resource/ASPPisParser.php"
         break;
       case 158: /* updateX ::= updateX SEMICOLON update1 */
-#line 309 "resource/sparql.y"
+#line 310 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 529; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ;' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4470 "resource/sparql.php"
+#line 4472 "resource/ASPPisParser.php"
         break;
       case 159: /* updateX ::= SEMICOLON prologue update1 */
-#line 310 "resource/sparql.y"
+#line 311 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 529; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = ';' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4475 "resource/sparql.php"
+#line 4477 "resource/ASPPisParser.php"
         break;
       case 160: /* updateX ::= SEMICOLON update1 */
-#line 311 "resource/sparql.y"
+#line 312 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 529; $yygotominor->query = ';' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4480 "resource/sparql.php"
+#line 4482 "resource/ASPPisParser.php"
         break;
       case 161: /* update1 ::= load */
       case 162: /* update1 ::= clear */
@@ -4656,413 +4658,413 @@ static $yy_default = array(
       case 169: /* update1 ::= deleteData */
       case 170: /* update1 ::= deletewhere */
       case 171: /* update1 ::= modify */
-#line 313 "resource/sparql.y"
+#line 314 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 530; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4495 "resource/sparql.php"
+#line 4497 "resource/ASPPisParser.php"
         break;
       case 172: /* load ::= LOAD SILENT iri INTO graphRef */
-#line 325 "resource/sparql.y"
+#line 326 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 531; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'LOAD SILENT ' . $this->yystack[$this->yyidx + -2]->minor->query . ' INTO ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4500 "resource/sparql.php"
+#line 4502 "resource/ASPPisParser.php"
         break;
       case 173: /* load ::= LOAD iri INTO graphRef */
-#line 326 "resource/sparql.y"
+#line 327 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 531; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'LOAD ' . $this->yystack[$this->yyidx + -2]->minor->query . ' INTO ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4505 "resource/sparql.php"
+#line 4507 "resource/ASPPisParser.php"
         break;
       case 174: /* load ::= LOAD SILENT iri */
-#line 327 "resource/sparql.y"
+#line 328 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 531; $yygotominor->query = 'LOAD SILENT ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4510 "resource/sparql.php"
+#line 4512 "resource/ASPPisParser.php"
         break;
       case 175: /* load ::= LOAD iri */
-#line 328 "resource/sparql.y"
+#line 329 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 531; $yygotominor->query = 'LOAD ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4515 "resource/sparql.php"
+#line 4517 "resource/ASPPisParser.php"
         break;
       case 176: /* clear ::= CLEAR SILENT graphRefAll */
-#line 330 "resource/sparql.y"
+#line 331 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 532; $yygotominor->query = 'CLEAR SILENT ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4520 "resource/sparql.php"
+#line 4522 "resource/ASPPisParser.php"
         break;
       case 177: /* clear ::= CLEAR graphRefAll */
-#line 331 "resource/sparql.y"
+#line 332 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 532; $yygotominor->query = 'CLEAR ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4525 "resource/sparql.php"
+#line 4527 "resource/ASPPisParser.php"
         break;
       case 178: /* drop ::= DROP SILENT graphRefAll */
-#line 333 "resource/sparql.y"
+#line 334 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 533; $yygotominor->query = 'DROP SILENT ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4530 "resource/sparql.php"
+#line 4532 "resource/ASPPisParser.php"
         break;
       case 179: /* drop ::= DROP graphRefAll */
-#line 334 "resource/sparql.y"
+#line 335 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 533; $yygotominor->query = 'DROP ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4535 "resource/sparql.php"
+#line 4537 "resource/ASPPisParser.php"
         break;
       case 180: /* create ::= CREATE SILENT graphRef */
-#line 336 "resource/sparql.y"
+#line 337 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 534; $yygotominor->query = 'CREATE SILENT ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4540 "resource/sparql.php"
+#line 4542 "resource/ASPPisParser.php"
         break;
       case 181: /* create ::= CREATE graphRef */
-#line 337 "resource/sparql.y"
+#line 338 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 534; $yygotominor->query = 'CREATE ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4545 "resource/sparql.php"
+#line 4547 "resource/ASPPisParser.php"
         break;
       case 182: /* add ::= ADD SILENT graphOrDefault TO graphOrDefault */
-#line 339 "resource/sparql.y"
+#line 340 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 535; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'ADD ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4550 "resource/sparql.php"
+#line 4552 "resource/ASPPisParser.php"
         break;
       case 183: /* add ::= ADD graphOrDefault TO graphOrDefault */
-#line 340 "resource/sparql.y"
+#line 341 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 535; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'ADD ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4555 "resource/sparql.php"
+#line 4557 "resource/ASPPisParser.php"
         break;
       case 184: /* move ::= MOVE SILENT graphOrDefault TO graphOrDefault */
-#line 342 "resource/sparql.y"
+#line 343 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 536; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'MOVE SILENT ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4560 "resource/sparql.php"
+#line 4562 "resource/ASPPisParser.php"
         break;
       case 185: /* move ::= MOVE graphOrDefault TO graphOrDefault */
-#line 343 "resource/sparql.y"
+#line 344 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 536; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'MOVE ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4565 "resource/sparql.php"
+#line 4567 "resource/ASPPisParser.php"
         break;
       case 186: /* copy ::= COPY SILENT graphOrDefault TO graphOrDefault */
-#line 345 "resource/sparql.y"
+#line 346 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 537; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'COPY SILENT ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4570 "resource/sparql.php"
+#line 4572 "resource/ASPPisParser.php"
         break;
       case 187: /* copy ::= COPY graphOrDefault TO graphOrDefault */
-#line 346 "resource/sparql.y"
+#line 347 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 537; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'COPY ' . $this->yystack[$this->yyidx + -2]->minor->query . ' TO ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4575 "resource/sparql.php"
+#line 4577 "resource/ASPPisParser.php"
         break;
       case 188: /* insertData ::= INSERTDATA quadData */
-#line 348 "resource/sparql.y"
+#line 349 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 538; $yygotominor->query = 'DELETE DATA ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4580 "resource/sparql.php"
+#line 4582 "resource/ASPPisParser.php"
         break;
       case 189: /* deleteData ::= DELETEDATA quadData */
-#line 350 "resource/sparql.y"
+#line 351 "resource/ASPPisParser.y"
 { if($this->yystack[$this->yyidx + 0]->minor->hasBN){ throw new Exception("Deleteclause is not allowed to contain Blanknodesyntax: DELETE DATA" . $this->yystack[$this->yyidx + 0]->minor->query); } $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 539; $yygotominor->query = 'DELETE DATA ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4585 "resource/sparql.php"
+#line 4587 "resource/ASPPisParser.php"
         break;
       case 190: /* deletewhere ::= DELETEWHERE quadPattern */
-#line 352 "resource/sparql.y"
+#line 353 "resource/ASPPisParser.y"
 { if($this->yystack[$this->yyidx + 0]->minor->hasBN){throw new Exception("Deleteclause is not allowed to contain Blanknodesyntax: DELETE WHERE" . $this->yystack[$this->yyidx + 0]->minor->query);} $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 540; $yygotominor->query = 'DELETE WHERE ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4590 "resource/sparql.php"
+#line 4592 "resource/ASPPisParser.php"
         break;
       case 191: /* modify ::= WITH iri deleteClause insertClause usingClauseX WHERE groupGraphPattern */
-#line 354 "resource/sparql.y"
+#line 355 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'WITH ' . $this->yystack[$this->yyidx + -5]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4595 "resource/sparql.php"
+#line 4597 "resource/ASPPisParser.php"
         break;
       case 192: /* modify ::= WITH iri deleteClause usingClauseX WHERE groupGraphPattern */
       case 193: /* modify ::= WITH iri insertClause usingClauseX WHERE groupGraphPattern */
       case 194: /* modify ::= WITH iri deleteClause insertClause WHERE groupGraphPattern */
-#line 355 "resource/sparql.y"
+#line 356 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'WITH ' . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4602 "resource/sparql.php"
+#line 4604 "resource/ASPPisParser.php"
         break;
       case 195: /* modify ::= WITH iri deleteClause WHERE groupGraphPattern */
       case 196: /* modify ::= WITH iri insertClause WHERE groupGraphPattern */
-#line 358 "resource/sparql.y"
+#line 359 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'WITH ' . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4608 "resource/sparql.php"
+#line 4610 "resource/ASPPisParser.php"
         break;
       case 197: /* modify ::= deleteClause insertClause usingClauseX WHERE groupGraphPattern */
-#line 360 "resource/sparql.y"
+#line 361 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4613 "resource/sparql.php"
+#line 4615 "resource/ASPPisParser.php"
         break;
       case 198: /* modify ::= deleteClause usingClauseX WHERE groupGraphPattern */
       case 199: /* modify ::= insertClause usingClauseX WHERE groupGraphPattern */
       case 200: /* modify ::= deleteClause insertClause WHERE groupGraphPattern */
-#line 361 "resource/sparql.y"
+#line 362 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4620 "resource/sparql.php"
+#line 4622 "resource/ASPPisParser.php"
         break;
       case 201: /* modify ::= deleteClause WHERE groupGraphPattern */
-#line 364 "resource/sparql.y"
+#line 365 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4625 "resource/sparql.php"
+#line 4627 "resource/ASPPisParser.php"
         break;
       case 202: /* modify ::= insertClause WHERE groupGraphPattern */
-#line 365 "resource/sparql.y"
+#line 366 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4630 "resource/sparql.php"
+#line 4632 "resource/ASPPisParser.php"
         break;
       case 203: /* usingClauseX ::= usingClauseX usingClause */
-#line 366 "resource/sparql.y"
+#line 367 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 542; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4635 "resource/sparql.php"
+#line 4637 "resource/ASPPisParser.php"
         break;
       case 204: /* usingClauseX ::= usingClause */
-#line 367 "resource/sparql.y"
+#line 368 "resource/ASPPisParser.y"
 {$yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 542; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4640 "resource/sparql.php"
+#line 4642 "resource/ASPPisParser.php"
         break;
       case 205: /* deleteClause ::= DELETE quadPattern */
-#line 369 "resource/sparql.y"
+#line 370 "resource/ASPPisParser.y"
 { if($this->yystack[$this->yyidx + 0]->minor->hasBN){throw new Exception("Deleteclause is not allowed to contain Blanknodesyntax: DELETE" . $this->yystack[$this->yyidx + 0]->minor->query);} $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 543; $yygotominor->query = 'DELETE ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4645 "resource/sparql.php"
+#line 4647 "resource/ASPPisParser.php"
         break;
       case 206: /* insertClause ::= INSERT quadPattern */
-#line 371 "resource/sparql.y"
+#line 372 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 544; $yygotominor->query = 'INSERT ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4650 "resource/sparql.php"
+#line 4652 "resource/ASPPisParser.php"
         break;
       case 207: /* usingClause ::= USING NAMED iri */
-#line 373 "resource/sparql.y"
+#line 374 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 545; $yygotominor->query = 'USING NAMED ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4655 "resource/sparql.php"
+#line 4657 "resource/ASPPisParser.php"
         break;
       case 208: /* usingClause ::= USING iri */
-#line 374 "resource/sparql.y"
+#line 375 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 545; $yygotominor->query = 'USING ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4660 "resource/sparql.php"
+#line 4662 "resource/ASPPisParser.php"
         break;
       case 209: /* graphOrDefault ::= GRAPH iri */
-#line 376 "resource/sparql.y"
+#line 377 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 546; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4665 "resource/sparql.php"
+#line 4667 "resource/ASPPisParser.php"
         break;
       case 210: /* graphOrDefault ::= DEFAULT */
-#line 377 "resource/sparql.y"
+#line 378 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 546; $yygotominor->query = 'DEFAULT';$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4670 "resource/sparql.php"
+#line 4672 "resource/ASPPisParser.php"
         break;
       case 211: /* graphOrDefault ::= iri */
-#line 378 "resource/sparql.y"
+#line 379 "resource/ASPPisParser.y"
 {$yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 546;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4675 "resource/sparql.php"
+#line 4677 "resource/ASPPisParser.php"
         break;
       case 212: /* graphRef ::= GRAPH iri */
-#line 380 "resource/sparql.y"
+#line 381 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 547; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4680 "resource/sparql.php"
+#line 4682 "resource/ASPPisParser.php"
         break;
       case 213: /* graphRefAll ::= graphRef */
-#line 382 "resource/sparql.y"
+#line 383 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 548; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4685 "resource/sparql.php"
+#line 4687 "resource/ASPPisParser.php"
         break;
       case 214: /* graphRefAll ::= DEFAULT */
-#line 383 "resource/sparql.y"
+#line 384 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 548; $yygotominor->query = 'DEFAULT';$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4690 "resource/sparql.php"
+#line 4692 "resource/ASPPisParser.php"
         break;
       case 215: /* graphRefAll ::= NAMED */
-#line 384 "resource/sparql.y"
+#line 385 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 548; $yygotominor->query = 'NAMED';$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4695 "resource/sparql.php"
+#line 4697 "resource/ASPPisParser.php"
         break;
       case 216: /* graphRefAll ::= ALL */
-#line 385 "resource/sparql.y"
+#line 386 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 548; $yygotominor->query = 'ALL';$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4700 "resource/sparql.php"
+#line 4702 "resource/ASPPisParser.php"
         break;
       case 217: /* quadPattern ::= LBRACE quads RBRACE */
-#line 387 "resource/sparql.y"
+#line 388 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -2]->minor; $yygotominor->type = 549; $yygotominor->query = '{ ' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4705 "resource/sparql.php"
+#line 4707 "resource/ASPPisParser.php"
         break;
       case 218: /* quadPattern ::= LBRACE RBRACE */
-#line 388 "resource/sparql.y"
+#line 389 "resource/ASPPisParser.y"
 {$yygotominor = new NTToken(); $yygotominor->type = 549; $yygotominor->query = '{ }';$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4710 "resource/sparql.php"
+#line 4712 "resource/ASPPisParser.php"
         break;
       case 219: /* quadData ::= LBRACE quads RBRACE */
-#line 390 "resource/sparql.y"
+#line 391 "resource/ASPPisParser.y"
 { if(!empty($this->yystack[$this->yyidx + -1]->minor->vars)){throw new Exception("QuadPattern arent allowed to contain variables: " . $this->yystack[$this->yyidx + -1]->minor->query);} $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 550; $yygotominor->query = '{ ' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4715 "resource/sparql.php"
+#line 4717 "resource/ASPPisParser.php"
         break;
       case 220: /* quadData ::= LBRACE RBRACE */
-#line 391 "resource/sparql.y"
+#line 392 "resource/ASPPisParser.y"
 {$yygotominor = new NTToken(); $yygotominor->type = 550; $yygotominor->query = '{ }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4720 "resource/sparql.php"
+#line 4722 "resource/ASPPisParser.php"
         break;
       case 221: /* quads ::= triplesTemplate quadsX */
-#line 393 "resource/sparql.y"
+#line 394 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 551; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4725 "resource/sparql.php"
+#line 4727 "resource/ASPPisParser.php"
         break;
       case 222: /* quads ::= triplesTemplate */
       case 223: /* quads ::= quadsX */
-#line 394 "resource/sparql.y"
+#line 395 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 551; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4731 "resource/sparql.php"
+#line 4733 "resource/ASPPisParser.php"
         break;
       case 224: /* quadsX ::= quadsX quadsNotTriples DOT triplesTemplate */
-#line 396 "resource/sparql.y"
+#line 397 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 552; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4736 "resource/sparql.php"
+#line 4738 "resource/ASPPisParser.php"
         break;
       case 225: /* quadsX ::= quadsX quadsNotTriples triplesTemplate */
-#line 397 "resource/sparql.y"
+#line 398 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 552; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4741 "resource/sparql.php"
+#line 4743 "resource/ASPPisParser.php"
         break;
       case 226: /* quadsX ::= quadsX quadsNotTriples DOT */
-#line 398 "resource/sparql.y"
+#line 399 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 552; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4746 "resource/sparql.php"
+#line 4748 "resource/ASPPisParser.php"
         break;
       case 227: /* quadsX ::= quadsX quadsNotTriples */
       case 229: /* quadsX ::= quadsNotTriples triplesTemplate */
-#line 399 "resource/sparql.y"
+#line 400 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 552; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4752 "resource/sparql.php"
+#line 4754 "resource/ASPPisParser.php"
         break;
       case 228: /* quadsX ::= quadsNotTriples DOT triplesTemplate */
-#line 400 "resource/sparql.y"
+#line 401 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 552; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4757 "resource/sparql.php"
+#line 4759 "resource/ASPPisParser.php"
         break;
       case 230: /* quadsX ::= quadsNotTriples DOT */
-#line 402 "resource/sparql.y"
+#line 403 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 552; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .';$yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4762 "resource/sparql.php"
+#line 4764 "resource/ASPPisParser.php"
         break;
       case 231: /* quadsX ::= quadsNotTriples */
-#line 403 "resource/sparql.y"
+#line 404 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 552; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4767 "resource/sparql.php"
+#line 4769 "resource/ASPPisParser.php"
         break;
       case 232: /* quadsNotTriples ::= GRAPH varOrIri LBRACE triplesTemplate RBRACE */
-#line 405 "resource/sparql.y"
+#line 406 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 553; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . ' { ' .  PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4772 "resource/sparql.php"
+#line 4774 "resource/ASPPisParser.php"
         break;
       case 233: /* quadsNotTriples ::= GRAPH varOrIri LBRACE RBRACE */
-#line 406 "resource/sparql.y"
+#line 407 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 553; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + -2]->minor->query . ' { }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4777 "resource/sparql.php"
+#line 4779 "resource/ASPPisParser.php"
         break;
       case 234: /* triplesTemplate ::= triplesSameSubject DOT triplesTemplateX DOT */
-#line 408 "resource/sparql.y"
+#line 409 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 554; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' .'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4782 "resource/sparql.php"
+#line 4784 "resource/ASPPisParser.php"
         break;
       case 235: /* triplesTemplate ::= triplesSameSubject DOT triplesTemplateX */
-#line 409 "resource/sparql.y"
+#line 410 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 554; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4787 "resource/sparql.php"
+#line 4789 "resource/ASPPisParser.php"
         break;
       case 236: /* triplesTemplate ::= triplesSameSubject DOT */
-#line 410 "resource/sparql.y"
+#line 411 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 554; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4792 "resource/sparql.php"
+#line 4794 "resource/ASPPisParser.php"
         break;
       case 237: /* triplesTemplate ::= triplesSameSubject */
-#line 411 "resource/sparql.y"
+#line 412 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 554; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4797 "resource/sparql.php"
+#line 4799 "resource/ASPPisParser.php"
         break;
       case 238: /* triplesTemplateX ::= triplesTemplateX DOT triplesSameSubject */
-#line 412 "resource/sparql.y"
+#line 413 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 555; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4802 "resource/sparql.php"
+#line 4804 "resource/ASPPisParser.php"
         break;
       case 239: /* triplesTemplateX ::= triplesSameSubject */
-#line 413 "resource/sparql.y"
+#line 414 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 555; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4807 "resource/sparql.php"
+#line 4809 "resource/ASPPisParser.php"
         break;
       case 240: /* groupGraphPattern ::= LBRACE groupGraphPatternSub RBRACE */
       case 241: /* groupGraphPattern ::= LBRACE subSelect RBRACE */
-#line 415 "resource/sparql.y"
+#line 416 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 556; $yygotominor->query = '{ ' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4813 "resource/sparql.php"
+#line 4815 "resource/ASPPisParser.php"
         break;
       case 242: /* groupGraphPattern ::= LBRACE RBRACE */
-#line 417 "resource/sparql.y"
+#line 418 "resource/ASPPisParser.y"
 {$yygotominor = new NTToken(); $yygotominor->type = 556; $yygotominor->query = '{ }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4818 "resource/sparql.php"
+#line 4820 "resource/ASPPisParser.php"
         break;
       case 243: /* groupGraphPatternSub ::= triplesBlock groupGraphPatternSubX */
-#line 419 "resource/sparql.y"
+#line 420 "resource/ASPPisParser.y"
 { if(!empty($this->yystack[$this->yyidx + 0]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->bindVar, $this->yystack[$this->yyidx + -1]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->type = 557; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + 0]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4823 "resource/sparql.php"
+#line 4825 "resource/ASPPisParser.php"
         break;
       case 244: /* groupGraphPatternSub ::= triplesBlock */
       case 245: /* groupGraphPatternSub ::= groupGraphPatternSubX */
-#line 420 "resource/sparql.y"
+#line 421 "resource/ASPPisParser.y"
 {$yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 557;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4829 "resource/sparql.php"
+#line 4831 "resource/ASPPisParser.php"
         break;
       case 246: /* groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples DOT triplesBlock */
-#line 422 "resource/sparql.y"
+#line 423 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->ssVars, $this->yystack[$this->yyidx + -3]->minor->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty($this->yystack[$this->yyidx + -2]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -3]->minor->noDuplicates($this->yystack[$this->yyidx + -2]->minor->bindVar, $this->yystack[$this->yyidx + -3]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->type = 558; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -3]->minor->ssVars + $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + -3]->minor->bindVar + $this->yystack[$this->yyidx + -2]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4834 "resource/sparql.php"
+#line 4836 "resource/ASPPisParser.php"
         break;
       case 247: /* groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples triplesBlock */
-#line 423 "resource/sparql.y"
+#line 424 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty($this->yystack[$this->yyidx + -1]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->bindVar, $this->yystack[$this->yyidx + -2]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->type = 558; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + -2]->minor->bindVar + $this->yystack[$this->yyidx + -1]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4839 "resource/sparql.php"
+#line 4841 "resource/ASPPisParser.php"
         break;
       case 248: /* groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples DOT */
-#line 424 "resource/sparql.y"
+#line 425 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->ssVars, $this->yystack[$this->yyidx + -2]->minor->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty($this->yystack[$this->yyidx + -1]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -2]->minor->noDuplicates($this->yystack[$this->yyidx + -1]->minor->bindVar, $this->yystack[$this->yyidx + -2]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->type = 558; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + -2]->minor->bindVar + $this->yystack[$this->yyidx + -1]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' .'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4844 "resource/sparql.php"
+#line 4846 "resource/ASPPisParser.php"
         break;
       case 249: /* groupGraphPatternSubX ::= groupGraphPatternSubX graphPatternNotTriples */
-#line 425 "resource/sparql.y"
+#line 426 "resource/ASPPisParser.y"
 { $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->ssVars, $this->yystack[$this->yyidx + -1]->minor->ssVars); if(isset($tmp)){throw new Exception("Variable is already in scope: " . $tmp);} else if(!empty($this->yystack[$this->yyidx + 0]->minor->bindVar)){ $tmp = $this->yystack[$this->yyidx + -1]->minor->noDuplicates($this->yystack[$this->yyidx + 0]->minor->bindVar, $this->yystack[$this->yyidx + -1]->minor->vars); if(isset($tmp)){throw new Exception("Bindvariable is already in scope: " . $tmp);}} $yygotominor = new NTToken(); $yygotominor->type = 558; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + -1]->minor->bindVar + $this->yystack[$this->yyidx + 0]->minor->bindVar; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4849 "resource/sparql.php"
+#line 4851 "resource/ASPPisParser.php"
         break;
       case 250: /* groupGraphPatternSubX ::= graphPatternNotTriples DOT triplesBlock */
-#line 426 "resource/sparql.y"
+#line 427 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 558; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4854 "resource/sparql.php"
+#line 4856 "resource/ASPPisParser.php"
         break;
       case 251: /* groupGraphPatternSubX ::= graphPatternNotTriples triplesBlock */
-#line 427 "resource/sparql.y"
+#line 428 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 558; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4859 "resource/sparql.php"
+#line 4861 "resource/ASPPisParser.php"
         break;
       case 252: /* groupGraphPatternSubX ::= graphPatternNotTriples DOT */
-#line 428 "resource/sparql.y"
+#line 429 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 558; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4864 "resource/sparql.php"
+#line 4866 "resource/ASPPisParser.php"
         break;
       case 253: /* groupGraphPatternSubX ::= graphPatternNotTriples */
-#line 429 "resource/sparql.y"
+#line 430 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 558; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4869 "resource/sparql.php"
+#line 4871 "resource/ASPPisParser.php"
         break;
       case 254: /* triplesBlock ::= triplesSameSubjectPath DOT triplesBlockX DOT */
-#line 431 "resource/sparql.y"
+#line 432 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 559; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' .'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4874 "resource/sparql.php"
+#line 4876 "resource/ASPPisParser.php"
         break;
       case 255: /* triplesBlock ::= triplesSameSubjectPath DOT triplesBlockX */
-#line 432 "resource/sparql.y"
+#line 433 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 559; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4879 "resource/sparql.php"
+#line 4881 "resource/ASPPisParser.php"
         break;
       case 256: /* triplesBlock ::= triplesSameSubjectPath DOT */
-#line 433 "resource/sparql.y"
+#line 434 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 559; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' .'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4884 "resource/sparql.php"
+#line 4886 "resource/ASPPisParser.php"
         break;
       case 257: /* triplesBlock ::= triplesSameSubjectPath */
-#line 434 "resource/sparql.y"
+#line 435 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 559; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4889 "resource/sparql.php"
+#line 4891 "resource/ASPPisParser.php"
         break;
       case 258: /* triplesBlockX ::= triplesBlockX DOT triplesSameSubjectPath */
-#line 435 "resource/sparql.y"
+#line 436 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 560; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' .' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4894 "resource/sparql.php"
+#line 4896 "resource/ASPPisParser.php"
         break;
       case 259: /* triplesBlockX ::= triplesSameSubjectPath */
-#line 436 "resource/sparql.y"
+#line 437 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 560; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4899 "resource/sparql.php"
+#line 4901 "resource/ASPPisParser.php"
         break;
       case 260: /* graphPatternNotTriples ::= groupOrUnionGraphPattern */
       case 261: /* graphPatternNotTriples ::= optionalGraphPattern */
@@ -5070,1318 +5072,1318 @@ static $yy_default = array(
       case 263: /* graphPatternNotTriples ::= graphGraphPattern */
       case 264: /* graphPatternNotTriples ::= serviceGraphPattern */
       case 265: /* graphPatternNotTriples ::= filter */
-#line 438 "resource/sparql.y"
+#line 439 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 561; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4909 "resource/sparql.php"
+#line 4911 "resource/ASPPisParser.php"
         break;
       case 266: /* graphPatternNotTriples ::= bind */
-#line 444 "resource/sparql.y"
+#line 445 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 561; $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->bindVar = $this->yystack[$this->yyidx + 0]->minor->bindVar; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4914 "resource/sparql.php"
+#line 4916 "resource/ASPPisParser.php"
         break;
       case 267: /* graphPatternNotTriples ::= inlineData */
-#line 445 "resource/sparql.y"
+#line 446 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 561; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4919 "resource/sparql.php"
+#line 4921 "resource/ASPPisParser.php"
         break;
       case 268: /* optionalGraphPattern ::= OPTIONAL groupGraphPattern */
-#line 447 "resource/sparql.y"
+#line 448 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 562; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'OPTIONAL ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4924 "resource/sparql.php"
+#line 4926 "resource/ASPPisParser.php"
         break;
       case 269: /* graphGraphPattern ::= GRAPH varOrIri groupGraphPattern */
-#line 449 "resource/sparql.y"
+#line 450 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 563; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4929 "resource/sparql.php"
+#line 4931 "resource/ASPPisParser.php"
         break;
       case 270: /* serviceGraphPattern ::= SERVICE SILENT varOrIri groupGraphPattern */
-#line 451 "resource/sparql.y"
+#line 452 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 564; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'SERVICE SILENT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4934 "resource/sparql.php"
+#line 4936 "resource/ASPPisParser.php"
         break;
       case 271: /* serviceGraphPattern ::= SERVICE varOrIri groupGraphPattern */
-#line 452 "resource/sparql.y"
+#line 453 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 564; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'SERVICE ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4939 "resource/sparql.php"
+#line 4941 "resource/ASPPisParser.php"
         break;
       case 272: /* bind ::= BIND LPARENTHESE expression AS var RPARENTHESE */
-#line 454 "resource/sparql.y"
+#line 455 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 565; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->ssVars[$this->yystack[$this->yyidx + -1]->minor->query] = 1; $yygotominor->ssVars += $this->yystack[$this->yyidx + -3]->minor->ssVars; $yygotominor->bindVar[$this->yystack[$this->yyidx + -1]->minor->query] = 1; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' AS ' . $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4944 "resource/sparql.php"
+#line 4946 "resource/ASPPisParser.php"
         break;
       case 273: /* inlineData ::= VALUES dataBlock */
-#line 456 "resource/sparql.y"
+#line 457 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 566; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4949 "resource/sparql.php"
+#line 4951 "resource/ASPPisParser.php"
         break;
       case 274: /* dataBlock ::= inlineDataOneVar */
       case 275: /* dataBlock ::= inlineDataFull */
-#line 458 "resource/sparql.y"
+#line 459 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 567; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4955 "resource/sparql.php"
+#line 4957 "resource/ASPPisParser.php"
         break;
       case 276: /* inlineDataOneVar ::= var LBRACE dataBlockValueX RBRACE */
-#line 461 "resource/sparql.y"
+#line 462 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 568; $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . ' { ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4960 "resource/sparql.php"
+#line 4962 "resource/ASPPisParser.php"
         break;
       case 277: /* inlineDataOneVar ::= var LBRACE RBRACE */
-#line 462 "resource/sparql.y"
+#line 463 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 568; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . '{ }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4965 "resource/sparql.php"
+#line 4967 "resource/ASPPisParser.php"
         break;
       case 278: /* dataBlockValueX ::= dataBlockValueX dataBlockValue */
-#line 463 "resource/sparql.y"
+#line 464 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 569; $yygotominor->count = $this->yystack[$this->yyidx + -1]->minor->count + 1; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4970 "resource/sparql.php"
+#line 4972 "resource/ASPPisParser.php"
         break;
       case 279: /* dataBlockValueX ::= dataBlockValue */
-#line 464 "resource/sparql.y"
+#line 465 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 569; $yygotominor->count = 1; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 4975 "resource/sparql.php"
+#line 4977 "resource/ASPPisParser.php"
         break;
       case 280: /* inlineDataFull ::= LPARENTHESE varX RPARENTHESE LBRACE inlineDataFullX RBRACE */
-#line 466 "resource/sparql.y"
+#line 467 "resource/ASPPisParser.y"
 {if($this->yystack[$this->yyidx + -1]->minor->count > 0 ){if($this->yystack[$this->yyidx + -4]->minor->count == $this->yystack[$this->yyidx + -1]->minor->count){ $yygotominor = new NTToken(); $yygotominor->type = 570; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -4]->minor->query . ' ) {' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' }';}else{throw new Exception("Different Amount of Variables and Values for Value Clause : " . $this->yystack[$this->yyidx + -4]->minor->query . ' and ' . $this->yystack[$this->yyidx + -1]->minor->query);}}else{$yygotominor = new NTToken(); $yygotominor->type = 570; $yygotominor->vars = $this->yystack[$this->yyidx + -4]->minor->vars; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -4]->minor->query . ' ) {' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . ' }';}$yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4980 "resource/sparql.php"
+#line 4982 "resource/ASPPisParser.php"
         break;
       case 281: /* inlineDataFull ::= NIL LBRACE nilX RBRACE */
-#line 467 "resource/sparql.y"
+#line 468 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 570; $yygotominor->query = '( ) { ' . $this->yystack[$this->yyidx + -1]->minor->query . ' }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4985 "resource/sparql.php"
+#line 4987 "resource/ASPPisParser.php"
         break;
       case 282: /* inlineDataFull ::= NIL LBRACE RBRACE */
-#line 468 "resource/sparql.y"
+#line 469 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 570; $yygotominor->query = '( ) { }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4990 "resource/sparql.php"
+#line 4992 "resource/ASPPisParser.php"
         break;
       case 283: /* nilX ::= nilX NIL */
-#line 469 "resource/sparql.y"
+#line 470 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 571; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 4995 "resource/sparql.php"
+#line 4997 "resource/ASPPisParser.php"
         break;
       case 284: /* nilX ::= NIL */
-#line 470 "resource/sparql.y"
+#line 471 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 571; $yygotominor->query = '( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5000 "resource/sparql.php"
+#line 5002 "resource/ASPPisParser.php"
         break;
       case 285: /* varX ::= varX var */
-#line 471 "resource/sparql.y"
+#line 472 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 572; $yygotominor->count = $this->yystack[$this->yyidx + -1]->minor->count + 1; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5005 "resource/sparql.php"
+#line 5007 "resource/ASPPisParser.php"
         break;
       case 286: /* varX ::= var */
-#line 472 "resource/sparql.y"
+#line 473 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 572; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->count = 1; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5010 "resource/sparql.php"
+#line 5012 "resource/ASPPisParser.php"
         break;
       case 287: /* inlineDataFullX ::= inlineDataFullX LPARENTHESE dataBlockValueX RPARENTHESE */
-#line 473 "resource/sparql.y"
+#line 474 "resource/ASPPisParser.y"
 {if($this->yystack[$this->yyidx + -3]->minor->count > 0 ){if($this->yystack[$this->yyidx + -3]->minor->count == $this->yystack[$this->yyidx + -1]->minor->count){ $yygotominor = new NTToken(); $yygotominor->type = 573; $yygotominor->count = $this->yystack[$this->yyidx + -3]->minor->count; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}else{throw new Exception("Different Amount of Values for Value Clause : " . $this->yystack[$this->yyidx + -3]->minor->query . ' and ' . $this->yystack[$this->yyidx + -2]->minor->query);}}else{$yygotominor = new NTToken(); $yygotominor->type = 573; $yygotominor->count = $this->yystack[$this->yyidx + -1]->minor->count; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )';}$yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5015 "resource/sparql.php"
+#line 5017 "resource/ASPPisParser.php"
         break;
       case 288: /* inlineDataFullX ::= inlineDataFullX NIL */
-#line 474 "resource/sparql.y"
+#line 475 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 573; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . '( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5020 "resource/sparql.php"
+#line 5022 "resource/ASPPisParser.php"
         break;
       case 289: /* inlineDataFullX ::= LPARENTHESE dataBlockValueX RPARENTHESE */
-#line 475 "resource/sparql.y"
+#line 476 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 573; $yygotominor->count = $this->yystack[$this->yyidx + -1]->minor->count; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5025 "resource/sparql.php"
+#line 5027 "resource/ASPPisParser.php"
         break;
       case 290: /* inlineDataFullX ::= NIL */
-#line 476 "resource/sparql.y"
+#line 477 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 573; $yygotominor->query = '( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5030 "resource/sparql.php"
+#line 5032 "resource/ASPPisParser.php"
         break;
       case 291: /* dataBlockValue ::= iri */
       case 292: /* dataBlockValue ::= rdfLiteral */
       case 293: /* dataBlockValue ::= numericLiteral */
       case 294: /* dataBlockValue ::= booleanLiteral */
-#line 478 "resource/sparql.y"
+#line 479 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 574; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5038 "resource/sparql.php"
+#line 5040 "resource/ASPPisParser.php"
         break;
       case 295: /* dataBlockValue ::= UNDEF */
-#line 482 "resource/sparql.y"
+#line 483 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 574; $yygotominor->query = 'UNDEF'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5043 "resource/sparql.php"
+#line 5045 "resource/ASPPisParser.php"
         break;
       case 296: /* minusGraphPattern ::= SMINUS groupGraphPattern */
-#line 484 "resource/sparql.y"
+#line 485 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 575; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'MINUS ' . PHP_EOL .  $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5048 "resource/sparql.php"
+#line 5050 "resource/ASPPisParser.php"
         break;
       case 297: /* groupOrUnionGraphPattern ::= groupGraphPattern groupOrUnionGraphPatternX */
-#line 486 "resource/sparql.y"
+#line 487 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 576; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5053 "resource/sparql.php"
+#line 5055 "resource/ASPPisParser.php"
         break;
       case 298: /* groupOrUnionGraphPattern ::= groupGraphPattern */
-#line 487 "resource/sparql.y"
+#line 488 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 576; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5058 "resource/sparql.php"
+#line 5060 "resource/ASPPisParser.php"
         break;
       case 299: /* groupOrUnionGraphPatternX ::= groupOrUnionGraphPatternX UNION groupGraphPattern */
-#line 488 "resource/sparql.y"
+#line 489 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 577; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . ' UNION ' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5063 "resource/sparql.php"
+#line 5065 "resource/ASPPisParser.php"
         break;
       case 300: /* groupOrUnionGraphPatternX ::= UNION GroupGraphPattern */
-#line 489 "resource/sparql.y"
+#line 490 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 577; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'UNION ' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5068 "resource/sparql.php"
+#line 5070 "resource/ASPPisParser.php"
         break;
       case 301: /* filter ::= FILTER LPARENTHESE expression RPARENTHESE */
-#line 491 "resource/sparql.y"
+#line 492 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 578; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'FILTER ( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5073 "resource/sparql.php"
+#line 5075 "resource/ASPPisParser.php"
         break;
       case 302: /* filter ::= FILTER builtInCall */
       case 303: /* filter ::= FILTER functionCall */
-#line 492 "resource/sparql.y"
+#line 493 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 578; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'FILTER ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5079 "resource/sparql.php"
+#line 5081 "resource/ASPPisParser.php"
         break;
       case 304: /* functionCall ::= iri argList */
-#line 495 "resource/sparql.y"
+#line 496 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 579; $yygotominor->hasFNC = true; $yygotominor->hasAGG = true; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5084 "resource/sparql.php"
+#line 5086 "resource/ASPPisParser.php"
         break;
       case 305: /* argList ::= LPARENTHESE DISTINCT expression argListX RPARENTHESE */
-#line 497 "resource/sparql.y"
+#line 498 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 580; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( DISTINCT' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5089 "resource/sparql.php"
+#line 5091 "resource/ASPPisParser.php"
         break;
       case 306: /* argList ::= LPARENTHESE expression argListX RPARENTHESE */
-#line 498 "resource/sparql.y"
+#line 499 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 580; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars +  $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5094 "resource/sparql.php"
+#line 5096 "resource/ASPPisParser.php"
         break;
       case 307: /* argList ::= NIL */
-#line 499 "resource/sparql.y"
+#line 500 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 580; $yygotominor->query = '( )' . PHP_EOL; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5099 "resource/sparql.php"
+#line 5101 "resource/ASPPisParser.php"
         break;
       case 308: /* argListX ::= argListX COMMA expression */
-#line 500 "resource/sparql.y"
+#line 501 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 581; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ', ' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5104 "resource/sparql.php"
+#line 5106 "resource/ASPPisParser.php"
         break;
       case 309: /* argListX ::= COMMA expression */
-#line 501 "resource/sparql.y"
+#line 502 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 581; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = ', ' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5109 "resource/sparql.php"
+#line 5111 "resource/ASPPisParser.php"
         break;
       case 310: /* expressionList ::= LPARENTHESE expression argListX RPARENTHESE */
-#line 503 "resource/sparql.y"
+#line 504 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 582; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5114 "resource/sparql.php"
+#line 5116 "resource/ASPPisParser.php"
         break;
       case 311: /* expressionList ::= NIL LBRACE RBRACE */
-#line 504 "resource/sparql.y"
+#line 505 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 582; $yygotominor->query = '( )' . PHP_EOL; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5119 "resource/sparql.php"
+#line 5121 "resource/ASPPisParser.php"
         break;
       case 312: /* triplesSameSubject ::= varOrTerm propertyListNotEmpty */
       case 313: /* triplesSameSubject ::= triplesNode propertyListNotEmpty */
-#line 506 "resource/sparql.y"
+#line 507 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 583; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5125 "resource/sparql.php"
+#line 5127 "resource/ASPPisParser.php"
         break;
       case 314: /* triplesSameSubject ::= triplesNode */
-#line 508 "resource/sparql.y"
+#line 509 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 583; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5130 "resource/sparql.php"
+#line 5132 "resource/ASPPisParser.php"
         break;
       case 315: /* propertyListNotEmpty ::= verb objectList propertyListNotEmptyX */
-#line 510 "resource/sparql.y"
+#line 511 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 584; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5135 "resource/sparql.php"
+#line 5137 "resource/ASPPisParser.php"
         break;
       case 316: /* propertyListNotEmpty ::= verb objectList */
-#line 511 "resource/sparql.y"
+#line 512 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 584; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5140 "resource/sparql.php"
+#line 5142 "resource/ASPPisParser.php"
         break;
       case 317: /* propertyListNotEmptyX ::= propertyListNotEmptyX SEMICOLON verb objectList */
-#line 512 "resource/sparql.y"
+#line 513 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 585; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5145 "resource/sparql.php"
+#line 5147 "resource/ASPPisParser.php"
         break;
       case 318: /* propertyListNotEmptyX ::= propertyListNotEmptyX SEMICOLON */
-#line 513 "resource/sparql.y"
+#line 514 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 585; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query. ';'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5150 "resource/sparql.php"
+#line 5152 "resource/ASPPisParser.php"
         break;
       case 319: /* propertyListNotEmptyX ::= SEMICOLON verb objectList */
-#line 514 "resource/sparql.y"
+#line 515 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 585; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5155 "resource/sparql.php"
+#line 5157 "resource/ASPPisParser.php"
         break;
       case 320: /* propertyListNotEmptyX ::= SEMICOLON */
-#line 515 "resource/sparql.y"
+#line 516 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 585; $yygotominor->query = ';'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5160 "resource/sparql.php"
+#line 5162 "resource/ASPPisParser.php"
         break;
       case 321: /* verb ::= varOrIri */
-#line 517 "resource/sparql.y"
+#line 518 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 586; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5165 "resource/sparql.php"
+#line 5167 "resource/ASPPisParser.php"
         break;
       case 322: /* verb ::= A */
-#line 518 "resource/sparql.y"
+#line 519 "resource/ASPPisParser.y"
 { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 586; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5170 "resource/sparql.php"
+#line 5172 "resource/ASPPisParser.php"
         break;
       case 323: /* objectList ::= graphNode objectListX */
-#line 520 "resource/sparql.y"
+#line 521 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 587; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5175 "resource/sparql.php"
+#line 5177 "resource/ASPPisParser.php"
         break;
       case 324: /* objectList ::= graphNode */
-#line 521 "resource/sparql.y"
+#line 522 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 587; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5180 "resource/sparql.php"
+#line 5182 "resource/ASPPisParser.php"
         break;
       case 325: /* objectListX ::= objectListX COMMA graphNode */
-#line 522 "resource/sparql.y"
+#line 523 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 588; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ', ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5185 "resource/sparql.php"
+#line 5187 "resource/ASPPisParser.php"
         break;
       case 326: /* objectListX ::= COMMA graphNode */
-#line 523 "resource/sparql.y"
+#line 524 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 588; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = ', ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5190 "resource/sparql.php"
+#line 5192 "resource/ASPPisParser.php"
         break;
       case 327: /* triplesSameSubjectPath ::= varOrTerm propertyListPathNotEmpty */
       case 328: /* triplesSameSubjectPath ::= triplesNodePath propertyListPathNotEmpty */
-#line 525 "resource/sparql.y"
+#line 526 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 589; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5196 "resource/sparql.php"
+#line 5198 "resource/ASPPisParser.php"
         break;
       case 329: /* triplesSameSubjectPath ::= triplesNodePath */
-#line 527 "resource/sparql.y"
+#line 528 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 589; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5201 "resource/sparql.php"
+#line 5203 "resource/ASPPisParser.php"
         break;
       case 330: /* propertyListPathNotEmpty ::= pathAlternative objectListPath propertyListPathNotEmptyX */
-#line 529 "resource/sparql.y"
+#line 530 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 590; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5206 "resource/sparql.php"
+#line 5208 "resource/ASPPisParser.php"
         break;
       case 331: /* propertyListPathNotEmpty ::= var objectListPath propertyListPathNotEmptyX */
-#line 530 "resource/sparql.y"
+#line 531 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 590; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5211 "resource/sparql.php"
+#line 5213 "resource/ASPPisParser.php"
         break;
       case 332: /* propertyListPathNotEmpty ::= pathAlternative objectListPath */
-#line 531 "resource/sparql.y"
+#line 532 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 590; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5216 "resource/sparql.php"
+#line 5218 "resource/ASPPisParser.php"
         break;
       case 333: /* propertyListPathNotEmpty ::= var objectListPath */
-#line 532 "resource/sparql.y"
+#line 533 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 590; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5221 "resource/sparql.php"
+#line 5223 "resource/ASPPisParser.php"
         break;
       case 334: /* propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON pathAlternative objectList */
-#line 533 "resource/sparql.y"
+#line 534 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 591; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5226 "resource/sparql.php"
+#line 5228 "resource/ASPPisParser.php"
         break;
       case 335: /* propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON var objectList */
-#line 534 "resource/sparql.y"
+#line 535 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 591; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -3]->minor->query . '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5231 "resource/sparql.php"
+#line 5233 "resource/ASPPisParser.php"
         break;
       case 336: /* propertyListPathNotEmptyX ::= propertyListPathNotEmptyX SEMICOLON */
-#line 535 "resource/sparql.y"
+#line 536 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 591; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query. ';'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5236 "resource/sparql.php"
+#line 5238 "resource/ASPPisParser.php"
         break;
       case 337: /* propertyListPathNotEmptyX ::= SEMICOLON pathAlternative objectList */
-#line 536 "resource/sparql.y"
+#line 537 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 591; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '; ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5241 "resource/sparql.php"
+#line 5243 "resource/ASPPisParser.php"
         break;
       case 338: /* propertyListPathNotEmptyX ::= SEMICOLON var objectList */
-#line 537 "resource/sparql.y"
+#line 538 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 591; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '; ' . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5246 "resource/sparql.php"
+#line 5248 "resource/ASPPisParser.php"
         break;
       case 339: /* propertyListPathNotEmptyX ::= SEMICOLON */
-#line 538 "resource/sparql.y"
+#line 539 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 591; $yygotominor->query = ';'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5251 "resource/sparql.php"
+#line 5253 "resource/ASPPisParser.php"
         break;
       case 340: /* objectListPath ::= graphNodePath objectListPathX */
-#line 540 "resource/sparql.y"
+#line 541 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 592; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5256 "resource/sparql.php"
+#line 5258 "resource/ASPPisParser.php"
         break;
       case 341: /* objectListPath ::= graphNodePath */
-#line 541 "resource/sparql.y"
+#line 542 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 592; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5261 "resource/sparql.php"
+#line 5263 "resource/ASPPisParser.php"
         break;
       case 342: /* objectListPathX ::= objectListPathX COMMA graphNodePath */
-#line 542 "resource/sparql.y"
+#line 543 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 593; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ', ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5266 "resource/sparql.php"
+#line 5268 "resource/ASPPisParser.php"
         break;
       case 343: /* objectListPathX ::= COMMA graphNodePath */
-#line 543 "resource/sparql.y"
+#line 544 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 593; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = ', ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5271 "resource/sparql.php"
+#line 5273 "resource/ASPPisParser.php"
         break;
       case 344: /* pathAlternative ::= pathSequence pathAlternativeX */
-#line 545 "resource/sparql.y"
+#line 546 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 594; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5276 "resource/sparql.php"
+#line 5278 "resource/ASPPisParser.php"
         break;
       case 345: /* pathAlternative ::= pathSequence */
-#line 546 "resource/sparql.y"
+#line 547 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 594; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5281 "resource/sparql.php"
+#line 5283 "resource/ASPPisParser.php"
         break;
       case 346: /* pathAlternativeX ::= pathAlternativeX VBAR pathSequence */
-#line 547 "resource/sparql.y"
+#line 548 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 595; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . '|' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5286 "resource/sparql.php"
+#line 5288 "resource/ASPPisParser.php"
         break;
       case 347: /* pathAlternativeX ::= VBAR pathSequence */
-#line 548 "resource/sparql.y"
+#line 549 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 595; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '|' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5291 "resource/sparql.php"
+#line 5293 "resource/ASPPisParser.php"
         break;
       case 348: /* pathSequence ::= pathEltOrInverse pathSequenceX */
-#line 550 "resource/sparql.y"
+#line 551 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 596; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5296 "resource/sparql.php"
+#line 5298 "resource/ASPPisParser.php"
         break;
       case 349: /* pathSequence ::= pathEltOrInverse */
-#line 551 "resource/sparql.y"
+#line 552 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 596; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5301 "resource/sparql.php"
+#line 5303 "resource/ASPPisParser.php"
         break;
       case 350: /* pathSequenceX ::= pathSequenceX SLASH pathEltOrInverse */
-#line 552 "resource/sparql.y"
+#line 553 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 597; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . '/' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5306 "resource/sparql.php"
+#line 5308 "resource/ASPPisParser.php"
         break;
       case 351: /* pathSequenceX ::= SLASH pathEltOrInverse */
-#line 553 "resource/sparql.y"
+#line 554 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 597; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '/' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5311 "resource/sparql.php"
+#line 5313 "resource/ASPPisParser.php"
         break;
       case 352: /* pathElt ::= pathPrimary pathMod */
-#line 555 "resource/sparql.y"
+#line 556 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 598; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5316 "resource/sparql.php"
+#line 5318 "resource/ASPPisParser.php"
         break;
       case 353: /* pathElt ::= pathPrimary */
-#line 556 "resource/sparql.y"
+#line 557 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 598; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5321 "resource/sparql.php"
+#line 5323 "resource/ASPPisParser.php"
         break;
       case 354: /* pathEltOrInverse ::= HAT pathElt */
-#line 558 "resource/sparql.y"
+#line 559 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 599; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '^' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5326 "resource/sparql.php"
+#line 5328 "resource/ASPPisParser.php"
         break;
       case 355: /* pathEltOrInverse ::= pathElt */
-#line 559 "resource/sparql.y"
+#line 560 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 599; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5331 "resource/sparql.php"
+#line 5333 "resource/ASPPisParser.php"
         break;
       case 356: /* pathMod ::= STAR */
-#line 561 "resource/sparql.y"
+#line 562 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 600; $yygotominor->query = '*'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5336 "resource/sparql.php"
+#line 5338 "resource/ASPPisParser.php"
         break;
       case 357: /* pathMod ::= PLUS */
-#line 562 "resource/sparql.y"
+#line 563 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 600; $yygotominor->query = '+'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5341 "resource/sparql.php"
+#line 5343 "resource/ASPPisParser.php"
         break;
       case 358: /* pathMod ::= QUESTION */
-#line 563 "resource/sparql.y"
+#line 564 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 600; $yygotominor->query = '?'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5346 "resource/sparql.php"
+#line 5348 "resource/ASPPisParser.php"
         break;
       case 359: /* pathPrimary ::= LPARENTHESE pathAlternative RPARENTHESE */
-#line 565 "resource/sparql.y"
+#line 566 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 601; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5351 "resource/sparql.php"
+#line 5353 "resource/ASPPisParser.php"
         break;
       case 360: /* pathPrimary ::= EXCLAMATION pathNegatedPropertySet */
-#line 566 "resource/sparql.y"
+#line 567 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 601; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '!' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5356 "resource/sparql.php"
+#line 5358 "resource/ASPPisParser.php"
         break;
       case 361: /* pathPrimary ::= A */
-#line 567 "resource/sparql.y"
+#line 568 "resource/ASPPisParser.y"
 { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 601; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5361 "resource/sparql.php"
+#line 5363 "resource/ASPPisParser.php"
         break;
       case 362: /* pathPrimary ::= iri */
-#line 568 "resource/sparql.y"
+#line 569 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 601; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5366 "resource/sparql.php"
+#line 5368 "resource/ASPPisParser.php"
         break;
       case 363: /* pathNegatedPropertySet ::= LPARENTHESE pathOneInPropertySet pathNegatedPropertySetX RPARENTHESE */
-#line 570 "resource/sparql.y"
+#line 571 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 602; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5371 "resource/sparql.php"
+#line 5373 "resource/ASPPisParser.php"
         break;
       case 364: /* pathNegatedPropertySet ::= LPARENTHESE pathOneInPropertySet RPARENTHESE */
-#line 571 "resource/sparql.y"
+#line 572 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 602; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5376 "resource/sparql.php"
+#line 5378 "resource/ASPPisParser.php"
         break;
       case 365: /* pathNegatedPropertySet ::= LPARENTHESE RPARENTHESE */
-#line 572 "resource/sparql.y"
+#line 573 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 602; $yygotominor->query = '( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5381 "resource/sparql.php"
+#line 5383 "resource/ASPPisParser.php"
         break;
       case 366: /* pathNegatedPropertySet ::= pathOneInPropertySet */
-#line 573 "resource/sparql.y"
+#line 574 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 602; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5386 "resource/sparql.php"
+#line 5388 "resource/ASPPisParser.php"
         break;
       case 367: /* pathNegatedPropertySetX ::= pathNegatedPropertySetX VBAR pathOneInPropertySet */
-#line 574 "resource/sparql.y"
+#line 575 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 603; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . '|' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5391 "resource/sparql.php"
+#line 5393 "resource/ASPPisParser.php"
         break;
       case 368: /* pathNegatedPropertySetX ::= VBAR pathOneInPropertySet */
-#line 575 "resource/sparql.y"
+#line 576 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 603; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '|' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5396 "resource/sparql.php"
+#line 5398 "resource/ASPPisParser.php"
         break;
       case 369: /* pathOneInPropertySet ::= HAT iri */
-#line 577 "resource/sparql.y"
+#line 578 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 604; $yygotominor->query = '^' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5401 "resource/sparql.php"
+#line 5403 "resource/ASPPisParser.php"
         break;
       case 370: /* pathOneInPropertySet ::= HAT A */
-#line 578 "resource/sparql.y"
+#line 579 "resource/ASPPisParser.y"
 { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 604; ; $yygotominor->query = '^rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5406 "resource/sparql.php"
+#line 5408 "resource/ASPPisParser.php"
         break;
       case 371: /* pathOneInPropertySet ::= A */
-#line 579 "resource/sparql.y"
+#line 580 "resource/ASPPisParser.y"
 { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 604; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5411 "resource/sparql.php"
+#line 5413 "resource/ASPPisParser.php"
         break;
       case 372: /* pathOneInPropertySet ::= iri */
-#line 580 "resource/sparql.y"
+#line 581 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 604; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5416 "resource/sparql.php"
+#line 5418 "resource/ASPPisParser.php"
         break;
       case 373: /* triplesNode ::= collection */
       case 374: /* triplesNode ::= blankNodePropertyList */
-#line 582 "resource/sparql.y"
+#line 583 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 605; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5422 "resource/sparql.php"
+#line 5424 "resource/ASPPisParser.php"
         break;
       case 375: /* blankNodePropertyList ::= LBRACKET propertyListNotEmpty RBRACKET */
-#line 585 "resource/sparql.y"
+#line 586 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 606; $yygotominor->hasBN = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '[ ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ]'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5427 "resource/sparql.php"
+#line 5429 "resource/ASPPisParser.php"
         break;
       case 376: /* triplesNodePath ::= collectionPath */
       case 377: /* triplesNodePath ::= blankNodePropertyListPath */
-#line 587 "resource/sparql.y"
+#line 588 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 607; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5433 "resource/sparql.php"
+#line 5435 "resource/ASPPisParser.php"
         break;
       case 378: /* blankNodePropertyListPath ::= LBRACKET propertyListPathNotEmpty RBRACKET */
-#line 590 "resource/sparql.y"
+#line 591 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 608; $yygotominor->hasBN = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '[ ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ]'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5438 "resource/sparql.php"
+#line 5440 "resource/ASPPisParser.php"
         break;
       case 379: /* collection ::= LPARENTHESE graphNodeX RPARENTHESE */
-#line 592 "resource/sparql.y"
+#line 593 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 609; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5443 "resource/sparql.php"
+#line 5445 "resource/ASPPisParser.php"
         break;
       case 380: /* graphNodeX ::= graphNodeX graphNode */
-#line 593 "resource/sparql.y"
+#line 594 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 610; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5448 "resource/sparql.php"
+#line 5450 "resource/ASPPisParser.php"
         break;
       case 381: /* graphNodeX ::= graphNode */
-#line 594 "resource/sparql.y"
+#line 595 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 610; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5453 "resource/sparql.php"
+#line 5455 "resource/ASPPisParser.php"
         break;
       case 382: /* collectionPath ::= LPARENTHESE graphNodePathX RPARENTHESE */
-#line 596 "resource/sparql.y"
+#line 597 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 611; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5458 "resource/sparql.php"
+#line 5460 "resource/ASPPisParser.php"
         break;
       case 383: /* graphNodePathX ::= graphNodePathX graphNodePath */
-#line 597 "resource/sparql.y"
+#line 598 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 612; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5463 "resource/sparql.php"
+#line 5465 "resource/ASPPisParser.php"
         break;
       case 384: /* graphNodePathX ::= graphNodePath */
-#line 598 "resource/sparql.y"
+#line 599 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 612; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5468 "resource/sparql.php"
+#line 5470 "resource/ASPPisParser.php"
         break;
       case 385: /* graphNode ::= varOrTerm */
       case 386: /* graphNode ::= triplesNode */
-#line 600 "resource/sparql.y"
+#line 601 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 613; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5474 "resource/sparql.php"
+#line 5476 "resource/ASPPisParser.php"
         break;
       case 387: /* graphNodePath ::= varOrTerm */
       case 388: /* graphNodePath ::= triplesNodePath */
-#line 603 "resource/sparql.y"
+#line 604 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 614; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5480 "resource/sparql.php"
+#line 5482 "resource/ASPPisParser.php"
         break;
       case 389: /* varOrTerm ::= var */
-#line 606 "resource/sparql.y"
+#line 607 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 615; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5485 "resource/sparql.php"
+#line 5487 "resource/ASPPisParser.php"
         break;
       case 390: /* varOrTerm ::= graphTerm */
-#line 607 "resource/sparql.y"
+#line 608 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 615; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5490 "resource/sparql.php"
+#line 5492 "resource/ASPPisParser.php"
         break;
       case 391: /* varOrIri ::= var */
-#line 609 "resource/sparql.y"
+#line 610 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 616; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5495 "resource/sparql.php"
+#line 5497 "resource/ASPPisParser.php"
         break;
       case 392: /* varOrIri ::= iri */
-#line 610 "resource/sparql.y"
+#line 611 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 616; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5500 "resource/sparql.php"
+#line 5502 "resource/ASPPisParser.php"
         break;
       case 393: /* var ::= VAR1 */
       case 394: /* var ::= VAR2 */
-#line 612 "resource/sparql.y"
+#line 613 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 617; $yygotominor->vars = array(); $yygotominor->vars[$this->yystack[$this->yyidx + 0]->minor->value] = 1; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5506 "resource/sparql.php"
+#line 5508 "resource/ASPPisParser.php"
         break;
       case 395: /* graphTerm ::= iri */
       case 396: /* graphTerm ::= rdfLiteral */
       case 397: /* graphTerm ::= numericLiteral */
       case 398: /* graphTerm ::= booleanLiteral */
-#line 615 "resource/sparql.y"
+#line 616 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 618; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5514 "resource/sparql.php"
+#line 5516 "resource/ASPPisParser.php"
         break;
       case 399: /* graphTerm ::= blankNode */
-#line 619 "resource/sparql.y"
+#line 620 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 618; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5519 "resource/sparql.php"
+#line 5521 "resource/ASPPisParser.php"
         break;
       case 400: /* graphTerm ::= NIL */
-#line 620 "resource/sparql.y"
+#line 621 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 618; $yygotominor->query = '( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5524 "resource/sparql.php"
+#line 5526 "resource/ASPPisParser.php"
         break;
       case 401: /* expression ::= conditionalAndExpression conditionalOrExpressionX */
-#line 622 "resource/sparql.y"
+#line 623 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 619; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5529 "resource/sparql.php"
+#line 5531 "resource/ASPPisParser.php"
         break;
       case 402: /* expression ::= conditionalAndExpression */
-#line 623 "resource/sparql.y"
+#line 624 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 619; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor);$yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5534 "resource/sparql.php"
+#line 5536 "resource/ASPPisParser.php"
         break;
       case 403: /* conditionalOrExpressionX ::= conditionalOrExpressionX OR conditionalAndExpression */
-#line 624 "resource/sparql.y"
+#line 625 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 620; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' || ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5539 "resource/sparql.php"
+#line 5541 "resource/ASPPisParser.php"
         break;
       case 404: /* conditionalOrExpressionX ::= OR conditionalAndExpression */
-#line 625 "resource/sparql.y"
+#line 626 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 620; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '|| ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5544 "resource/sparql.php"
+#line 5546 "resource/ASPPisParser.php"
         break;
       case 405: /* conditionalAndExpression ::= relationalExpression conditionalAndExpressionX */
-#line 627 "resource/sparql.y"
+#line 628 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 621; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5549 "resource/sparql.php"
+#line 5551 "resource/ASPPisParser.php"
         break;
       case 406: /* conditionalAndExpression ::= relationalExpression */
-#line 628 "resource/sparql.y"
+#line 629 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 621; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5554 "resource/sparql.php"
+#line 5556 "resource/ASPPisParser.php"
         break;
       case 407: /* conditionalAndExpressionX ::= conditionalAndExpressionX AND relationalExpression */
-#line 629 "resource/sparql.y"
+#line 630 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 622; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' && ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5559 "resource/sparql.php"
+#line 5561 "resource/ASPPisParser.php"
         break;
       case 408: /* conditionalAndExpressionX ::= AND relationalExpression */
-#line 630 "resource/sparql.y"
+#line 631 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 622; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '&& ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5564 "resource/sparql.php"
+#line 5566 "resource/ASPPisParser.php"
         break;
       case 409: /* relationalExpression ::= additiveExpression relationalExpressionX */
-#line 632 "resource/sparql.y"
+#line 633 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 623; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5569 "resource/sparql.php"
+#line 5571 "resource/ASPPisParser.php"
         break;
       case 410: /* relationalExpression ::= additiveExpression */
-#line 633 "resource/sparql.y"
+#line 634 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 623; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5574 "resource/sparql.php"
+#line 5576 "resource/ASPPisParser.php"
         break;
       case 411: /* relationalExpressionX ::= EQUAL additiveExpression */
-#line 634 "resource/sparql.y"
+#line 635 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 624; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '= ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5579 "resource/sparql.php"
+#line 5581 "resource/ASPPisParser.php"
         break;
       case 412: /* relationalExpressionX ::= NEQUAL additiveExpression */
-#line 635 "resource/sparql.y"
+#line 636 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 624; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '!= ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5584 "resource/sparql.php"
+#line 5586 "resource/ASPPisParser.php"
         break;
       case 413: /* relationalExpressionX ::= SMALLERTHEN additiveExpression */
-#line 636 "resource/sparql.y"
+#line 637 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 624; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '< ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5589 "resource/sparql.php"
+#line 5591 "resource/ASPPisParser.php"
         break;
       case 414: /* relationalExpressionX ::= GREATERTHEN additiveExpression */
-#line 637 "resource/sparql.y"
+#line 638 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 624; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '> ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5594 "resource/sparql.php"
+#line 5596 "resource/ASPPisParser.php"
         break;
       case 415: /* relationalExpressionX ::= SMALLERTHENQ additiveExpression */
-#line 638 "resource/sparql.y"
+#line 639 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 624; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '<= ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5599 "resource/sparql.php"
+#line 5601 "resource/ASPPisParser.php"
         break;
       case 416: /* relationalExpressionX ::= GREATERTHENQ additiveExpression */
-#line 639 "resource/sparql.y"
+#line 640 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 624; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '>= ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5604 "resource/sparql.php"
+#line 5606 "resource/ASPPisParser.php"
         break;
       case 417: /* relationalExpressionX ::= IN expressionList */
-#line 640 "resource/sparql.y"
+#line 641 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 624; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'IN' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5609 "resource/sparql.php"
+#line 5611 "resource/ASPPisParser.php"
         break;
       case 418: /* relationalExpressionX ::= NOT IN expressionList */
-#line 641 "resource/sparql.y"
+#line 642 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 624; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'NOT IN' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5614 "resource/sparql.php"
+#line 5616 "resource/ASPPisParser.php"
         break;
       case 419: /* additiveExpression ::= multiplicativeExpression additiveExpressionX */
-#line 643 "resource/sparql.y"
+#line 644 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 625; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5619 "resource/sparql.php"
+#line 5621 "resource/ASPPisParser.php"
         break;
       case 420: /* additiveExpression ::= multiplicativeExpression */
-#line 644 "resource/sparql.y"
+#line 645 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 625; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5624 "resource/sparql.php"
+#line 5626 "resource/ASPPisParser.php"
         break;
       case 421: /* additiveExpressionX ::= additiveExpressionX numericLiteralPositive additiveExpressionY */
       case 422: /* additiveExpressionX ::= additiveExpressionX numericLiteralNegative additiveExpressionY */
-#line 645 "resource/sparql.y"
+#line 646 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 626; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' ' . $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5630 "resource/sparql.php"
+#line 5632 "resource/ASPPisParser.php"
         break;
       case 423: /* additiveExpressionX ::= additiveExpressionX numericLiteralPositive */
       case 424: /* additiveExpressionX ::= additiveExpressionX numericLiteralNegative */
-#line 647 "resource/sparql.y"
+#line 648 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 626; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5636 "resource/sparql.php"
+#line 5638 "resource/ASPPisParser.php"
         break;
       case 425: /* additiveExpressionX ::= additiveExpressionX PLUS multiplicativeExpression */
-#line 649 "resource/sparql.y"
+#line 650 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 626; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' + ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5641 "resource/sparql.php"
+#line 5643 "resource/ASPPisParser.php"
         break;
       case 426: /* additiveExpressionX ::= additiveExpressionX MINUS multiplicativeExpression */
-#line 650 "resource/sparql.y"
+#line 651 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 626; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' - ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5646 "resource/sparql.php"
+#line 5648 "resource/ASPPisParser.php"
         break;
       case 427: /* additiveExpressionX ::= numericLiteralPositive additiveExpressionY */
       case 428: /* additiveExpressionX ::= numericLiteralNegative additiveExpressionY */
-#line 651 "resource/sparql.y"
+#line 652 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 626; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5652 "resource/sparql.php"
+#line 5654 "resource/ASPPisParser.php"
         break;
       case 429: /* additiveExpressionX ::= numericLiteralPositive */
       case 430: /* additiveExpressionX ::= numericLiteralNegative */
-#line 653 "resource/sparql.y"
+#line 654 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 626; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5658 "resource/sparql.php"
+#line 5660 "resource/ASPPisParser.php"
         break;
       case 431: /* additiveExpressionX ::= PLUS multiplicativeExpression */
-#line 655 "resource/sparql.y"
+#line 656 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 626; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '+ ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5663 "resource/sparql.php"
+#line 5665 "resource/ASPPisParser.php"
         break;
       case 432: /* additiveExpressionX ::= MINUS multiplicativeExpression */
-#line 656 "resource/sparql.y"
+#line 657 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 626; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '- ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5668 "resource/sparql.php"
+#line 5670 "resource/ASPPisParser.php"
         break;
       case 433: /* additiveExpressionY ::= additiveExpressionY STAR unaryExpression */
-#line 657 "resource/sparql.y"
+#line 658 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 627; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' * ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5673 "resource/sparql.php"
+#line 5675 "resource/ASPPisParser.php"
         break;
       case 434: /* additiveExpressionY ::= additiveExpressionY SLASH unaryExpression */
-#line 658 "resource/sparql.y"
+#line 659 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 627; $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -2]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . ' / ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5678 "resource/sparql.php"
+#line 5680 "resource/ASPPisParser.php"
         break;
       case 435: /* additiveExpressionY ::= STAR unaryExpression */
-#line 659 "resource/sparql.y"
+#line 660 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 627; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '* ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5683 "resource/sparql.php"
+#line 5685 "resource/ASPPisParser.php"
         break;
       case 436: /* additiveExpressionY ::= SLASH unaryExpression */
-#line 660 "resource/sparql.y"
+#line 661 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 627; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '/ ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5688 "resource/sparql.php"
+#line 5690 "resource/ASPPisParser.php"
         break;
       case 437: /* multiplicativeExpression ::= unaryExpression additiveExpressionY */
-#line 662 "resource/sparql.y"
+#line 663 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 628; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . ' ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5693 "resource/sparql.php"
+#line 5695 "resource/ASPPisParser.php"
         break;
       case 438: /* multiplicativeExpression ::= unaryExpression */
-#line 663 "resource/sparql.y"
+#line 664 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 628; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5698 "resource/sparql.php"
+#line 5700 "resource/ASPPisParser.php"
         break;
       case 439: /* unaryExpression ::= EXCLAMATION primaryExpression */
-#line 665 "resource/sparql.y"
+#line 666 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 629; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '! ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5703 "resource/sparql.php"
+#line 5705 "resource/ASPPisParser.php"
         break;
       case 440: /* unaryExpression ::= PLUS primaryExpression */
-#line 666 "resource/sparql.y"
+#line 667 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 629; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '+ ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5708 "resource/sparql.php"
+#line 5710 "resource/ASPPisParser.php"
         break;
       case 441: /* unaryExpression ::= MINUS primaryExpression */
-#line 667 "resource/sparql.y"
+#line 668 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 629; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = '- ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5713 "resource/sparql.php"
+#line 5715 "resource/ASPPisParser.php"
         break;
       case 442: /* unaryExpression ::= primaryExpression */
-#line 668 "resource/sparql.y"
+#line 669 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 629; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5718 "resource/sparql.php"
+#line 5720 "resource/ASPPisParser.php"
         break;
       case 443: /* primaryExpression ::= LPARENTHESE expression RPARENTHESE */
-#line 670 "resource/sparql.y"
+#line 671 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 630; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + -1]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = '( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5723 "resource/sparql.php"
+#line 5725 "resource/ASPPisParser.php"
         break;
       case 444: /* primaryExpression ::= builtInCall */
-#line 671 "resource/sparql.y"
+#line 672 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 630; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5728 "resource/sparql.php"
+#line 5730 "resource/ASPPisParser.php"
         break;
       case 445: /* primaryExpression ::= iri */
       case 447: /* primaryExpression ::= rdfLiteral */
       case 448: /* primaryExpression ::= numericLiteral */
       case 449: /* primaryExpression ::= booleanLiteral */
-#line 672 "resource/sparql.y"
+#line 673 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 630; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5736 "resource/sparql.php"
+#line 5738 "resource/ASPPisParser.php"
         break;
       case 446: /* primaryExpression ::= functionCall */
-#line 673 "resource/sparql.y"
+#line 674 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 630; $yygotominor->hasFNC = true; $yygotominor->hasAGG = true; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5741 "resource/sparql.php"
+#line 5743 "resource/ASPPisParser.php"
         break;
       case 450: /* primaryExpression ::= var */
-#line 677 "resource/sparql.y"
+#line 678 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 630; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5746 "resource/sparql.php"
+#line 5748 "resource/ASPPisParser.php"
         break;
       case 451: /* builtInCall ::= aggregate */
       case 452: /* builtInCall ::= regexExpression */
       case 469: /* builtInCall ::= subStringExpression */
       case 471: /* builtInCall ::= strReplaceExpression */
-#line 679 "resource/sparql.y"
+#line 680 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5754 "resource/sparql.php"
+#line 5756 "resource/ASPPisParser.php"
         break;
       case 453: /* builtInCall ::= existsFunc */
       case 454: /* builtInCall ::= notExistsFunc */
-#line 681 "resource/sparql.y"
+#line 682 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 5760 "resource/sparql.php"
+#line 5762 "resource/ASPPisParser.php"
         break;
       case 455: /* builtInCall ::= STR LPARENTHESE expression RPARENTHESE */
       case 456: /* builtInCall ::= LANG LPARENTHESE expression RPARENTHESE */
-#line 683 "resource/sparql.y"
+#line 684 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STR( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5766 "resource/sparql.php"
+#line 5768 "resource/ASPPisParser.php"
         break;
       case 457: /* builtInCall ::= LANGMATCHES LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 685 "resource/sparql.y"
+#line 686 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'LANGMATCHES( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5771 "resource/sparql.php"
+#line 5773 "resource/ASPPisParser.php"
         break;
       case 458: /* builtInCall ::= DATATYPE LPARENTHESE expression RPARENTHESE */
-#line 686 "resource/sparql.y"
+#line 687 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'DATATYPE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5776 "resource/sparql.php"
+#line 5778 "resource/ASPPisParser.php"
         break;
       case 459: /* builtInCall ::= BOUND LPARENTHESE var RPARENTHESE */
-#line 687 "resource/sparql.y"
+#line 688 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->query = 'BOUND( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5781 "resource/sparql.php"
+#line 5783 "resource/ASPPisParser.php"
         break;
       case 460: /* builtInCall ::= URI LPARENTHESE expression RPARENTHESE */
-#line 688 "resource/sparql.y"
+#line 689 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'URI( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5786 "resource/sparql.php"
+#line 5788 "resource/ASPPisParser.php"
         break;
       case 461: /* builtInCall ::= BNODE LPARENTHESE expression RPARENTHESE */
-#line 689 "resource/sparql.y"
+#line 690 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->hasBN = true; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes[$this->yystack[$this->yyidx + -1]->minor->query] = 1; $yygotominor->bNodes += $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'BNODE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5791 "resource/sparql.php"
+#line 5793 "resource/ASPPisParser.php"
         break;
       case 462: /* builtInCall ::= BNODE NIL */
-#line 690 "resource/sparql.y"
+#line 691 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->hasBN = true; $yygotominor->query = 'BNODE( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5796 "resource/sparql.php"
+#line 5798 "resource/ASPPisParser.php"
         break;
       case 463: /* builtInCall ::= RAND NIL */
-#line 691 "resource/sparql.y"
+#line 692 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->query = 'RAND( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5801 "resource/sparql.php"
+#line 5803 "resource/ASPPisParser.php"
         break;
       case 464: /* builtInCall ::= ABS LPARENTHESE expression RPARENTHESE */
-#line 692 "resource/sparql.y"
+#line 693 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ABS(' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5806 "resource/sparql.php"
+#line 5808 "resource/ASPPisParser.php"
         break;
       case 465: /* builtInCall ::= CEIL LPARENTHESE expression RPARENTHESE */
-#line 693 "resource/sparql.y"
+#line 694 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars;$yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'CEIL(' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5811 "resource/sparql.php"
+#line 5813 "resource/ASPPisParser.php"
         break;
       case 466: /* builtInCall ::= FLOOR LPARENTHESE expression RPARENTHESE */
-#line 694 "resource/sparql.y"
+#line 695 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'FLOOR(' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5816 "resource/sparql.php"
+#line 5818 "resource/ASPPisParser.php"
         break;
       case 467: /* builtInCall ::= ROUND LPARENTHESE expression RPARENTHESE */
-#line 695 "resource/sparql.y"
+#line 696 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ROUND(' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5821 "resource/sparql.php"
+#line 5823 "resource/ASPPisParser.php"
         break;
       case 468: /* builtInCall ::= CONCAT expressionList */
-#line 696 "resource/sparql.y"
+#line 697 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars;$yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'CONCAT' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5826 "resource/sparql.php"
+#line 5828 "resource/ASPPisParser.php"
         break;
       case 470: /* builtInCall ::= STRLEN LPARENTHESE expression RPARENTHESE */
-#line 698 "resource/sparql.y"
+#line 699 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRLEN( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5831 "resource/sparql.php"
+#line 5833 "resource/ASPPisParser.php"
         break;
       case 472: /* builtInCall ::= UCASE LPARENTHESE expression RPARENTHESE */
-#line 700 "resource/sparql.y"
+#line 701 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'UCASE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5836 "resource/sparql.php"
+#line 5838 "resource/ASPPisParser.php"
         break;
       case 473: /* builtInCall ::= LCASE LPARENTHESE expression RPARENTHESE */
-#line 701 "resource/sparql.y"
+#line 702 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query =  'LCASE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5841 "resource/sparql.php"
+#line 5843 "resource/ASPPisParser.php"
         break;
       case 474: /* builtInCall ::= ENCODE_FOR_URI LPARENTHESE expression RPARENTHESE */
-#line 702 "resource/sparql.y"
+#line 703 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ENCODE_FOR_URI( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5846 "resource/sparql.php"
+#line 5848 "resource/ASPPisParser.php"
         break;
       case 475: /* builtInCall ::= CONTAINS LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 703 "resource/sparql.y"
+#line 704 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'CONTAINS( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5851 "resource/sparql.php"
+#line 5853 "resource/ASPPisParser.php"
         break;
       case 476: /* builtInCall ::= STRSTARTS LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 704 "resource/sparql.y"
+#line 705 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRSTARTS( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5856 "resource/sparql.php"
+#line 5858 "resource/ASPPisParser.php"
         break;
       case 477: /* builtInCall ::= STRENDS LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 705 "resource/sparql.y"
+#line 706 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRENDS( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5861 "resource/sparql.php"
+#line 5863 "resource/ASPPisParser.php"
         break;
       case 478: /* builtInCall ::= STBEFORE LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 706 "resource/sparql.y"
+#line 707 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STBEFORE( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5866 "resource/sparql.php"
+#line 5868 "resource/ASPPisParser.php"
         break;
       case 479: /* builtInCall ::= STRAFTER LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 707 "resource/sparql.y"
+#line 708 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRAFTER( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5871 "resource/sparql.php"
+#line 5873 "resource/ASPPisParser.php"
         break;
       case 480: /* builtInCall ::= YEAR LPARENTHESE expression RPARENTHESE */
-#line 708 "resource/sparql.y"
+#line 709 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'YEAR( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5876 "resource/sparql.php"
+#line 5878 "resource/ASPPisParser.php"
         break;
       case 481: /* builtInCall ::= MONTH LPARENTHESE expression RPARENTHESE */
-#line 709 "resource/sparql.y"
+#line 710 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'MONTH( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5881 "resource/sparql.php"
+#line 5883 "resource/ASPPisParser.php"
         break;
       case 482: /* builtInCall ::= DAY LPARENTHESE expression RPARENTHESE */
-#line 710 "resource/sparql.y"
+#line 711 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'DAY( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5886 "resource/sparql.php"
+#line 5888 "resource/ASPPisParser.php"
         break;
       case 483: /* builtInCall ::= HOURS LPARENTHESE expression RPARENTHESE */
-#line 711 "resource/sparql.y"
+#line 712 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'HOURS( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5891 "resource/sparql.php"
+#line 5893 "resource/ASPPisParser.php"
         break;
       case 484: /* builtInCall ::= MINUTES LPARENTHESE expression RPARENTHESE */
-#line 712 "resource/sparql.y"
+#line 713 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'MINUTES( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5896 "resource/sparql.php"
+#line 5898 "resource/ASPPisParser.php"
         break;
       case 485: /* builtInCall ::= SECONDS LPARENTHESE expression RPARENTHESE */
-#line 713 "resource/sparql.y"
+#line 714 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SECONDS( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5901 "resource/sparql.php"
+#line 5903 "resource/ASPPisParser.php"
         break;
       case 486: /* builtInCall ::= TIMEZONE LPARENTHESE expression RPARENTHESE */
-#line 714 "resource/sparql.y"
+#line 715 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'TIMEZONE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5906 "resource/sparql.php"
+#line 5908 "resource/ASPPisParser.php"
         break;
       case 487: /* builtInCall ::= TZ LPARENTHESE expression RPARENTHESE */
-#line 715 "resource/sparql.y"
+#line 716 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'TZ( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5911 "resource/sparql.php"
+#line 5913 "resource/ASPPisParser.php"
         break;
       case 488: /* builtInCall ::= NOW NIL */
-#line 716 "resource/sparql.y"
+#line 717 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->query = 'NOW( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5916 "resource/sparql.php"
+#line 5918 "resource/ASPPisParser.php"
         break;
       case 489: /* builtInCall ::= UUID NIL */
-#line 717 "resource/sparql.y"
+#line 718 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->query = 'UUID( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5921 "resource/sparql.php"
+#line 5923 "resource/ASPPisParser.php"
         break;
       case 490: /* builtInCall ::= STRUUID NIL */
-#line 718 "resource/sparql.y"
+#line 719 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->query = 'STRUUID( )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5926 "resource/sparql.php"
+#line 5928 "resource/ASPPisParser.php"
         break;
       case 491: /* builtInCall ::= MD5 LPARENTHESE expression RPARENTHESE */
-#line 719 "resource/sparql.y"
+#line 720 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'MD5( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5931 "resource/sparql.php"
+#line 5933 "resource/ASPPisParser.php"
         break;
       case 492: /* builtInCall ::= SHA1 LPARENTHESE expression RPARENTHESE */
-#line 720 "resource/sparql.y"
+#line 721 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SHA1( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5936 "resource/sparql.php"
+#line 5938 "resource/ASPPisParser.php"
         break;
       case 493: /* builtInCall ::= SHA256 LPARENTHESE expression RPARENTHESE */
-#line 721 "resource/sparql.y"
+#line 722 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SHA256( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5941 "resource/sparql.php"
+#line 5943 "resource/ASPPisParser.php"
         break;
       case 494: /* builtInCall ::= SHA384 LPARENTHESE expression RPARENTHESE */
-#line 722 "resource/sparql.y"
+#line 723 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SHA384( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5946 "resource/sparql.php"
+#line 5948 "resource/ASPPisParser.php"
         break;
       case 495: /* builtInCall ::= SHA512 LPARENTHESE expression RPARENTHESE */
-#line 723 "resource/sparql.y"
+#line 724 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SHA512( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5951 "resource/sparql.php"
+#line 5953 "resource/ASPPisParser.php"
         break;
       case 496: /* builtInCall ::= COALESCE expressionList */
-#line 724 "resource/sparql.y"
+#line 725 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'COALESCE' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5956 "resource/sparql.php"
+#line 5958 "resource/ASPPisParser.php"
         break;
       case 497: /* builtInCall ::= IF LPARENTHESE expression COMMA expression COMMA expression RPARENTHESE */
-#line 725 "resource/sparql.y"
+#line 726 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'IF( ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query .  ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -7]->minor, $this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5961 "resource/sparql.php"
+#line 5963 "resource/ASPPisParser.php"
         break;
       case 498: /* builtInCall ::= STRLANG LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 726 "resource/sparql.y"
+#line 727 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRLANG( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5966 "resource/sparql.php"
+#line 5968 "resource/ASPPisParser.php"
         break;
       case 499: /* builtInCall ::= STRDT LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 727 "resource/sparql.y"
+#line 728 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'STRDT( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5971 "resource/sparql.php"
+#line 5973 "resource/ASPPisParser.php"
         break;
       case 500: /* builtInCall ::= SAMETERM LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 728 "resource/sparql.y"
+#line 729 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SAMETERM( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query .  ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5976 "resource/sparql.php"
+#line 5978 "resource/ASPPisParser.php"
         break;
       case 501: /* builtInCall ::= ISIRI LPARENTHESE expression RPARENTHESE */
-#line 729 "resource/sparql.y"
+#line 730 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISIRI( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5981 "resource/sparql.php"
+#line 5983 "resource/ASPPisParser.php"
         break;
       case 502: /* builtInCall ::= ISURI LPARENTHESE expression RPARENTHESE */
-#line 730 "resource/sparql.y"
+#line 731 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISURI( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5986 "resource/sparql.php"
+#line 5988 "resource/ASPPisParser.php"
         break;
       case 503: /* builtInCall ::= ISBLANK LPARENTHESE expression RPARENTHESE */
-#line 731 "resource/sparql.y"
+#line 732 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISBLANK( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5991 "resource/sparql.php"
+#line 5993 "resource/ASPPisParser.php"
         break;
       case 504: /* builtInCall ::= ISLITERAL LPARENTHESE expression RPARENTHESE */
-#line 732 "resource/sparql.y"
+#line 733 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISLITERAL( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 5996 "resource/sparql.php"
+#line 5998 "resource/ASPPisParser.php"
         break;
       case 505: /* builtInCall ::= ISNUMERIC LPARENTHESE expression RPARENTHESE */
-#line 733 "resource/sparql.y"
+#line 734 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 631; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'ISNUMERIC( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6001 "resource/sparql.php"
+#line 6003 "resource/ASPPisParser.php"
         break;
       case 506: /* regexExpression ::= REGEX LPARENTHESE expression COMMA expression COMMA expression RPARENTHESE */
-#line 735 "resource/sparql.y"
+#line 736 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 632; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'REGEX( ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -7]->minor, $this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6006 "resource/sparql.php"
+#line 6008 "resource/ASPPisParser.php"
         break;
       case 507: /* regexExpression ::= REGEX LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 736 "resource/sparql.y"
+#line 737 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 632; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'REGEX( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6011 "resource/sparql.php"
+#line 6013 "resource/ASPPisParser.php"
         break;
       case 508: /* subStringExpression ::= SUBSTR LPARENTHESE expression COMMA expression COMMA expression RPARENTHESE */
-#line 738 "resource/sparql.y"
+#line 739 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 633; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SUBSTR( ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -7]->minor, $this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6016 "resource/sparql.php"
+#line 6018 "resource/ASPPisParser.php"
         break;
       case 509: /* subStringExpression ::= SUBSTR LPARENTHESE expression COMMA expression RPARENTHESE */
-#line 739 "resource/sparql.y"
+#line 740 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 633; $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'SUBSTR( ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6021 "resource/sparql.php"
+#line 6023 "resource/ASPPisParser.php"
         break;
       case 510: /* strReplaceExpression ::= REPLACE LPARENTHESE expression COMMA expression COMMA expression COMMA expression RPARENTHESE */
-#line 741 "resource/sparql.y"
+#line 742 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 634; $yygotominor->copyBools($this->yystack[$this->yyidx + -7]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -7]->minor->vars + $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -7]->minor->bNodes + $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'REPLACE( ' . $this->yystack[$this->yyidx + -7]->minor->query . ', ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -9]->minor, $this->yystack[$this->yyidx + -8]->minor, $this->yystack[$this->yyidx + -7]->minor, $this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6026 "resource/sparql.php"
+#line 6028 "resource/ASPPisParser.php"
         break;
       case 511: /* strReplaceExpression ::= REPLACE LPARENTHESE expression COMMA expression COMMA expression RPARENTHESE */
-#line 742 "resource/sparql.y"
+#line 743 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 634; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->query = 'REPLACE( ' . $this->yystack[$this->yyidx + -5]->minor->query . ', ' . $this->yystack[$this->yyidx + -3]->minor->query . ', ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -7]->minor, $this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6031 "resource/sparql.php"
+#line 6033 "resource/ASPPisParser.php"
         break;
       case 512: /* existsFunc ::= EXISTS groupGraphPattern */
-#line 744 "resource/sparql.y"
+#line 745 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 635; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'EXISTS ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6036 "resource/sparql.php"
+#line 6038 "resource/ASPPisParser.php"
         break;
       case 513: /* notExistsFunc ::= NOT EXISTS groupGraphPattern */
-#line 746 "resource/sparql.y"
+#line 747 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 636; $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars; $yygotominor->vars = $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'NOT EXISTS ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6041 "resource/sparql.php"
+#line 6043 "resource/ASPPisParser.php"
         break;
       case 514: /* aggregate ::= COUNT LPARENTHESE DISTINCT STAR RPARENTHESE */
-#line 748 "resource/sparql.y"
+#line 749 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'COUNT( DISTINCT * )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6046 "resource/sparql.php"
+#line 6048 "resource/ASPPisParser.php"
         break;
       case 515: /* aggregate ::= COUNT LPARENTHESE DISTINCT expression RPARENTHESE */
-#line 749 "resource/sparql.y"
+#line 750 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'COUNT( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6051 "resource/sparql.php"
+#line 6053 "resource/ASPPisParser.php"
         break;
       case 516: /* aggregate ::= COUNT LPARENTHESE STAR RPARENTHESE */
-#line 750 "resource/sparql.y"
+#line 751 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'COUNT( * )'; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6056 "resource/sparql.php"
+#line 6058 "resource/ASPPisParser.php"
         break;
       case 517: /* aggregate ::= COUNT LPARENTHESE expression RPARENTHESE */
-#line 751 "resource/sparql.y"
+#line 752 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'COUNT( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6061 "resource/sparql.php"
+#line 6063 "resource/ASPPisParser.php"
         break;
       case 518: /* aggregate ::= SUM LPARENTHESE DISTINCT expression RPARENTHESE */
-#line 752 "resource/sparql.y"
+#line 753 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'SUM( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6066 "resource/sparql.php"
+#line 6068 "resource/ASPPisParser.php"
         break;
       case 519: /* aggregate ::= MIN LPARENTHESE DISTINCT expression RPARENTHESE */
-#line 753 "resource/sparql.y"
+#line 754 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'MIN( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6071 "resource/sparql.php"
+#line 6073 "resource/ASPPisParser.php"
         break;
       case 520: /* aggregate ::= MAX LPARENTHESE DISTINCT expression RPARENTHESE */
-#line 754 "resource/sparql.y"
+#line 755 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'MAX( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6076 "resource/sparql.php"
+#line 6078 "resource/ASPPisParser.php"
         break;
       case 521: /* aggregate ::= AVG LPARENTHESE DISTINCT expression RPARENTHESE */
-#line 755 "resource/sparql.y"
+#line 756 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'AVG( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6081 "resource/sparql.php"
+#line 6083 "resource/ASPPisParser.php"
         break;
       case 522: /* aggregate ::= SAMPLE LPARENTHESE DISTINCT expression RPARENTHESE */
-#line 756 "resource/sparql.y"
+#line 757 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'SAMPLE( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6086 "resource/sparql.php"
+#line 6088 "resource/ASPPisParser.php"
         break;
       case 523: /* aggregate ::= SUM LPARENTHESE expression RPARENTHESE */
-#line 757 "resource/sparql.y"
+#line 758 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'SUM( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6091 "resource/sparql.php"
+#line 6093 "resource/ASPPisParser.php"
         break;
       case 524: /* aggregate ::= MIN LPARENTHESE expression RPARENTHESE */
-#line 758 "resource/sparql.y"
+#line 759 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'MIN( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6096 "resource/sparql.php"
+#line 6098 "resource/ASPPisParser.php"
         break;
       case 525: /* aggregate ::= MAX LPARENTHESE expression RPARENTHESE */
-#line 759 "resource/sparql.y"
+#line 760 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'MAX( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6101 "resource/sparql.php"
+#line 6103 "resource/ASPPisParser.php"
         break;
       case 526: /* aggregate ::= AVG LPARENTHESE expression RPARENTHESE */
-#line 760 "resource/sparql.y"
+#line 761 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'AVG( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6106 "resource/sparql.php"
+#line 6108 "resource/ASPPisParser.php"
         break;
       case 527: /* aggregate ::= SAMPLE LPARENTHESE expression RPARENTHESE */
-#line 761 "resource/sparql.y"
+#line 762 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'SAMPLE( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6111 "resource/sparql.php"
+#line 6113 "resource/ASPPisParser.php"
         break;
       case 528: /* aggregate ::= GROUP_CONCAT LPARENTHESE DISTINCT expression SEMICOLON SEPARATOR EQUAL string RPARENTHESE */
-#line 762 "resource/sparql.y"
+#line 763 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'GROUP_CONCAT( DISTINCT ' . $this->yystack[$this->yyidx + -5]->minor->query . ' ; SEPARATOR = ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -8]->minor, $this->yystack[$this->yyidx + -7]->minor, $this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6116 "resource/sparql.php"
+#line 6118 "resource/ASPPisParser.php"
         break;
       case 529: /* aggregate ::= GROUP_CONCAT LPARENTHESE DISTINCT expression RPARENTHESE */
-#line 763 "resource/sparql.y"
+#line 764 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'GROUP_CONCAT( DISTINCT ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6121 "resource/sparql.php"
+#line 6123 "resource/ASPPisParser.php"
         break;
       case 530: /* aggregate ::= GROUP_CONCAT LPARENTHESE expression SEMICOLON SEPARATOR EQUAL string RPARENTHESE */
-#line 764 "resource/sparql.y"
+#line 765 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'GROUP_CONCAT( ' . $this->yystack[$this->yyidx + -5]->minor->query . ' ; SEPARATOR = ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -7]->minor, $this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6126 "resource/sparql.php"
+#line 6128 "resource/ASPPisParser.php"
         break;
       case 531: /* aggregate ::= GROUP_CONCAT LPARENTHESE expression RPARENTHESE */
-#line 765 "resource/sparql.y"
+#line 766 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 637; $yygotominor->hasAGG = true; $yygotominor->query = 'GROUP_CONCAT( ' . $this->yystack[$this->yyidx + -1]->minor->query . ' )'; $yygotominor->copyBools($this->yystack[$this->yyidx + -1]->minor); $yygotominor->vars = $this->yystack[$this->yyidx + -1]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -1]->minor->bNodes; $yygotominor->childs = array($this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6131 "resource/sparql.php"
+#line 6133 "resource/ASPPisParser.php"
         break;
       case 532: /* rdfLiteral ::= string LANGTAG */
-#line 767 "resource/sparql.y"
+#line 768 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 638; $yygotominor->query = $this->yystack[$this->yyidx + -1]->minor->query . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6136 "resource/sparql.php"
+#line 6138 "resource/ASPPisParser.php"
         break;
       case 533: /* rdfLiteral ::= string DHAT iri */
-#line 768 "resource/sparql.y"
+#line 769 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 638; $yygotominor->query = $this->yystack[$this->yyidx + -2]->minor->query . $this->yystack[$this->yyidx + -1]->minor->value . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
-#line 6141 "resource/sparql.php"
+#line 6143 "resource/ASPPisParser.php"
         break;
       case 534: /* rdfLiteral ::= string */
-#line 769 "resource/sparql.y"
+#line 770 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 638; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6146 "resource/sparql.php"
+#line 6148 "resource/ASPPisParser.php"
         break;
       case 535: /* numericLiteral ::= numericLiteralUnsigned */
       case 536: /* numericLiteral ::= numericLiteralPositive */
       case 537: /* numericLiteral ::= numericLiteralNegative */
-#line 771 "resource/sparql.y"
+#line 772 "resource/ASPPisParser.y"
 { $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 639; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6153 "resource/sparql.php"
+#line 6155 "resource/ASPPisParser.php"
         break;
       case 538: /* numericLiteralUnsigned ::= INTEGER */
       case 539: /* numericLiteralUnsigned ::= DECIMAL */
       case 540: /* numericLiteralUnsigned ::= DOUBLE */
-#line 775 "resource/sparql.y"
+#line 776 "resource/ASPPisParser.y"
 {$yygotominor = new NTToken(); $yygotominor->type = 640; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6160 "resource/sparql.php"
+#line 6162 "resource/ASPPisParser.php"
         break;
       case 541: /* numericLiteralPositive ::= INTEGER_POSITIVE */
       case 542: /* numericLiteralPositive ::= DECIMAL_POSITIVE */
       case 543: /* numericLiteralPositive ::= DOUBLE_POSITIVE */
-#line 779 "resource/sparql.y"
+#line 780 "resource/ASPPisParser.y"
 {$yygotominor = new NTToken(); $yygotominor->type = 641; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6167 "resource/sparql.php"
+#line 6169 "resource/ASPPisParser.php"
         break;
       case 544: /* numericLiteralNegative ::= INTEGER_NEGATIVE */
       case 545: /* numericLiteralNegative ::= DECIMAL_NEGATIVE */
       case 546: /* numericLiteralNegative ::= DOUBLE_NEGATIVE */
-#line 783 "resource/sparql.y"
+#line 784 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 642; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6174 "resource/sparql.php"
+#line 6176 "resource/ASPPisParser.php"
         break;
       case 547: /* booleanLiteral ::= TRUE */
-#line 787 "resource/sparql.y"
+#line 788 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 643; $yygotominor->query = "true";$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6179 "resource/sparql.php"
+#line 6181 "resource/ASPPisParser.php"
         break;
       case 548: /* booleanLiteral ::= FALSE */
-#line 788 "resource/sparql.y"
+#line 789 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 643; $yygotominor->query = "false";$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6184 "resource/sparql.php"
+#line 6186 "resource/ASPPisParser.php"
         break;
       case 549: /* string ::= STRING_LITERAL1 */
       case 550: /* string ::= STRING_LITERAL2 */
       case 551: /* string ::= STRING_LITERAL_LONG1 */
       case 552: /* string ::= STRING_LITERAL_LONG2 */
-#line 790 "resource/sparql.y"
+#line 791 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 644; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6192 "resource/sparql.php"
+#line 6194 "resource/ASPPisParser.php"
         break;
       case 553: /* iri ::= IRIREF */
-#line 795 "resource/sparql.y"
+#line 796 "resource/ASPPisParser.y"
 { if(!$this->checkBase($this->yystack[$this->yyidx + 0]->minor->value)){throw new Exception("Missing Base for " . $this->yystack[$this->yyidx + 0]->minor->value);} $yygotominor = new NTToken(); $yygotominor->type = 645; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6197 "resource/sparql.php"
+#line 6199 "resource/ASPPisParser.php"
         break;
       case 554: /* iri ::= prefixedName */
-#line 796 "resource/sparql.y"
+#line 797 "resource/ASPPisParser.y"
 { $yygotominor = new NTToken(); $yygotominor->type = 645; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->query;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6202 "resource/sparql.php"
+#line 6204 "resource/ASPPisParser.php"
         break;
       case 555: /* prefixedName ::= PNAME_LN */
       case 556: /* prefixedName ::= PNAME_NS */
-#line 798 "resource/sparql.y"
+#line 799 "resource/ASPPisParser.y"
 {if(!$this->checkNS($this->yystack[$this->yyidx + 0]->minor->value)){throw new Exception("Missing Prefix for " . $this->yystack[$this->yyidx + 0]->minor->value);} $yygotominor = new NTToken(); $yygotominor->type = 646; $yygotominor->query = $this->yystack[$this->yyidx + 0]->minor->value;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6208 "resource/sparql.php"
+#line 6210 "resource/ASPPisParser.php"
         break;
       case 557: /* blankNode ::= BLANK_NODE_LABEL */
-#line 801 "resource/sparql.y"
+#line 802 "resource/ASPPisParser.y"
 {$yygotominor = new NTToken(); $yygotominor->type = 647; $yygotominor->hasBN = true; $yygotominor->bNodes[$this->yystack[$this->yyidx + 0]->minor->value] = 1;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6213 "resource/sparql.php"
+#line 6215 "resource/ASPPisParser.php"
         break;
       case 558: /* blankNode ::= ANON */
-#line 802 "resource/sparql.y"
+#line 803 "resource/ASPPisParser.y"
 {$yygotominor = new NTToken(); $yygotominor->type = 647; $yygotominor->hasBN = true;$yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
-#line 6218 "resource/sparql.php"
+#line 6220 "resource/ASPPisParser.php"
         break;
       default:
         break;
@@ -6409,10 +6411,10 @@ static $yy_default = array(
     while ($this->yyidx >= 0) 
       $this->yy_pop_parser_stack();
 
-#line 121 "resource/sparql.y"
+#line 122 "resource/ASPPisParser.y"
 
-    /*transfer somehow execution class and write the error into it maybe? maybe as fourth parameter (kinda wasteful as every token will throw it in the parser again)*/
-#line 6249 "resource/sparql.php"
+    throw new Exception('Couldnt finish Parsing (Unkown Problem)');
+#line 6251 "resource/ASPPisParser.php"
   }
 
   private function yy_syntax_error($yymajor, $yyminor = null)
@@ -6430,11 +6432,10 @@ static $yy_default = array(
 
     while ($this->yyidx >= 0) 
       $this->yy_pop_parser_stack();
-#line 116 "resource/sparql.y"
+#line 118 "resource/ASPPisParser.y"
 
-print('Success');
 
-#line 6271 "resource/sparql.php"
+#line 6272 "resource/ASPPisParser.php"
   }
 
   public function doParse($yymajor, $yyminor = null)

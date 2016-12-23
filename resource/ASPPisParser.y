@@ -5,11 +5,13 @@
  */
 
 /* This is a lemon grammar for the Sparql1.1 language */
-%name SparqlPHPParser
+%name aSPPisParser
 %token_prefix TK_
 
 %include { /* this will be copied blindly */
 namespace aSPPis\lib;
+use \stdClass;
+use \Exception;
 class NTToken {
     /* arrays, the array will be considered as sets, as only a few situations need an actual check for duplicates. 
      * This is achieved in PHP with using the value as key and a uniformed value for all keys. 
@@ -114,12 +116,11 @@ function checkBase($alias) {
 }
 
 %parse_accept {
-print('Success');
 
 }
 
 %parse_failure {
-    /*transfer somehow execution class and write the error into it maybe? maybe as fourth parameter (kinda wasteful as every token will throw it in the parser again)*/
+    throw new Exception('Couldnt finish Parsing (Unkown Problem)');
 }
 
 /* this defines a symbol for the lexer */

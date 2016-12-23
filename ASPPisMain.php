@@ -1,7 +1,9 @@
 <?php
 namespace aSPPis;
 require_once('vendor/autoload.php');
-
+use aSPPis\lib\ASPPisParser;
+use aSPPis\lib\ASPPisLexer;
+use \Exception;
 class ASPPisMain
 {
     //root gets set in the parser
@@ -11,10 +13,10 @@ class ASPPisMain
     private function parse($filePointer)
     {
         if (!isset($this->parser)) {
-            $this->parser = new SparqlPHPParser($this);
+            $this->parser = new ASPPisParser($this);
         }
 
-        $scanner = new SparqlLexer($filePointer);
+        $scanner = new ASPPisLexer($filePointer);
         while ($token = $scanner->nextToken()) {
             if ($token->type != -1) {
                 $this->parser->doParse($token->type, $token);

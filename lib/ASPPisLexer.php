@@ -1,9 +1,11 @@
 <?php
-namespace aSSPis\lib;
+namespace aSPPis\lib;
 include 'jlex.php';
+use \JLexBase;
+use \JLexToken;
 
 
-class SparqlLexer extends JLexBase  {
+class ASPPisLexer extends JLexBase  {
 	const YY_BUFFER_SIZE = 512;
 	const YY_F = -1;
 	const YY_NO_STATE = -1;
@@ -6719,7 +6721,7 @@ array(
 						case -2:
 							break;
 						case 2:
-							{ return $this->createToken(SparqlPHPParser::TK_SMALLERTHEN); }
+							{ return $this->createToken(aSPPisParser::TK_SMALLERTHEN); }
 						case -3:
 							break;
 						case 3:
@@ -6727,67 +6729,67 @@ array(
 						case -4:
 							break;
 						case 4:
-							{ return $this->createToken(SparqlPHPParser::TK_GREATERTHEN); }
+							{ return $this->createToken(aSPPisParser::TK_GREATERTHEN); }
 						case -5:
 							break;
 						case 5:
-							{ return $this->createToken(SparqlPHPParser::TK_MINUS); }
+							{ return $this->createToken(aSPPisParser::TK_MINUS); }
 						case -6:
 							break;
 						case 6:
-							{ return $this->createToken(SparqlPHPParser::TK_INTEGER); }
+							{ return $this->createToken(aSPPisParser::TK_INTEGER); }
 						case -7:
 							break;
 						case 7:
-							{ return $this->createToken(SparqlPHPParser::TK_DOT); }
+							{ return $this->createToken(aSPPisParser::TK_DOT); }
 						case -8:
 							break;
 						case 8:
-							{ return $this->createToken(SparqlPHPParser::TK_PNAME_NS); }
+							{ return $this->createToken(aSPPisParser::TK_PNAME_NS); }
 						case -9:
 							break;
 						case 9:
-							{ return $this->createToken(SparqlPHPParser::TK_EXCLAMATION); }
+							{ return $this->createToken(aSPPisParser::TK_EXCLAMATION); }
 						case -10:
 							break;
 						case 10:
-							{ return $this->createToken(SparqlPHPParser::TK_LPARENTHESE); }
+							{ return $this->createToken(aSPPisParser::TK_LPARENTHESE); }
 						case -11:
 							break;
 						case 11:
-							{ return $this->createToken(SparqlPHPParser::TK_RPARENTHESE); }
+							{ return $this->createToken(aSPPisParser::TK_RPARENTHESE); }
 						case -12:
 							break;
 						case 12:
-							{ return $this->createToken(SparqlPHPParser::TK_STAR); }
+							{ return $this->createToken(aSPPisParser::TK_STAR); }
 						case -13:
 							break;
 						case 13:
-							{ return $this->createToken(SparqlPHPParser::TK_PLUS); }
+							{ return $this->createToken(aSPPisParser::TK_PLUS); }
 						case -14:
 							break;
 						case 14:
-							{ return $this->createToken(SparqlPHPParser::TK_COMMA); }
+							{ return $this->createToken(aSPPisParser::TK_COMMA); }
 						case -15:
 							break;
 						case 15:
-							{ return $this->createToken(SparqlPHPParser::TK_SEMICOLON); }
+							{ return $this->createToken(aSPPisParser::TK_SEMICOLON); }
 						case -16:
 							break;
 						case 16:
-							{ return $this->createToken(SparqlPHPParser::TK_EQUAL); }
+							{ return $this->createToken(aSPPisParser::TK_EQUAL); }
 						case -17:
 							break;
 						case 17:
-							{ return $this->createToken(SparqlPHPParser::TK_SLASH); }
+							{ return $this->createToken(aSPPisParser::TK_SLASH); }
 						case -18:
 							break;
 						case 18:
-							{ return $this->createToken(SparqlPHPParser::TK_QUESTION); }
+							{ return $this->createToken(aSPPisParser::TK_QUESTION); }
 						case -19:
 							break;
 						case 19:
-							{ return $this->createToken(SparqlPHPParser::TK_A); }
+							{ return $this->createToken(aSPPisParser::TK_A); }
 						case -20:
 							break;
 						case 20:
@@ -6795,583 +6797,583 @@ array(
 						case -21:
 							break;
 						case 21:
-							{ return $this->createToken(SparqlPHPParser::TK_LBRACKET); }
+							{ return $this->createToken(aSPPisParser::TK_LBRACKET); }
 						case -22:
 							break;
 						case 22:
-							{ return $this->createToken(SparqlPHPParser::TK_RBRACKET); }
+							{ return $this->createToken(aSPPisParser::TK_RBRACKET); }
 						case -23:
 							break;
 						case 23:
-							{ return $this->createToken(SparqlPHPParser::TK_LBRACE); }
+							{ return $this->createToken(aSPPisParser::TK_LBRACE); }
 						case -24:
 							break;
 						case 24:
-							{ return $this->createToken(SparqlPHPParser::TK_RBRACE); }
+							{ return $this->createToken(aSPPisParser::TK_RBRACE); }
 						case -25:
 							break;
 						case 25:
-							{ return $this->createToken(SparqlPHPParser::TK_VBAR); }
+							{ return $this->createToken(aSPPisParser::TK_VBAR); }
 						case -26:
 							break;
 						case 26:
-							{ return $this->createToken(SparqlPHPParser::TK_HAT); }
+							{ return $this->createToken(aSPPisParser::TK_HAT); }
 						case -27:
 							break;
 						case 27:
-							{ return $this->createToken(SparqlPHPParser::TK_IRIREF); }
+							{ return $this->createToken(aSPPisParser::TK_IRIREF); }
 						case -28:
 							break;
 						case 28:
-							{ return $this->createToken(SparqlPHPParser::TK_INTEGER_NEGATIVE); }
+							{ return $this->createToken(aSPPisParser::TK_INTEGER_NEGATIVE); }
 						case -29:
 							break;
 						case 29:
-							{ return $this->createToken(SparqlPHPParser::TK_DECIMAL); }
+							{ return $this->createToken(aSPPisParser::TK_DECIMAL); }
 						case -30:
 							break;
 						case 30:
-							{ return $this->createToken(SparqlPHPParser::TK_PNAME_LN); }
+							{ return $this->createToken(aSPPisParser::TK_PNAME_LN); }
 						case -31:
 							break;
 						case 31:
-							{ return $this->createToken(SparqlPHPParser::TK_NEQUAL); }
+							{ return $this->createToken(aSPPisParser::TK_NEQUAL); }
 						case -32:
 							break;
 						case 32:
-							{ return $this->createToken(SparqlPHPParser::TK_VAR2); }
+							{ return $this->createToken(aSPPisParser::TK_VAR2); }
 						case -33:
 							break;
 						case 33:
-							{ return $this->createToken(SparqlPHPParser::TK_AND); }
+							{ return $this->createToken(aSPPisParser::TK_AND); }
 						case -34:
 							break;
 						case 34:
-							{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL1); }
+							{ return $this->createToken(aSPPisParser::TK_STRING_LITERAL1); }
 						case -35:
 							break;
 						case 35:
-							{ return $this->createToken(SparqlPHPParser::TK_NIL); }
+							{ return $this->createToken(aSPPisParser::TK_NIL); }
 						case -36:
 							break;
 						case 36:
-							{ return $this->createToken(SparqlPHPParser::TK_INTEGER_POSITIVE); }
+							{ return $this->createToken(aSPPisParser::TK_INTEGER_POSITIVE); }
 						case -37:
 							break;
 						case 37:
-							{ return $this->createToken(SparqlPHPParser::TK_SMALLERTHENQ); }
+							{ return $this->createToken(aSPPisParser::TK_SMALLERTHENQ); }
 						case -38:
 							break;
 						case 38:
-							{ return $this->createToken(SparqlPHPParser::TK_GREATERTHENQ); }
+							{ return $this->createToken(aSPPisParser::TK_GREATERTHENQ); }
 						case -39:
 							break;
 						case 39:
-							{ return $this->createToken(SparqlPHPParser::TK_VAR1); }
+							{ return $this->createToken(aSPPisParser::TK_VAR1); }
 						case -40:
 							break;
 						case 40:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -41:
 							break;
 						case 41:
-							{ return $this->createToken(SparqlPHPParser::TK_BY); }
+							{ return $this->createToken(aSPPisParser::TK_BY); }
 						case -42:
 							break;
 						case 42:
-							{ return $this->createToken(SparqlPHPParser::TK_AS); }
+							{ return $this->createToken(aSPPisParser::TK_AS); }
 						case -43:
 							break;
 						case 43:
-							{ return $this->createToken(SparqlPHPParser::TK_IF); }
+							{ return $this->createToken(aSPPisParser::TK_IF); }
 						case -44:
 							break;
 						case 44:
-							{ return $this->createToken(SparqlPHPParser::TK_IN); }
+							{ return $this->createToken(aSPPisParser::TK_IN); }
 						case -45:
 							break;
 						case 45:
-							{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL2); }
+							{ return $this->createToken(aSPPisParser::TK_STRING_LITERAL2); }
 						case -46:
 							break;
 						case 46:
-							{ return $this->createToken(SparqlPHPParser::TK_ANON); }
+							{ return $this->createToken(aSPPisParser::TK_ANON); }
 						case -47:
 							break;
 						case 47:
-							{ return $this->createToken(SparqlPHPParser::TK_TO); }
+							{ return $this->createToken(aSPPisParser::TK_TO); }
 						case -48:
 							break;
 						case 48:
-							{ return $this->createToken(SparqlPHPParser::TK_TZ); }
+							{ return $this->createToken(aSPPisParser::TK_TZ); }
 						case -49:
 							break;
 						case 49:
-							{ return $this->createToken(SparqlPHPParser::TK_OR); }
+							{ return $this->createToken(aSPPisParser::TK_OR); }
 						case -50:
 							break;
 						case 50:
-							{ return $this->createToken(SparqlPHPParser::TK_DHAT); }
+							{ return $this->createToken(aSPPisParser::TK_DHAT); }
 						case -51:
 							break;
 						case 51:
-							{ return $this->createToken(SparqlPHPParser::TK_BLANK_NODE_LABEL); }
+							{ return $this->createToken(aSPPisParser::TK_BLANK_NODE_LABEL); }
 						case -52:
 							break;
 						case 52:
-							{ return $this->createToken(SparqlPHPParser::TK_DECIMAL_NEGATIVE); }
+							{ return $this->createToken(aSPPisParser::TK_DECIMAL_NEGATIVE); }
 						case -53:
 							break;
 						case 53:
-							{ return $this->createToken(SparqlPHPParser::TK_DOUBLE); }
+							{ return $this->createToken(aSPPisParser::TK_DOUBLE); }
 						case -54:
 							break;
 						case 54:
-							{ return $this->createToken(SparqlPHPParser::TK_DAY); }
+							{ return $this->createToken(aSPPisParser::TK_DAY); }
 						case -55:
 							break;
 						case 55:
-							{ return $this->createToken(SparqlPHPParser::TK_DECIMAL_POSITIVE); }
+							{ return $this->createToken(aSPPisParser::TK_DECIMAL_POSITIVE); }
 						case -56:
 							break;
 						case 56:
-							{ return $this->createToken(SparqlPHPParser::TK_ADD); }
+							{ return $this->createToken(aSPPisParser::TK_ADD); }
 						case -57:
 							break;
 						case 57:
-							{ return $this->createToken(SparqlPHPParser::TK_ABS); }
+							{ return $this->createToken(aSPPisParser::TK_ABS); }
 						case -58:
 							break;
 						case 58:
-							{ return $this->createToken(SparqlPHPParser::TK_ASC); }
+							{ return $this->createToken(aSPPisParser::TK_ASC); }
 						case -59:
 							break;
 						case 59:
-							{ return $this->createToken(SparqlPHPParser::TK_ASK); }
+							{ return $this->createToken(aSPPisParser::TK_ASK); }
 						case -60:
 							break;
 						case 60:
-							{ return $this->createToken(SparqlPHPParser::TK_ALL); }
+							{ return $this->createToken(aSPPisParser::TK_ALL); }
 						case -61:
 							break;
 						case 61:
-							{ return $this->createToken(SparqlPHPParser::TK_AVG); }
+							{ return $this->createToken(aSPPisParser::TK_AVG); }
 						case -62:
 							break;
 						case 62:
-							{ return $this->createToken(SparqlPHPParser::TK_STR); }
+							{ return $this->createToken(aSPPisParser::TK_STR); }
 						case -63:
 							break;
 						case 63:
-							{ return $this->createToken(SparqlPHPParser::TK_SUM); }
+							{ return $this->createToken(aSPPisParser::TK_SUM); }
 						case -64:
 							break;
 						case 64:
-							{ return $this->createToken(SparqlPHPParser::TK_IRI); }
+							{ return $this->createToken(aSPPisParser::TK_IRI); }
 						case -65:
 							break;
 						case 65:
-							{ return $this->createToken(SparqlPHPParser::TK_NOT); }
+							{ return $this->createToken(aSPPisParser::TK_NOT); }
 						case -66:
 							break;
 						case 66:
-							{ return $this->createToken(SparqlPHPParser::TK_NOW); }
+							{ return $this->createToken(aSPPisParser::TK_NOW); }
 						case -67:
 							break;
 						case 67:
-							{ return $this->createToken(SparqlPHPParser::TK_URI); }
+							{ return $this->createToken(aSPPisParser::TK_URI); }
 						case -68:
 							break;
 						case 68:
-							{ return $this->createToken(SparqlPHPParser::TK_MD5); }
+							{ return $this->createToken(aSPPisParser::TK_MD5); }
 						case -69:
 							break;
 						case 69:
-							{ return $this->createToken(SparqlPHPParser::TK_MAX); }
+							{ return $this->createToken(aSPPisParser::TK_MAX); }
 						case -70:
 							break;
 						case 70:
-							{ return $this->createToken(SparqlPHPParser::TK_MIN); }
+							{ return $this->createToken(aSPPisParser::TK_MIN); }
 						case -71:
 							break;
 						case 71:
-							{ return $this->createToken(SparqlPHPParser::TK_DESC); }
+							{ return $this->createToken(aSPPisParser::TK_DESC); }
 						case -72:
 							break;
 						case 72:
-							{ return $this->createToken(SparqlPHPParser::TK_DROP); }
+							{ return $this->createToken(aSPPisParser::TK_DROP); }
 						case -73:
 							break;
 						case 73:
-							{ return $this->createToken(SparqlPHPParser::TK_BASE); }
+							{ return $this->createToken(aSPPisParser::TK_BASE); }
 						case -74:
 							break;
 						case 74:
-							{ return $this->createToken(SparqlPHPParser::TK_BIND); }
+							{ return $this->createToken(aSPPisParser::TK_BIND); }
 						case -75:
 							break;
 						case 75:
-							{ return $this->createToken(SparqlPHPParser::TK_SHA1); }
+							{ return $this->createToken(aSPPisParser::TK_SHA1); }
 						case -76:
 							break;
 						case 76:
-							{ return $this->createToken(SparqlPHPParser::TK_RAND); }
+							{ return $this->createToken(aSPPisParser::TK_RAND); }
 						case -77:
 							break;
 						case 77:
-							{ return $this->createToken(SparqlPHPParser::TK_FROM); }
+							{ return $this->createToken(aSPPisParser::TK_FROM); }
 						case -78:
 							break;
 						case 78:
-							{ return $this->createToken(SparqlPHPParser::TK_INTO); }
+							{ return $this->createToken(aSPPisParser::TK_INTO); }
 						case -79:
 							break;
 						case 79:
-							{ return $this->createToken(SparqlPHPParser::TK_LANG); }
+							{ return $this->createToken(aSPPisParser::TK_LANG); }
 						case -80:
 							break;
 						case 80:
-							{ return $this->createToken(SparqlPHPParser::TK_LOAD); }
+							{ return $this->createToken(aSPPisParser::TK_LOAD); }
 						case -81:
 							break;
 						case 81:
-							{ return $this->createToken(SparqlPHPParser::TK_CEIL); }
+							{ return $this->createToken(aSPPisParser::TK_CEIL); }
 						case -82:
 							break;
 						case 82:
-							{ return $this->createToken(SparqlPHPParser::TK_COPY); }
+							{ return $this->createToken(aSPPisParser::TK_COPY); }
 						case -83:
 							break;
 						case 83:
-							{ return $this->createToken(SparqlPHPParser::TK_TRUE); }
+							{ return $this->createToken(aSPPisParser::TK_TRUE); }
 						case -84:
 							break;
 						case 84:
-							{ return $this->createToken(SparqlPHPParser::TK_UUID); }
+							{ return $this->createToken(aSPPisParser::TK_UUID); }
 						case -85:
 							break;
 						case 85:
-							{ return $this->createToken(SparqlPHPParser::TK_MOVE); }
+							{ return $this->createToken(aSPPisParser::TK_MOVE); }
 						case -86:
 							break;
 						case 86:
-							{ return $this->createToken(SparqlPHPParser::TK_YEAR); }
+							{ return $this->createToken(aSPPisParser::TK_YEAR); }
 						case -87:
 							break;
 						case 87:
-							{ return $this->createToken(SparqlPHPParser::TK_WITH); }
+							{ return $this->createToken(aSPPisParser::TK_WITH); }
 						case -88:
 							break;
 						case 88:
-							{ return $this->createToken(SparqlPHPParser::TK_DOUBLE_NEGATIVE); }
+							{ return $this->createToken(aSPPisParser::TK_DOUBLE_NEGATIVE); }
 						case -89:
 							break;
 						case 89:
-							{ return $this->createToken(SparqlPHPParser::TK_DOUBLE_POSITIVE); }
+							{ return $this->createToken(aSPPisParser::TK_DOUBLE_POSITIVE); }
 						case -90:
 							break;
 						case 90:
-							{ return $this->createToken(SparqlPHPParser::TK_BNODE); }
+							{ return $this->createToken(aSPPisParser::TK_BNODE); }
 						case -91:
 							break;
 						case 91:
-							{ return $this->createToken(SparqlPHPParser::TK_BOUND); }
+							{ return $this->createToken(aSPPisParser::TK_BOUND); }
 						case -92:
 							break;
 						case 92:
-							{ return $this->createToken(SparqlPHPParser::TK_STRDT); }
+							{ return $this->createToken(aSPPisParser::TK_STRDT); }
 						case -93:
 							break;
 						case 93:
-							{ return $this->createToken(SparqlPHPParser::TK_REGEX); }
+							{ return $this->createToken(aSPPisParser::TK_REGEX); }
 						case -94:
 							break;
 						case 94:
-							{ return $this->createToken(SparqlPHPParser::TK_ROUND); }
+							{ return $this->createToken(aSPPisParser::TK_ROUND); }
 						case -95:
 							break;
 						case 95:
-							{ return $this->createToken(SparqlPHPParser::TK_FALSE); }
+							{ return $this->createToken(aSPPisParser::TK_FALSE); }
 						case -96:
 							break;
 						case 96:
-							{ return $this->createToken(SparqlPHPParser::TK_FLOOR); }
+							{ return $this->createToken(aSPPisParser::TK_FLOOR); }
 						case -97:
 							break;
 						case 97:
-							{ return $this->createToken(SparqlPHPParser::TK_ISIRI); }
+							{ return $this->createToken(aSPPisParser::TK_ISIRI); }
 						case -98:
 							break;
 						case 98:
-							{ return $this->createToken(SparqlPHPParser::TK_ISURI); }
+							{ return $this->createToken(aSPPisParser::TK_ISURI); }
 						case -99:
 							break;
 						case 99:
-							{ return $this->createToken(SparqlPHPParser::TK_NAMED); }
+							{ return $this->createToken(aSPPisParser::TK_NAMED); }
 						case -100:
 							break;
 						case 100:
-							{ return $this->createToken(SparqlPHPParser::TK_LIMIT); }
+							{ return $this->createToken(aSPPisParser::TK_LIMIT); }
 						case -101:
 							break;
 						case 101:
-							{ return $this->createToken(SparqlPHPParser::TK_LCASE); }
+							{ return $this->createToken(aSPPisParser::TK_LCASE); }
 						case -102:
 							break;
 						case 102:
-							{ return $this->createToken(SparqlPHPParser::TK_CLEAR); }
+							{ return $this->createToken(aSPPisParser::TK_CLEAR); }
 						case -103:
 							break;
 						case 103:
-							{ return $this->createToken(SparqlPHPParser::TK_COUNT); }
+							{ return $this->createToken(aSPPisParser::TK_COUNT); }
 						case -104:
 							break;
 						case 104:
-							{ return $this->createToken(SparqlPHPParser::TK_USING); }
+							{ return $this->createToken(aSPPisParser::TK_USING); }
 						case -105:
 							break;
 						case 105:
-							{ return $this->createToken(SparqlPHPParser::TK_UNDEF); }
+							{ return $this->createToken(aSPPisParser::TK_UNDEF); }
 						case -106:
 							break;
 						case 106:
-							{ return $this->createToken(SparqlPHPParser::TK_UNION); }
+							{ return $this->createToken(aSPPisParser::TK_UNION); }
 						case -107:
 							break;
 						case 107:
-							{ return $this->createToken(SparqlPHPParser::TK_UCASE); }
+							{ return $this->createToken(aSPPisParser::TK_UCASE); }
 						case -108:
 							break;
 						case 108:
-							{ return $this->createToken(SparqlPHPParser::TK_ORDER); }
+							{ return $this->createToken(aSPPisParser::TK_ORDER); }
 						case -109:
 							break;
 						case 109:
-							{ return $this->createToken(SparqlPHPParser::TK_SMINUS); }
+							{ return $this->createToken(aSPPisParser::TK_SMINUS); }
 						case -110:
 							break;
 						case 110:
-							{ return $this->createToken(SparqlPHPParser::TK_MONTH); }
+							{ return $this->createToken(aSPPisParser::TK_MONTH); }
 						case -111:
 							break;
 						case 111:
-							{ return $this->createToken(SparqlPHPParser::TK_GRAPH); }
+							{ return $this->createToken(aSPPisParser::TK_GRAPH); }
 						case -112:
 							break;
 						case 112:
-							{ return $this->createToken(SparqlPHPParser::TK_GROUP); }
+							{ return $this->createToken(aSPPisParser::TK_GROUP); }
 						case -113:
 							break;
 						case 113:
-							{ return $this->createToken(SparqlPHPParser::TK_HOURS); }
+							{ return $this->createToken(aSPPisParser::TK_HOURS); }
 						case -114:
 							break;
 						case 114:
-							{ return $this->createToken(SparqlPHPParser::TK_WHERE); }
+							{ return $this->createToken(aSPPisParser::TK_WHERE); }
 						case -115:
 							break;
 						case 115:
-							{ return $this->createToken(SparqlPHPParser::TK_DELETE); }
+							{ return $this->createToken(aSPPisParser::TK_DELETE); }
 						case -116:
 							break;
 						case 116:
-							{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL_LONG1); }
+							{ return $this->createToken(aSPPisParser::TK_STRING_LITERAL_LONG1); }
 						case -117:
 							break;
 						case 117:
-							{ return $this->createToken(SparqlPHPParser::TK_SAMPLE); }
+							{ return $this->createToken(aSPPisParser::TK_SAMPLE); }
 						case -118:
 							break;
 						case 118:
-							{ return $this->createToken(SparqlPHPParser::TK_SELECT); }
+							{ return $this->createToken(aSPPisParser::TK_SELECT); }
 						case -119:
 							break;
 						case 119:
-							{ return $this->createToken(SparqlPHPParser::TK_SILENT); }
+							{ return $this->createToken(aSPPisParser::TK_SILENT); }
 						case -120:
 							break;
 						case 120:
-							{ return $this->createToken(SparqlPHPParser::TK_STRLEN); }
+							{ return $this->createToken(aSPPisParser::TK_STRLEN); }
 						case -121:
 							break;
 						case 121:
-							{ return $this->createToken(SparqlPHPParser::TK_SUBSTR); }
+							{ return $this->createToken(aSPPisParser::TK_SUBSTR); }
 						case -122:
 							break;
 						case 122:
-							{ return $this->createToken(SparqlPHPParser::TK_SHA512); }
+							{ return $this->createToken(aSPPisParser::TK_SHA512); }
 						case -123:
 							break;
 						case 123:
-							{ return $this->createToken(SparqlPHPParser::TK_SHA256); }
+							{ return $this->createToken(aSPPisParser::TK_SHA256); }
 						case -124:
 							break;
 						case 124:
-							{ return $this->createToken(SparqlPHPParser::TK_SHA384); }
+							{ return $this->createToken(aSPPisParser::TK_SHA384); }
 						case -125:
 							break;
 						case 125:
-							{ return $this->createToken(SparqlPHPParser::TK_EXISTS); }
+							{ return $this->createToken(aSPPisParser::TK_EXISTS); }
 						case -126:
 							break;
 						case 126:
-							{ return $this->createToken(SparqlPHPParser::TK_PREFIX); }
+							{ return $this->createToken(aSPPisParser::TK_PREFIX); }
 						case -127:
 							break;
 						case 127:
-							{ return $this->createToken(SparqlPHPParser::TK_FILTER); }
+							{ return $this->createToken(aSPPisParser::TK_FILTER); }
 						case -128:
 							break;
 						case 128:
-							{ return $this->createToken(SparqlPHPParser::TK_INSERT); }
+							{ return $this->createToken(aSPPisParser::TK_INSERT); }
 						case -129:
 							break;
 						case 129:
-							{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL_LONG2); }
+							{ return $this->createToken(aSPPisParser::TK_STRING_LITERAL_LONG2); }
 						case -130:
 							break;
 						case 130:
-							{ return $this->createToken(SparqlPHPParser::TK_CREATE); }
+							{ return $this->createToken(aSPPisParser::TK_CREATE); }
 						case -131:
 							break;
 						case 131:
-							{ return $this->createToken(SparqlPHPParser::TK_CONCAT); }
+							{ return $this->createToken(aSPPisParser::TK_CONCAT); }
 						case -132:
 							break;
 						case 132:
-							{ return $this->createToken(SparqlPHPParser::TK_OFFSET); }
+							{ return $this->createToken(aSPPisParser::TK_OFFSET); }
 						case -133:
 							break;
 						case 133:
-							{ return $this->createToken(SparqlPHPParser::TK_HAVING); }
+							{ return $this->createToken(aSPPisParser::TK_HAVING); }
 						case -134:
 							break;
 						case 134:
-							{ return $this->createToken(SparqlPHPParser::TK_VALUES); }
+							{ return $this->createToken(aSPPisParser::TK_VALUES); }
 						case -135:
 							break;
 						case 135:
-							{ return $this->createToken(SparqlPHPParser::TK_DEFAULT); }
+							{ return $this->createToken(aSPPisParser::TK_DEFAULT); }
 						case -136:
 							break;
 						case 136:
-							{ return $this->createToken(SparqlPHPParser::TK_SERVICE); }
+							{ return $this->createToken(aSPPisParser::TK_SERVICE); }
 						case -137:
 							break;
 						case 137:
-							{ return $this->createToken(SparqlPHPParser::TK_SECONDS); }
+							{ return $this->createToken(aSPPisParser::TK_SECONDS); }
 						case -138:
 							break;
 						case 138:
-							{ return $this->createToken(SparqlPHPParser::TK_STRENDS); }
+							{ return $this->createToken(aSPPisParser::TK_STRENDS); }
 						case -139:
 							break;
 						case 139:
-							{ return $this->createToken(SparqlPHPParser::TK_STRLANG); }
+							{ return $this->createToken(aSPPisParser::TK_STRLANG); }
 						case -140:
 							break;
 						case 140:
-							{ return $this->createToken(SparqlPHPParser::TK_STRUUID); }
+							{ return $this->createToken(aSPPisParser::TK_STRUUID); }
 						case -141:
 							break;
 						case 141:
-							{ return $this->createToken(SparqlPHPParser::TK_REDUCED); }
+							{ return $this->createToken(aSPPisParser::TK_REDUCED); }
 						case -142:
 							break;
 						case 142:
-							{ return $this->createToken(SparqlPHPParser::TK_REPLACE); }
+							{ return $this->createToken(aSPPisParser::TK_REPLACE); }
 						case -143:
 							break;
 						case 143:
-							{ return $this->createToken(SparqlPHPParser::TK_ISBLANK); }
+							{ return $this->createToken(aSPPisParser::TK_ISBLANK); }
 						case -144:
 							break;
 						case 144:
-							{ return $this->createToken(SparqlPHPParser::TK_MINUTES); }
+							{ return $this->createToken(aSPPisParser::TK_MINUTES); }
 						case -145:
 							break;
 						case 145:
-							{ return $this->createToken(SparqlPHPParser::TK_DATATYPE); }
+							{ return $this->createToken(aSPPisParser::TK_DATATYPE); }
 						case -146:
 							break;
 						case 146:
-							{ return $this->createToken(SparqlPHPParser::TK_DESCRIBE); }
+							{ return $this->createToken(aSPPisParser::TK_DESCRIBE); }
 						case -147:
 							break;
 						case 147:
-							{ return $this->createToken(SparqlPHPParser::TK_DISTINCT); }
+							{ return $this->createToken(aSPPisParser::TK_DISTINCT); }
 						case -148:
 							break;
 						case 148:
-							{ return $this->createToken(SparqlPHPParser::TK_SAMETERM); }
+							{ return $this->createToken(aSPPisParser::TK_SAMETERM); }
 						case -149:
 							break;
 						case 149:
-							{ return $this->createToken(SparqlPHPParser::TK_STRAFTER); }
+							{ return $this->createToken(aSPPisParser::TK_STRAFTER); }
 						case -150:
 							break;
 						case 150:
-							{ return $this->createToken(SparqlPHPParser::TK_COALESCE); }
+							{ return $this->createToken(aSPPisParser::TK_COALESCE); }
 						case -151:
 							break;
 						case 151:
-							{ return $this->createToken(SparqlPHPParser::TK_CONTAINS); }
+							{ return $this->createToken(aSPPisParser::TK_CONTAINS); }
 						case -152:
 							break;
 						case 152:
-							{ return $this->createToken(SparqlPHPParser::TK_TIMEZONE); }
+							{ return $this->createToken(aSPPisParser::TK_TIMEZONE); }
 						case -153:
 							break;
 						case 153:
-							{ return $this->createToken(SparqlPHPParser::TK_OPTIONAL); }
+							{ return $this->createToken(aSPPisParser::TK_OPTIONAL); }
 						case -154:
 							break;
 						case 154:
-							{ return $this->createToken(SparqlPHPParser::TK_SEPARATOR); }
+							{ return $this->createToken(aSPPisParser::TK_SEPARATOR); }
 						case -155:
 							break;
 						case 155:
-							{ return $this->createToken(SparqlPHPParser::TK_STRBEFORE); }
+							{ return $this->createToken(aSPPisParser::TK_STRBEFORE); }
 						case -156:
 							break;
 						case 156:
-							{ return $this->createToken(SparqlPHPParser::TK_STRSTARTS); }
+							{ return $this->createToken(aSPPisParser::TK_STRSTARTS); }
 						case -157:
 							break;
 						case 157:
-							{ return $this->createToken(SparqlPHPParser::TK_ISNUMERIC); }
+							{ return $this->createToken(aSPPisParser::TK_ISNUMERIC); }
 						case -158:
 							break;
 						case 158:
-							{ return $this->createToken(SparqlPHPParser::TK_ISLITERAL); }
+							{ return $this->createToken(aSPPisParser::TK_ISLITERAL); }
 						case -159:
 							break;
 						case 159:
-							{ return $this->createToken(SparqlPHPParser::TK_CONSTRUCT); }
+							{ return $this->createToken(aSPPisParser::TK_CONSTRUCT); }
 						case -160:
 							break;
 						case 160:
-							{ $tmp = $this->createToken(SparqlPHPParser::TK_DELETEDATA); $tmp->value = "DELETE DATA"; return $tmp; }
+							{ $tmp = $this->createToken(aSPPisParser::TK_DELETEDATA); $tmp->value = "DELETE DATA"; return $tmp; }
 						case -161:
 							break;
 						case 161:
-							{ $tmp = $this->createToken(SparqlPHPParser::TK_INSERTDATA); $tmp->value = "INSERT DATA"; return $tmp; }
+							{ $tmp = $this->createToken(aSPPisParser::TK_INSERTDATA); $tmp->value = "INSERT DATA"; return $tmp; }
 						case -162:
 							break;
 						case 162:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGMATCHES); }
+							{ return $this->createToken(aSPPisParser::TK_LANGMATCHES); }
 						case -163:
 							break;
 						case 163:
-							{ $tmp = $this->createToken(SparqlPHPParser::TK_DELETEWHERE); $tmp->value = "DELETE WHERE"; return $tmp; }
+							{ $tmp = $this->createToken(aSPPisParser::TK_DELETEWHERE); $tmp->value = "DELETE WHERE"; return $tmp; }
 						case -164:
 							break;
 						case 164:
-							{ return $this->createToken(SparqlPHPParser::TK_GROUP_CONCAT); }
+							{ return $this->createToken(aSPPisParser::TK_GROUP_CONCAT); }
 						case -165:
 							break;
 						case 165:
-							{ return $this->createToken(SparqlPHPParser::TK_ENCODE_FOR_URI); }
+							{ return $this->createToken(aSPPisParser::TK_ENCODE_FOR_URI); }
 						case -166:
 							break;
 						case 167:
@@ -7379,31 +7381,31 @@ array(
 						case -167:
 							break;
 						case 168:
-							{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL1); }
+							{ return $this->createToken(aSPPisParser::TK_STRING_LITERAL1); }
 						case -168:
 							break;
 						case 169:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -169:
 							break;
 						case 170:
-							{ return $this->createToken(SparqlPHPParser::TK_STRING_LITERAL2); }
+							{ return $this->createToken(aSPPisParser::TK_STRING_LITERAL2); }
 						case -170:
 							break;
 						case 171:
-							{ return $this->createToken(SparqlPHPParser::TK_DECIMAL_NEGATIVE); }
+							{ return $this->createToken(aSPPisParser::TK_DECIMAL_NEGATIVE); }
 						case -171:
 							break;
 						case 172:
-							{ return $this->createToken(SparqlPHPParser::TK_DECIMAL_POSITIVE); }
+							{ return $this->createToken(aSPPisParser::TK_DECIMAL_POSITIVE); }
 						case -172:
 							break;
 						case 173:
-							{ return $this->createToken(SparqlPHPParser::TK_BASE); }
+							{ return $this->createToken(aSPPisParser::TK_BASE); }
 						case -173:
 							break;
 						case 174:
-							{ return $this->createToken(SparqlPHPParser::TK_PREFIX); }
+							{ return $this->createToken(aSPPisParser::TK_PREFIX); }
 						case -174:
 							break;
 						case 176:
@@ -7411,7 +7413,7 @@ array(
 						case -175:
 							break;
 						case 177:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -176:
 							break;
 						case 179:
@@ -7419,7 +7421,7 @@ array(
 						case -177:
 							break;
 						case 180:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -178:
 							break;
 						case 182:
@@ -7459,11 +7461,11 @@ array(
 						case -187:
 							break;
 						case 335:
-							{ return $this->createToken(SparqlPHPParser::TK_DECIMAL); }
+							{ return $this->createToken(aSPPisParser::TK_DECIMAL); }
 						case -188:
 							break;
 						case 336:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -189:
 							break;
 						case 337:
@@ -7471,7 +7473,7 @@ array(
 						case -190:
 							break;
 						case 343:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -191:
 							break;
 						case 344:
@@ -7491,7 +7493,7 @@ array(
 						case -195:
 							break;
 						case 433:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -196:
 							break;
 						case 434:
@@ -7499,7 +7501,7 @@ array(
 						case -197:
 							break;
 						case 437:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -198:
 							break;
 						case 438:
@@ -7523,7 +7525,7 @@ array(
 						case -203:
 							break;
 						case 500:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -204:
 							break;
 						case 501:
@@ -7539,7 +7541,7 @@ array(
 						case -207:
 							break;
 						case 537:
-							{ return $this->createToken(SparqlPHPParser::TK_LANGTAG); }
+							{ return $this->createToken(aSPPisParser::TK_LANGTAG); }
 						case -208:
 							break;
 						case 538:
