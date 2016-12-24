@@ -69,7 +69,7 @@ class NTToken {
 }  
 #line 71 "resource/ASPPisParser.php"
 
-class aSPPisParser {
+class ASPPisParser {
   private $yyidx = -1;               /* Index of top element in stack */
   private $yyerrcnt;                 /* Shifts left before out of the error */
   private $yystack = array();

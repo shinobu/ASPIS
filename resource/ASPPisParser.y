@@ -5,7 +5,7 @@
  */
 
 /* This is a lemon grammar for the Sparql1.1 language */
-%name aSPPisParser
+%name ASPPisParser
 %token_prefix TK_
 
 %include { /* this will be copied blindly */
