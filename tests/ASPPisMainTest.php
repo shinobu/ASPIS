@@ -1,12 +1,14 @@
 <?php
-require(__DIR__ . '/../SparqlPHPParserMain.php');
-class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
+namespace aSPPis\tests;
+use aSPPis\ASPPisMain;
+
+class ASPPisMainTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBasicQueryAndPHP()
     {
         // Arrange
-        $parser = new SparqlPHPParserMain();
+        $parser = new ASPPisMain();
 
         // Act
         $parser->parseString('BASE <http://www.url.com/> PREFIX abc:<https://test.com/>
@@ -23,7 +25,7 @@ class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
      */
     public function testW3CQueries($type, $testFile)
     {
-        $parser = new SparqlPHPParserMain();
+        $parser = new ASPPisMain();
         try {
             $parser->parseFile($testFile);
             if($type === 'negativeTest') {
@@ -49,7 +51,7 @@ class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
         $manifestIncludes = $this->importFromManifest($manifestAllPath, true);
         foreach($manifestIncludes as $manifest) {
             $manifestTestNames = $this->importFromManifest($manifest);
-            $manifestGraph = new EasyRdf_Graph();
+            $manifestGraph = new \EasyRdf_Graph();
             $manifestGraph->parseFile($manifest);
             $resource = $manifestGraph->toRdfPhp();
             foreach($manifestTestNames as $testName) {
@@ -62,7 +64,7 @@ class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
                     $type = 'negativeTest';
                 }
                 $testFile = $resource[$testName]["http://www.w3.org/2001/sw/DataAccess/tests/test-manifest#action"][0]['value'];
-                //remove double file:// from the queryFilePaths
+                //remove file:// from the queryFilePaths
                 $testFile = substr($testFile, 7);
                 //adding the testName as name for the key, makes it easy to see which s11ts testcases fail.
                 $parseArray[$testName] = array('type' => $type, 'file' => $testFile);
@@ -73,7 +75,7 @@ class SparqlPHPParserMainTest extends \PHPUnit_Framework_TestCase
 
     public function importFromManifest($fileName, $onlySyntax = false)
     {
-        $graph = new EasyRdf_Graph();
+        $graph = new \EasyRdf_Graph();
         $graph->parseFile($fileName, 'turtle');
         $resource = $graph->toRdfPhp();
         $counter = 1;

@@ -24,5 +24,8 @@
             "( cd vendor/shinobu/jlex-php; jar cvf JLexPHP.jar JLexPHP/*.class)",
             "( cd vendor/shinobu/lemon-php; cc -o lemon lemon.c)"
         ]
+    },
+    "autoload": {
+        "psr-4": {"aSPPis\\": ""}
     }
 }
