@@ -96,12 +96,21 @@ function checkNS($alias) {
     if ($alias == null) {
         return false;
     }
-    if (isset($allNS[$alias])) {
-        return true;
+    //alias contains the part after the : as well, so it needs to be stripped, first locate the position
+    $pos = strpos($alias, ':');
+    if($pos !== false) {
+        //keep : as an empty prefix is allowed
+        $strippedAlias = substr($alias, 0, $pos + 1);
+        if (isset($this->allNS[$strippedAlias])) {
+            return true;
+        }
     }
     return false;
 }
 
+//removed the base check, its actually not necessary/queries its allowed to have <x> as iri...
+//actual iri reference transformation is rather complex ( http://www.ietf.org/rfc/rfc3986.txt )
+//unsure if that is necessary for this project though
 function checkBase($alias) {
     if (strcmp(substr($alias,1,7),'http://') == 0 || strcmp(substr($alias,1,8),'https://') == 0) {
         return true;
@@ -495,14 +504,17 @@ filter(A) ::= FILTER(B) functionCall(C). { A = new NTToken(); A->type = 578; A->
 
 functionCall(A) ::= iri(B) argList(C). { A = new NTToken(); A->type = 579; A->hasFNC = true; A->hasAGG = true; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = B->query . C->query; A->childs = array(B, C); }
 
-argList(A) ::= LPARENTHESE(B) DISTINCT(C) expression(D) argListX(E) RPARENTHESE(F). { A = new NTToken(); A->type = 580; A->copyBools(D); A->copyBools(E); A->vars = D->vars + E->vars; A->bNodes = D->bNodes + E->bNodes; A->query = '( DISTINCT' . D->query . PHP_EOL . E->query .  ' )'; A->childs = array(B, C, D, E, F); }
-argList(A) ::= LPARENTHESE(B) expression(C) argListX(D) RPARENTHESE(E). { A = new NTToken(); A->type = 580; A->copyBools(C); A->copyBools(D); A->vars = C->vars +  D->vars; A->bNodes = C->bNodes + D->bNodes; A->query = '( ' . C->query . PHP_EOL . D->query .  ' )'; A->childs = array(B, C, D, E); }
+argList(A) ::= LPARENTHESE(B) DISTINCT(C) expression(D) argListX(E) RPARENTHESE(F). { A = new NTToken(); A->type = 580; A->copyBools(D); A->copyBools(E); A->vars = D->vars + E->vars; A->bNodes = D->bNodes + E->bNodes; A->query = '( DISTINCT' . D->query . E->query .  ' )'; A->childs = array(B, C, D, E, F); }
+argList(A) ::= LPARENTHESE(B) expression(C) argListX(D) RPARENTHESE(E). { A = new NTToken(); A->type = 580; A->copyBools(C); A->copyBools(D); A->vars = C->vars +  D->vars; A->bNodes = C->bNodes + D->bNodes; A->query = '( ' . C->query . D->query .  ' )'; A->childs = array(B, C, D, E); }
+argList(A) ::= LPARENTHESE(B) DISTINCT(C) expression(D) RPARENTHESE(E). { A = D; A->type = 580; A->query = '( DISTINCT' . D->query . ' )'; A->childs = array(B, C, D, E); }
+argList(A) ::= LPARENTHESE(B) expression(C) RPARENTHESE(D). { A = C; A->type = 580; A->query = '( ' . C->query . ' )'; A->childs = array(B, C, D); }
 argList(A) ::= NIL(B). { A = new NTToken(); A->type = 580; A->query = '( )' . PHP_EOL; A->childs = array(B); }
-argListX(A) ::= argListX(B) COMMA(C) expression(D). { A = new NTToken(); A->type = 581; A->copyBools(B); A->copyBools(D); A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ', ' . PHP_EOL . D->query; A->childs = array(B, C, D); }
-argListX(A) ::= COMMA(B) expression(C). { A = new NTToken(); A->type = 581; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = ', ' . PHP_EOL . C->query; A->childs = array(B, C); }
+argListX(A) ::= argListX(B) COMMA(C) expression(D). { A = new NTToken(); A->type = 581; A->copyBools(B); A->copyBools(D); A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ', ' . D->query; A->childs = array(B, C, D); }
+argListX(A) ::= COMMA(B) expression(C). { A = new NTToken(); A->type = 581; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = ', ' . C->query; A->childs = array(B, C); }
 
-expressionList(A) ::= LPARENTHESE(B) expression(C) argListX(D) RPARENTHESE(E). { A = new NTToken(); A->type = 582; A->copyBools(C); A->copyBools(D); A->vars = C->vars + D->vars; A->bNodes = C->bNodes + D->bNodes; A->query = '( ' . C->query . PHP_EOL . D->query .  ' )'; A->childs = array(B, C, D, E); }
-expressionList(A) ::= NIL(B) LBRACE(C) RBRACE(D). { A = new NTToken(); A->type = 582; A->query = '( )' . PHP_EOL; A->childs = array(B, C, D); }
+expressionList(A) ::= LPARENTHESE(B) expression(C) argListX(D) RPARENTHESE(E). { A = new NTToken(); A->type = 582; A->copyBools(C); A->copyBools(D); A->vars = C->vars + D->vars; A->bNodes = C->bNodes + D->bNodes; A->query = '( ' . C->query . D->query .  ' )'; A->childs = array(B, C, D, E); }
+expressionList(A) ::= LPARENTHESE(B) expression(C) RPARENTHESE(D). { A = C; A->type = 582; A->query = '( ' . C->query . ' )'; A->childs = array(B, C, D); }
+expressionList(A) ::= NIL(B). { A = new NTToken(); A->type = 582; A->query = '( )' . PHP_EOL; A->childs = array(B); }
 
 triplesSameSubject(A) ::= varOrTerm(B) propertyListNotEmpty(C). { A = new NTToken(); A->type = 583; A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; A->childs = array(B, C); }
 triplesSameSubject(A) ::= triplesNode(B) propertyListNotEmpty(C). { A = new NTToken(); A->type = 583; A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; A->childs = array(B, C); }
@@ -793,7 +805,7 @@ string(A) ::= STRING_LITERAL2(B). { A = new NTToken(); A->type = 644; A->query =
 string(A) ::= STRING_LITERAL_LONG1(B). { A = new NTToken(); A->type = 644; A->query = B->value;A->childs = array(B); }
 string(A) ::= STRING_LITERAL_LONG2(B). { A = new NTToken(); A->type = 644; A->query = B->value;A->childs = array(B); }
 
-iri(A) ::= IRIREF(B). { if(!$this->checkBase(B->value)){throw new Exception("Missing Base for " . B->value);} A = new NTToken(); A->type = 645; A->query = B->value;A->childs = array(B); }
+iri(A) ::= IRIREF(B). { A = new NTToken(); A->type = 645; A->query = B->value;A->childs = array(B); }
 iri(A) ::= prefixedName(B). { A = new NTToken(); A->type = 645; A->query = B->query;A->childs = array(B); }
 
 prefixedName(A) ::= PNAME_LN(B). {if(!$this->checkNS(B->value)){throw new Exception("Missing Prefix for " . B->value);} A = new NTToken(); A->type = 646; A->query = B->value;A->childs = array(B); }
