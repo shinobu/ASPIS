@@ -19,8 +19,11 @@ class ASPPisMain
         $scanner = new ASPPisLexer($filePointer);
         while ($token = $scanner->nextToken()) {
             if ($token->type != -1) {
+                print PHP_EOL;
+                print $token->value;
                 $this->parser->doParse($token->type, $token);
             } else {
+                $this->root = null;
                 $err = 'Invalid Input in line ' . $token->line . '. Problem with: ' . $token->value . fgets($filePointer, 15);
                 throw new Exception($err);
             }

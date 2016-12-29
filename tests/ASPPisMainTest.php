@@ -1,6 +1,7 @@
 <?php
 namespace aSPPis\tests;
 use aSPPis\ASPPisMain;
+use Exception;
 
 class ASPPisMainTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,17 +29,17 @@ class ASPPisMainTest extends \PHPUnit_Framework_TestCase
         $parser = new ASPPisMain();
         try {
             $parser->parseFile($testFile);
-            if($type === 'negativeTest') {
+            if($type == 'negativeTest') {
                 unset($parser);
                 $this->fail($testFile . ': This Query should Fail');
             }
             $this->assertFalse($parser->root == null);
         } catch (Exception $e) {
-            if($type === 'positiveTest') {
+            if($type == 'positiveTest') {
                 unset($parser);
                 $this->fail($testFile . PHP_EOL . $e);
             }
-            $this->assertNull($parser->root);
+            $this->assertTrue(true);
         }
         unset($parser);
     }

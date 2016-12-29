@@ -24,6 +24,17 @@ class NTToken {
      *the as's of the selectclause count for the above area as well though 
      */
     public $ssVars = array();
+    /* ssVars in nested groupGraphPatter's do not interfere
+     * for example is (from w3c test set - syntax-SELECTscope3.rq):
+     *  SELECT *
+     *  WHERE {
+     *    {SELECT (1 AS ?X ) {}
+     *    }
+     *    {SELECT (1 AS ?X ) {}
+     *    }
+     *  }
+     * a valid query, as both AS ?X calls are on different, only used in ggp's (everything that contains them and can be turned into them again)
+    public $gGPssVars = array();
     public $bNodes = array();
     /* needs to be an array, because multiple binds can be reduced and be checked against one triplegroup preceding all binds */
     public $bindVar = array();
@@ -39,6 +50,7 @@ class NTToken {
     public $hasBN = false;
     public $hasFNC = false;
     public $hasAGG = false;
+    public $hasStar = false;
 
   /* to reduce the amount of isset calls the 'usual' smaller set should be set 1, returns null if NO duplicates are found
    * might be useful to return the duplicate for the error message tho (TODO)
@@ -177,18 +189,17 @@ datasetClauseX(A) ::= datasetClauseX(B) datasetClause(C). { A = new NTToken(); A
 datasetClauseX(A) ::= datasetClause(B). { A = B;  A->type = 506;A->childs = array(B); }
 
 
-subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D) valuesClause(E). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(E->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->type = 507; A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; A->childs = array(B, C, D, E); }
-subSelect(A) ::= selectClause(B) whereclause(C) valuesClause(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->type = 507; A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; A->childs = array(B, C, D); }
-subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->type = 507; A->copyBools(B); A->copyBools(C); A->copyBools(D); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; A->childs = array(B, C, D); }
-subSelect(A) ::= selectClause(B) whereclause(C). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->type = 507; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
+subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D) valuesClause(E). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(E->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, E->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->type = 507; A->copyBools(B); A->copyBools(C); A->copyBools(D); if(!B->hasStar) {A->ssVars = B->ssVars;} else {A->ssVars = B->ssVars + C->ssVars + D->ssVars + E->ssVars;} A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query . PHP_EOL . E->query; A->childs = array(B, C, D, E); }
+subSelect(A) ::= selectClause(B) whereclause(C) valuesClause(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->type = 507; A->copyBools(B); A->copyBools(C); A->copyBools(D); if(!B->hasStar) {A->ssVars = B->ssVars;} else {A->ssVars = B->ssVars + C->ssVars + D->ssVars;} A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; A->childs = array(B, C, D); }
+subSelect(A) ::= selectClause(B) whereclause(C) solutionModifier(D). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(B->ssVars, D->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} $tmp = B->noDuplicates(D->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->type = 507; A->copyBools(B); A->copyBools(C); A->copyBools(D); if(!B->hasStar) {A->ssVars = B->ssVars;} else {A->ssVars = B->ssVars + C->ssVars + D->ssVars;} A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; A->childs = array(B, C, D); }
+subSelect(A) ::= selectClause(B) whereclause(C). { $tmp = B->noDuplicates(B->ssVars, C->ssVars); if(isset($tmp)){ throw new Exception('Error, Variable already bound: ' . $tmp, -1);} A = new NTToken(); A->type = 507; A->copyBools(B); A->copyBools(C); if(!B->hasStar) {A->ssVars = B->ssVars;} else {A->ssVars = B->ssVars + C->ssVars;} A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
 
 selectClause(A) ::= SELECT(B) DISTINCT(C) selectClauseX(D). { A = D; A->type = 508; A->query = 'SELECT DISTINCT' . D->query;A->childs = array(B, C, D); }
 selectClause(A) ::= SELECT(B) REDUCED(C) selectClauseX(D). { A = D; A->type = 508; A->query = 'SELECT REDUCED' . D->query;A->childs = array(B, C, D); }
-selectClause(A) ::= SELECT(B) STAR(C) selectClauseX(D). { A = D; A->type = 508; A->query = 'SELECT *' . D->query;A->childs = array(B, C, D); }
-selectClause(A) ::= SELECT(B) DISTINCT(C) STAR(D). { A = new NTToken(); A->type = 508; A->query = 'SELECT DISTINCT *'; A->childs = array(B, C, D); }
-selectClause(A) ::= SELECT(B) REDUCED(C) STAR(D). { A = new NTToken(); A->type = 508; A->query = 'SELECT REDUCED *'; A->childs = array(B, C, D); }
+selectClause(A) ::= SELECT(B) DISTINCT(C) STAR(D). { A = new NTToken(); A->type = 508; A->hasStar = true; A->query = 'SELECT DISTINCT *'; A->childs = array(B, C, D); }
+selectClause(A) ::= SELECT(B) REDUCED(C) STAR(D). { A = new NTToken(); A->type = 508; A->hasStar = true; A->query = 'SELECT REDUCED *'; A->childs = array(B, C, D); }
 selectClause(A) ::= SELECT(B) selectClauseX(C). { A = C; A->type = 508; A->query = 'SELECT ' . C->query;A->childs = array(B, C); }
-selectClause(A) ::= SELECT(B) STAR(C). { A = new NTToken(); A->type = 508; A->query = 'SELECT *'; A->childs = array(B, C); }
+selectClause(A) ::= SELECT(B) STAR(C). { A = new NTToken(); A->type = 508; A->hasStar = true; A->query = 'SELECT *'; A->childs = array(B, C); }
 selectClauseX(A) ::= selectClauseX(B) LPARENTHESE(C) expression(D) AS(E) var(F) RPARENTHESE(G). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars + D->ssVars + F->vars; A->vars = B->vars + D->vars + F->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . '( ' . D->query . ' AS ' . F->query . ' )'; A->childs = array(B, C, D, E, F, G); }
 selectClauseX(A) ::= selectClauseX(B) LPARENTHESE(C) expression(D) RPARENTHESE(E). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars + D->ssVars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . PHP_EOL . '( ' . D->query . ' )'; A->childs = array(B, C, D, E); }
 selectClauseX(A) ::= selectClauseX(B) builtInCall(C). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
@@ -422,7 +433,7 @@ triplesTemplate(A) ::= triplesSameSubject(B). { A = new NTToken(); A->type = 554
 triplesTemplateX(A) ::= triplesTemplateX(B) DOT(C) triplesSameSubject(D). { A = new NTToken(); A->type = 555; A->copyBools(B); A->copyBools(D); A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ' .' . PHP_EOL . D->query; A->childs = array(B, C, D); }
 triplesTemplateX(A) ::= triplesSameSubject(B). { A = new NTToken(); A->type = 555; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; A->childs = array(B); }
 
-groupGraphPattern(A) ::= LBRACE(B) groupGraphPatternSub(C) RBRACE(D). { A = C; A->type = 556; A->query = '{ ' . PHP_EOL . C->query . PHP_EOL . ' }'; A->childs = array(B, C, D); }
+groupGraphPattern(A) ::= LBRACE(B) groupGraphPatternSub(C) RBRACE(D). { A = C; A->type = 556; A->bindVar = array(); A->query = '{ ' . PHP_EOL . C->query . PHP_EOL . ' }'; A->childs = array(B, C, D); }
 groupGraphPattern(A) ::= LBRACE(B) subSelect(C) RBRACE(D). { A = C; A->type = 556; A->query = '{ ' . PHP_EOL . C->query . PHP_EOL . ' }'; A->childs = array(B, C, D); }
 groupGraphPattern(A) ::= LBRACE(B) RBRACE(C). {A = new NTToken(); A->type = 556; A->query = '{ }'; A->childs = array(B, C); }
 
@@ -496,7 +507,7 @@ minusGraphPattern(A) ::= SMINUS(B) groupGraphPattern(C). { A = new NTToken(); A-
 groupOrUnionGraphPattern(A) ::= groupGraphPattern(B) groupOrUnionGraphPatternX(C). { A = new NTToken(); A->type = 576; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
 groupOrUnionGraphPattern(A) ::= groupGraphPattern(B). { A = new NTToken(); A->type = 576; A->copyBools(B); A->ssVars = B->ssVars; A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; A->childs = array(B); }
 groupOrUnionGraphPatternX(A) ::= groupOrUnionGraphPatternX(B) UNION(C) groupGraphPattern(D). { A = new NTToken(); A->type = 577; A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars + D->ssVars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . PHP_EOL . ' UNION ' . PHP_EOL . D->query; A->childs = array(B, C, D); }
-groupOrUnionGraphPatternX(A) ::= UNION(B) GroupGraphPattern(C). { A = new NTToken(); A->type = 577; A->copyBools(C); A->ssVars = C->ssVars; A->vars = C->vars; A->bNodes = C->bNodes; A->query = 'UNION ' . PHP_EOL . C->query; A->childs = array(B, C); }
+groupOrUnionGraphPatternX(A) ::= UNION(B) groupGraphPattern(C). { A = new NTToken(); A->type = 577; A->copyBools(C); A->ssVars = C->ssVars; A->vars = C->vars; A->bNodes = C->bNodes; A->query = 'UNION ' . PHP_EOL . C->query; A->childs = array(B, C); }
 
 filter(A) ::= FILTER(B) LPARENTHESE(C) expression(D) RPARENTHESE(E). { A = new NTToken(); A->type = 578; A->copyBools(D); A->vars = D->vars; A->bNodes = D->bNodes; A->query = 'FILTER ( ' . D->query . ' )'; A->childs = array(B, C, D, E); }
 filter(A) ::= FILTER(B) builtInCall(C). { A = new NTToken(); A->type = 578; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = 'FILTER ' . C->query; A->childs = array(B, C); }
