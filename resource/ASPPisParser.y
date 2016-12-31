@@ -334,7 +334,7 @@ update(A) ::= update1(B). { A = B; A->type = 528; A->childs = array(B); }
 updateX(A) ::= updateX(B) SEMICOLON(C) prologue(D) update1(E). { A = new NTToken(); A->type = 529; A->copyBools(B); A->copyBools(E); A->vars = B->vars + E->vars; A->bNodes = B->bNodes + E->bNodes; A->query = B->query . ' ;' . PHP_EOL . D->query . PHP_EOL . E->query; A->childs = array(B, C, D, E); }
 updateX(A) ::= updateX(B) SEMICOLON(C) update1(D). { A = new NTToken(); A->type = 529; A->copyBools(B); A->copyBools(D); A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ' ;' . PHP_EOL . D->query; A->childs = array(B, C, D); }
 updateX(A) ::= SEMICOLON(B) prologue(C) update1(D). { A = new NTToken(); A->type = 529; A->copyBools(D); A->vars = D->vars; A->bNodes = D->bNodes; A->query = ';' . PHP_EOL . B->query . PHP_EOL . C->query; A->childs = array(B, C, D); }
-updateX(A) ::= SEMICOLON(B) update1(C). { A = B; A->type = 529; A->query = ';' . PHP_EOL . B->query; A->childs = array(B, C); }
+updateX(A) ::= SEMICOLON(B) update1(C). { A = C; A->type = 529; A->query = ';' . PHP_EOL . C->query; A->childs = array(B, C); }
 
 update1(A) ::= load(B). { A = B; A->type = 530; A->childs = array(B); }
 update1(A) ::= clear(B). { A = B; A->type = 530; A->childs = array(B); }
@@ -371,13 +371,13 @@ move(A) ::= MOVE(B) graphOrDefault(C) TO(D) graphOrDefault(E). { A = new NTToken
 copy(A) ::= COPY(B) SILENT(C) graphOrDefault(D) TO(E) graphOrDefault(F). { A = new NTToken(); A->type = 537; A->copyBools(D); A->copyBools(F); A->vars = D->vars + F->vars; A->bNodes = D->bNodes + F->bNodes; A->query = 'COPY SILENT ' . D->query . ' TO ' . F->query; A->childs = array(B, C, D, E, F); }
 copy(A) ::= COPY(B) graphOrDefault(C) TO(D) graphOrDefault(E). { A = new NTToken(); A->type = 537; A->copyBools(C); A->copyBools(E); A->vars = C->vars + E->vars; A->bNodes = C->bNodes + E->bNodes; A->query = 'COPY ' . C->query . ' TO ' . E->query; A->childs = array(B, C, D, E); }
 
-insertData(A) ::= INSERTDATA(B) quadData(C). { A = B; A->type = 538; A->query = 'DELETE DATA ' . C->query; A->childs = array(B, C); }
+insertData(A) ::= INSERTDATA(B) quadData(C). { A = C; A->type = 538; A->query = 'DELETE DATA ' . C->query; A->childs = array(B, C); }
 
 deleteData(A) ::= DELETEDATA(B) quadData(C). { if(C->hasBN){ throw new Exception("Deleteclause is not allowed to contain Blanknodesyntax: DELETE DATA" . C->query); } A = C; A->type = 539; A->query = 'DELETE DATA ' . C->query; A->childs = array(B, C); }
 
 deletewhere(A) ::= DELETEWHERE(B) quadPattern(C). { if(C->hasBN){throw new Exception("Deleteclause is not allowed to contain Blanknodesyntax: DELETE WHERE" . C->query);} A = C; A->type = 540; A->query = 'DELETE WHERE ' . C->query; A->childs = array(B, C); }
 
-modify(A) ::= WITH(B) iri(C) deleteClause(D) insertClause(E) usingClauseX(F) WHERE(G) groupGraphPattern(H). { A = new NTToken(); A->type = 541; A->copyBools(C); A->copyBools(D); A->copyBools(E); A->copyBools(F); A->copyBools(H); A->ssVars = H->ssVars + H->gGPssVars; A->vars = C->vars + D->vars + E->vars + F->vars + H->vars; A->bNodes = C->bNodes + D->bNodes + E->bNodes + F->bNodes + H->bNodes; A->query = 'WITH ' . C->query . PHP_EOL . D->query . PHP_EOL . E->query . PHP_EOL . F->query . PHP_EOL . 'WHERE' . PHP_EOL . G->query; A->childs = array(B, C, D, E, F, G, H); }
+modify(A) ::= WITH(B) iri(C) deleteClause(D) insertClause(E) usingClauseX(F) WHERE(G) groupGraphPattern(H). { A = new NTToken(); A->type = 541; A->copyBools(C); A->copyBools(D); A->copyBools(E); A->copyBools(F); A->copyBools(H); A->ssVars = H->ssVars + H->gGPssVars; A->vars = C->vars + D->vars + E->vars + F->vars + H->vars; A->bNodes = C->bNodes + D->bNodes + E->bNodes + F->bNodes + H->bNodes; A->query = 'WITH ' . C->query . PHP_EOL . D->query . PHP_EOL . E->query . PHP_EOL . F->query . PHP_EOL . 'WHERE' . PHP_EOL . H->query; A->childs = array(B, C, D, E, F, G, H); }
 modify(A) ::= WITH(B) iri(C) deleteClause(D) usingClauseX(E) WHERE(F) groupGraphPattern(G).{ A = new NTToken(); A->type = 541; A->copyBools(C); A->copyBools(D); A->copyBools(E); A->copyBools(G); A->ssVars = G->ssVars  + G->gGPssVars; A->vars = C->vars + D->vars + E->vars + G->vars; A->bNodes = C->bNodes + D->bNodes + E->bNodes + G->bNodes; A->query = 'WITH ' . C->query . PHP_EOL . D->query . PHP_EOL . E->query . PHP_EOL . 'WHERE' . PHP_EOL . G->query; A->childs = array(B, C, D, E, F, G); }
 modify(A) ::= WITH(B) iri(C) insertClause(D) usingClauseX(E) WHERE(F) groupGraphPattern(G).{ A = new NTToken(); A->type = 541; A->copyBools(C); A->copyBools(D); A->copyBools(E); A->copyBools(G); A->ssVars = G->ssVars + G->gGPssVars; A->vars = C->vars + D->vars + E->vars + G->vars; A->bNodes = C->bNodes + D->bNodes + E->bNodes + G->bNodes; A->query = 'WITH ' . C->query . PHP_EOL . D->query . PHP_EOL . E->query . PHP_EOL . 'WHERE' . PHP_EOL . G->query; A->childs = array(B, C, D, E, F, G); }
 modify(A) ::= WITH(B) iri(C) deleteClause(D) insertClause(E) WHERE(F) groupGraphPattern(G).{ A = new NTToken(); A->type = 541; A->copyBools(C); A->copyBools(D); A->copyBools(E); A->copyBools(G); A->ssVars = G->ssVars + G->gGPssVars; A->vars = C->vars + D->vars + E->vars + G->vars; A->bNodes = C->bNodes + D->bNodes + E->bNodes + G->bNodes; A->query = 'WITH ' . C->query . PHP_EOL . D->query . PHP_EOL . E->query . PHP_EOL . 'WHERE' . PHP_EOL . G->query; A->childs = array(B, C, D, E, F, G); }
@@ -399,18 +399,18 @@ insertClause(A) ::= INSERT(B) quadPattern(C). { A = C; A->type = 544; A->query =
 usingClause(A) ::= USING(B) NAMED(C) iri(D). { A = D; A->type = 545; A->query = 'USING NAMED ' . D->query; A->childs = array(B, C, D); }
 usingClause(A) ::= USING(B) iri(C). { A = C; A->type = 545; A->query = 'USING ' . C->query; A->childs = array(B, C); }
 
-graphOrDefault(A) ::= GRAPH(B) iri(C). { A = B; A->type = 546; A->query = 'GRAPH ' . C->query; A->childs = array(B, C); }
+graphOrDefault(A) ::= GRAPH(B) iri(C). { A = C; A->type = 546; A->query = 'GRAPH ' . C->query; A->childs = array(B, C); }
 graphOrDefault(A) ::= DEFAULT(B). { A = new NTToken(); A->type = 546; A->query = 'DEFAULT';A->childs = array(B); }
 graphOrDefault(A) ::= iri(B). {A = B; A->type = 546;A->childs = array(B); }
 
-graphRef(A) ::= GRAPH(B) iri(C). { A = B; A->type = 547; A->query = 'GRAPH ' . C->query; A->childs = array(B, C); }
+graphRef(A) ::= GRAPH(B) iri(C). { A = C; A->type = 547; A->query = 'GRAPH ' . C->query; A->childs = array(B, C); }
 
 graphRefAll(A) ::= graphRef(B). { A = B; A->type = 548; A->childs = array(B); }
 graphRefAll(A) ::= DEFAULT(B). { A = new NTToken(); A->type = 548; A->query = 'DEFAULT';A->childs = array(B); }
 graphRefAll(A) ::= NAMED(B). { A = new NTToken(); A->type = 548; A->query = 'NAMED';A->childs = array(B); }
 graphRefAll(A) ::= ALL(B). { A = new NTToken(); A->type = 548; A->query = 'ALL';A->childs = array(B); }
 
-quadPattern(A) ::= LBRACE(B) quads(C) RBRACE(D). { A = B; A->type = 549; A->query = '{ ' . PHP_EOL . C->query . PHP_EOL . ' }'; A->childs = array(B, C, D); }
+quadPattern(A) ::= LBRACE(B) quads(C) RBRACE(D). { A = C; A->type = 549; A->query = '{ ' . PHP_EOL . C->query . PHP_EOL . ' }'; A->childs = array(B, C, D); }
 quadPattern(A) ::= LBRACE(B) RBRACE(C). {A = new NTToken(); A->type = 549; A->query = '{ }';A->childs = array(B, C); }
 
 quadData(A) ::= LBRACE(B) quads(C) RBRACE(D). { if(!empty(C->vars)){throw new Exception("QuadPattern arent allowed to contain variables: " . C->query);} A = C; A->type = 550; A->query = '{ ' . PHP_EOL . C->query . PHP_EOL . ' }'; A->childs = array(B, C, D); }

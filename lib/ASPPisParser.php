@@ -4564,7 +4564,7 @@ static $yy_default = array(
         break;
       case 163: /* updateX ::= SEMICOLON update1 */
 #line 337 "resource/ASPPisParser.y"
-{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 529; $yygotominor->query = ';' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 529; $yygotominor->query = ';' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 4403 "resource/ASPPisParser.php"
         break;
       case 164: /* update1 ::= load */
@@ -4664,7 +4664,7 @@ static $yy_default = array(
         break;
       case 191: /* insertData ::= INSERTDATA quadData */
 #line 374 "resource/ASPPisParser.y"
-{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 538; $yygotominor->query = 'DELETE DATA ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 538; $yygotominor->query = 'DELETE DATA ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 4503 "resource/ASPPisParser.php"
         break;
       case 192: /* deleteData ::= DELETEDATA quadData */
@@ -4679,7 +4679,7 @@ static $yy_default = array(
         break;
       case 194: /* modify ::= WITH iri deleteClause insertClause usingClauseX WHERE groupGraphPattern */
 #line 380 "resource/ASPPisParser.y"
-{ $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->gGPssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'WITH ' . $this->yystack[$this->yyidx + -5]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ $yygotominor = new NTToken(); $yygotominor->type = 541; $yygotominor->copyBools($this->yystack[$this->yyidx + -5]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -4]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -3]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + -2]->minor); $yygotominor->copyBools($this->yystack[$this->yyidx + 0]->minor); $yygotominor->ssVars = $this->yystack[$this->yyidx + 0]->minor->ssVars + $this->yystack[$this->yyidx + 0]->minor->gGPssVars; $yygotominor->vars = $this->yystack[$this->yyidx + -5]->minor->vars + $this->yystack[$this->yyidx + -4]->minor->vars + $this->yystack[$this->yyidx + -3]->minor->vars + $this->yystack[$this->yyidx + -2]->minor->vars + $this->yystack[$this->yyidx + 0]->minor->vars; $yygotominor->bNodes = $this->yystack[$this->yyidx + -5]->minor->bNodes + $this->yystack[$this->yyidx + -4]->minor->bNodes + $this->yystack[$this->yyidx + -3]->minor->bNodes + $this->yystack[$this->yyidx + -2]->minor->bNodes + $this->yystack[$this->yyidx + 0]->minor->bNodes; $yygotominor->query = 'WITH ' . $this->yystack[$this->yyidx + -5]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -4]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -3]->minor->query . PHP_EOL . $this->yystack[$this->yyidx + -2]->minor->query . PHP_EOL . 'WHERE' . PHP_EOL . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -6]->minor, $this->yystack[$this->yyidx + -5]->minor, $this->yystack[$this->yyidx + -4]->minor, $this->yystack[$this->yyidx + -3]->minor, $this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 4518 "resource/ASPPisParser.php"
         break;
       case 195: /* modify ::= WITH iri deleteClause usingClauseX WHERE groupGraphPattern */
@@ -4749,7 +4749,7 @@ static $yy_default = array(
         break;
       case 212: /* graphOrDefault ::= GRAPH iri */
 #line 402 "resource/ASPPisParser.y"
-{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 546; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 546; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 4588 "resource/ASPPisParser.php"
         break;
       case 213: /* graphOrDefault ::= DEFAULT */
@@ -4764,7 +4764,7 @@ static $yy_default = array(
         break;
       case 215: /* graphRef ::= GRAPH iri */
 #line 406 "resource/ASPPisParser.y"
-{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 547; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ $yygotominor = $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 547; $yygotominor->query = 'GRAPH ' . $this->yystack[$this->yyidx + 0]->minor->query; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 4603 "resource/ASPPisParser.php"
         break;
       case 216: /* graphRefAll ::= graphRef */
@@ -4789,7 +4789,7 @@ static $yy_default = array(
         break;
       case 220: /* quadPattern ::= LBRACE quads RBRACE */
 #line 413 "resource/ASPPisParser.y"
-{ $yygotominor = $this->yystack[$this->yyidx + -2]->minor; $yygotominor->type = 549; $yygotominor->query = '{ ' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ $yygotominor = $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 549; $yygotominor->query = '{ ' . PHP_EOL . $this->yystack[$this->yyidx + -1]->minor->query . PHP_EOL . ' }'; $yygotominor->childs = array($this->yystack[$this->yyidx + -2]->minor, $this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 4628 "resource/ASPPisParser.php"
         break;
       case 221: /* quadPattern ::= LBRACE RBRACE */
