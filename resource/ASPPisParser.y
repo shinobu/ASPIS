@@ -47,7 +47,6 @@ class NTToken {
     //Childs of the NTToken to create the parse tree
     public $childs = array();
     /* booleans */
-    public $hasSS = false;
     public $hasBN = false;
     public $hasFNC = false;
     public $hasAGG = false;
@@ -82,9 +81,6 @@ class NTToken {
 		if ($this->hasAGG == false) {
 			  $this->hasAGG = $tmpToken->hasAGG;
 		}
-    if ($this->hasSS == false) {
-        $this->hasSS == $tmpToken->hasSS;
-    }
 	}
 }  
 }
@@ -150,6 +146,7 @@ function checkBase($alias) {
 
 start(A) ::= query(B). { A = B; $this->main->root = B; }
 start(A) ::= update(B). { A = B; $this->main->root = B; }
+start(A) ::= . {A = new NTToken(); $this->main->root = A;}
 
 query(A) ::= prologue(B) selectQuery(C) valuesClause(D). { A = new NTToken(); A->type = 500; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; A->childs = array(B, C, D); }
 query(A) ::= prologue(B) constructQuery(C) valuesClause(D). { A = new NTToken(); A->type = 500; A->query = B->query . PHP_EOL . C->query . PHP_EOL . D->query; A->childs = array(B, C, D); }
@@ -201,22 +198,10 @@ selectClause(A) ::= SELECT(B) DISTINCT(C) STAR(D). { A = new NTToken(); A->type 
 selectClause(A) ::= SELECT(B) REDUCED(C) STAR(D). { A = new NTToken(); A->type = 508; A->hasStar = true; A->query = 'SELECT REDUCED *'; A->childs = array(B, C, D); }
 selectClause(A) ::= SELECT(B) selectClauseX(C). { A = C; A->type = 508; A->vars = C->vars; A->bNodes = C->bNodes; A->query = 'SELECT ' . C->query;A->childs = array(B, C); }
 selectClause(A) ::= SELECT(B) STAR(C). { A = new NTToken(); A->type = 508; A->hasStar = true; A->query = 'SELECT *'; A->childs = array(B, C); }
-selectClauseX(A) ::= selectClauseX(B) LPARENTHESE(C) expression(D) AS(E) var(F) RPARENTHESE(G). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars + D->ssVars + F->vars; A->vars = B->vars + D->vars + F->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . '( ' . D->query . ' AS ' . F->query . ' )'; A->childs = array(B, C, D, E, F, G); }
-selectClauseX(A) ::= selectClauseX(B) LPARENTHESE(C) expression(D) RPARENTHESE(E). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars + D->ssVars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . PHP_EOL . '( ' . D->query . ' )'; A->childs = array(B, C, D, E); }
-selectClauseX(A) ::= selectClauseX(B) builtInCall(C). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
-selectClauseX(A) ::= selectClauseX(B) rdfLiteral(C). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
-selectClauseX(A) ::= selectClauseX(B) numericLiteral(C). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
-selectClauseX(A) ::= selectClauseX(B) booleanLiteral(C). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
+selectClauseX(A) ::= selectClauseX(B) LPARENTHESE(C) expression(D) AS(E) var(F) RPARENTHESE(G). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars + D->ssVars + F->vars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . '( ' . D->query . ' AS ' . F->query . ' )'; A->childs = array(B, C, D, E, F, G); }
 selectClauseX(A) ::= selectClauseX(B) var(C). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
-selectClauseX(A) ::= selectClauseX(B) functionCall(C). { A = new NTToken(); A->type = 509; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars + C->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
-selectClauseX(A) ::= LPARENTHESE(B) expression(C) AS(D) var(E) RPARENTHESE(F). { A = new NTToken(); A->type = 509; A->copyBools(C); A->ssVars = C->ssVars + E->vars; A->vars = C->vars + E->vars; A->bNodes = C->bNodes; A->query = '( ' . C->query . ' AS ' . E->query . ' )'; A->childs = array(B, C, D, E, F); }
-selectClauseX(A) ::= LPARENTHESE(B) expression(C) RPARENTHESE(D). { A = C; A->type = 509; A->query = '( ' . C->query . ' )'; A->childs = array(B, C, D); }
-selectClauseX(A) ::= builtInCall(B). { A = B; A->type = 509; A->childs = array(B); }
-selectClauseX(A) ::= rdfLiteral(B). { A = B; A->type = 509; A->childs = array(B); }
-selectClauseX(A) ::= numericLiteral(B). { A = B; A->type = 509; A->childs = array(B); }
-selectClauseX(A) ::= booleanLiteral(B). { A = B; A->type = 509; A->childs = array(B); }
+selectClauseX(A) ::= LPARENTHESE(B) expression(C) AS(D) var(E) RPARENTHESE(F). { A = new NTToken(); A->type = 509; A->copyBools(C); A->ssVars = C->ssVars + E->vars; A->vars = C->vars; A->bNodes = C->bNodes; A->query = '( ' . C->query . ' AS ' . E->query . ' )'; A->childs = array(B, C, D, E, F); }
 selectClauseX(A) ::= var(B). { A = B; A->type = 509; A->childs = array(B); }
-selectClauseX(A) ::= functionCall(B). { A = B; A->type = 509; A->childs = array(B); }
 
 constructQuery(A) ::= CONSTRUCT(B) LBRACE(C) triplesTemplate(D) RBRACE(E) datasetClauseX(F) whereclause(G) solutionModifier(H). { A = new NTToken(); A->type = 510; A->copyBools(D); A->copyBools(G); A->copyBools(H); A->ssVars = D->ssVars + G->ssVars + H->ssVars; A->vars = D->vars + G->vars + H->vars; A->bNodes = D->bNodes + G->bNodes + H->bNodes; A->query = 'CONSTRUCT' . PHP_EOL . '{' . PHP_EOL . D->query . PHP_EOL . '}' . PHP_EOL. F->query . PHP_EOL . G->query . PHP_EOL . H->query; A->childs = array(B, C, D, E, F, G, H); }
 constructQuery(A) ::= CONSTRUCT(B) LBRACE(C) RBRACE(D) datasetClauseX(E) whereclause(F) solutionModifier(G). { A = new NTToken(); A->type = 510; A->copyBools(F); A->copyBools(G); A->ssVars = F->ssVars + G->ssVars; A->vars = F->vars + G->vars; A->bNodes = F->bNodes + G->bNodes; A->query = 'CONSTRUCT { }' . PHP_EOL . E->query . PHP_EOL. F->query . PHP_EOL . G->query; A->childs = array(B, C, D, E, F, G); }
@@ -287,7 +272,7 @@ groupConditionX(A) ::= groupConditionX(B) builtInCall(C). { A = new NTToken(); A
 groupConditionX(A) ::= groupConditionX(B) functionCall(C). { A = new NTToken(); A->type = 518; A->hasFNC = true; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query;A->childs = array(B, C); }
 groupConditionX(A) ::= groupConditionX(B) LPARENTHESE(C) expression(D) RPARENTHESE(E). { A = new NTToken(); A->type = 518; A->copyBools(B); A->copyBools(D); A->ssVars = B->ssVars; A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . '( ' . D->query . ' )';A->childs = array(B, C, D, E); }
 groupConditionX(A) ::= groupConditionX(B) var(C). { A = new NTToken(); A->type = 518; A->copyBools(B); A->copyBools(C); A->ssVars = B->ssVars; A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query;A->childs = array(B, C); }
-groupConditionX(A) ::= LPARENTHESE(B) expression(C) AS(D) var(E) RPARENTHESE(F). { A = new NTToken(); A->type = 518; A->copyBools(C); A->copyBools(E); A->ssVars = E->vars; A->vars = C->vars + E->vars; A->bNodes = C->bNodes + E->bNodes; A->query = '( ' . C->query . ' AS ' . E->query . ' )';A->childs = array(B, C, D, E, F); }
+groupConditionX(A) ::= LPARENTHESE(B) expression(C) AS(D) var(E) RPARENTHESE(F). { A = new NTToken(); A->type = 518; A->copyBools(C); A->copyBools(E); A->ssVars = E->vars; A->vars = C->vars; A->bNodes = C->bNodes + E->bNodes; A->query = '( ' . C->query . ' AS ' . E->query . ' )';A->childs = array(B, C, D, E, F); }
 groupConditionX(A) ::= builtInCall(B). { A = B; A->type = 518; A->childs = array(B); }
 groupConditionX(A) ::= functionCall(B). { A = B; A->type = 518; A->hasFNC = true; A->childs = array(B); }
 groupConditionX(A) ::= LPARENTHESE(B) expression(C) RPARENTHESE(D). { A = C; A->type = 518; A->query = '( ' . C->query . ' )';A->childs = array(B, C, D); }
@@ -331,6 +316,7 @@ update(A) ::= prologue(B) update1(C) SEMICOLON(D). { A = new NTToken(); A->type 
 update(A) ::= prologue(B) update1(C). { A = new NTToken(); A->type = 528; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = B->query . PHP_EOL . C->query; A->childs = array(B, C); }
 update(A) ::= update1(B) SEMICOLON(C). { A = B; A->type = 528; A->query = B->query . ' ;'; A->childs = array(B, C); }
 update(A) ::= update1(B). { A = B; A->type = 528; A->childs = array(B); }
+update(A) ::= prologue(B). { A = B; A->type = 528; A->childs = array(B); }
 updateX(A) ::= updateX(B) SEMICOLON(C) prologue(D) update1(E). { A = new NTToken(); A->type = 529; A->copyBools(B); A->copyBools(E); A->vars = B->vars + E->vars; A->bNodes = B->bNodes + E->bNodes; A->query = B->query . ' ;' . PHP_EOL . D->query . PHP_EOL . E->query; A->childs = array(B, C, D, E); }
 updateX(A) ::= updateX(B) SEMICOLON(C) update1(D). { A = new NTToken(); A->type = 529; A->copyBools(B); A->copyBools(D); A->vars = B->vars + D->vars; A->bNodes = B->bNodes + D->bNodes; A->query = B->query . ' ;' . PHP_EOL . D->query; A->childs = array(B, C, D); }
 updateX(A) ::= SEMICOLON(B) prologue(C) update1(D). { A = new NTToken(); A->type = 529; A->copyBools(D); A->vars = D->vars; A->bNodes = D->bNodes; A->query = ';' . PHP_EOL . B->query . PHP_EOL . C->query; A->childs = array(B, C, D); }
@@ -477,7 +463,7 @@ graphGraphPattern(A) ::= GRAPH(B) varOrIri(C) groupGraphPattern(D). { A = new NT
 serviceGraphPattern(A) ::= SERVICE(B) SILENT(C) varOrIri(D) groupGraphPattern(E). { A = new NTToken(); A->type = 564; A->copyBools(E); A->gGPssVars = E->gGPssVars; A->vars = D->vars + E->vars; A->bNodes = E->bNodes; A->query = 'SERVICE SILENT ' . D->query . ' ' . E->query; A->childs = array(B, C, D, E); }
 serviceGraphPattern(A) ::= SERVICE(B) varOrIri(C) groupGraphPattern(D). { A = new NTToken(); A->type = 564; A->copyBools(D); A->gGPssVars = D->gGPssVars; A->vars = C->vars + D->vars; A->bNodes = D->bNodes; A->query = 'SERVICE ' . C->query . ' ' . D->query; A->childs = array(B, C, D); }
 
-bind(A) ::= BIND(B) LPARENTHESE(C) expression(D) AS(E) var(F) RPARENTHESE(G). { A = new NTToken(); A->type = 565; A->copyBools(D); A->ssVars[F->query] = 1; A->ssVars += D->ssVars; A->bindVar[F->query] = 1; A->vars = D->vars + F->vars; A->bNodes = D->bNodes; A->query = D->query . ' AS ' . F->query; A->childs = array(B, C, D, E, F, G); }
+bind(A) ::= BIND(B) LPARENTHESE(C) expression(D) AS(E) var(F) RPARENTHESE(G). { A = new NTToken(); A->type = 565; A->copyBools(D); A->ssVars[F->query] = 1; A->ssVars += D->ssVars; A->bindVar[F->query] = 1; A->vars = D->vars; A->bNodes = D->bNodes; A->query = D->query . ' AS ' . F->query; A->childs = array(B, C, D, E, F, G); }
 
 inlineData(A) ::= VALUES(B) dataBlock(C). { A = new NTToken(); A->type = 566; A->vars = C->vars; A->query = C->query; A->childs = array(B, C); }
 
