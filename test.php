@@ -85,27 +85,27 @@ function importFromManifest($fileName, $onlySyntax = false)
    return $manifestPaths;
 }
 
-// $counter = 0;
-// 
-// $parseArray = providerTestW3CQueries();
-// foreach($parseArray as $array) {
-//     $parser = new ASPPisMain;
-//     $counter++;
-//     try {
-//         $parser->parseFile((string)$array['file']);
-//         print 'succ ' . $array['type'] . PHP_EOL;
-//         if ($array['type'] == 'negativeTest') print $array['file'] . PHP_EOL;
-//     }
-//     catch (Exception $e) {
-//         print 'fail ' . $array['type'] . PHP_EOL;
-//         if ($array['type'] == 'positiveTest') print $array['file'] . PHP_EOL;
-//     }
-// //$parser->parseFile($array['file']);
-// }
-// print $counter;
-$parser = new ASPPisMain;
-$parser->parseFile('/home/shino/PHP-SparqlParser/tests/_files/w3cS11TS/syntax-query/syn-bad-pname-05.rq');
-print $parser->root->query;
+$counter = 0;
+
+$parseArray = providerTestW3CQueries();
+foreach($parseArray as $array) {
+    $parser = new ASPPisMain;
+    $counter++;
+    try {
+        $parser->parseFile((string)$array['file']);
+        print 'succ ' . $array['type'] . PHP_EOL;
+        if ($array['type'] == 'negativeTest') print $array['file'] . PHP_EOL;
+    }
+    catch (Exception $e) {
+        print 'fail ' . $array['type'] . PHP_EOL;
+        if ($array['type'] == 'positiveTest') print $array['file'] . PHP_EOL;
+    }
+//$parser->parseFile($array['file']);
+}
+print $counter;
+//$parser = new ASPPisMain;
+//$parser->parseFile('/home/shino/PHP-SparqlParser/tests/_files/w3cS11TS/syntax-query/syn-bad-pname-05.rq');
+//print $parser->root->query;
 //print_r(PHP_EOL);
 //print_r($parser->root->query);
 

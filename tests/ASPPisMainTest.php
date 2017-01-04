@@ -21,33 +21,82 @@ class ASPPisMainTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('BASE <http://www.url.com/>' . PHP_EOL . 'PREFIX abc:<https://test.com/>' . PHP_EOL . 'SELECT *' . PHP_EOL . 'WHERE { ' . PHP_EOL .'?a ?b ?c' . PHP_EOL . ' }', $query);
     }
     
+    // /**
+    //  * @dataProvider providerTestW3CQueries
+    //  */
+    // public function testW3CQueries($type, $testFile)
+    // {
+    //     //tests do not work correctly, some negative tests do NOT FAIL (they should) and are still shown as non-failing
+    //     $parser = new ASPPisMain();
+    //     try {
+    //         $parser->parseFile((string)$testFile);
+    //         if($type == 'negativeTest') {
+    //             unset($parser);
+    //             $this->fail($testFile . ': This Query should Fail');
+    //         } else {
+    //         $this->assertFalse($parser->root == null);
+    //         }
+    //     } catch (Exception $e) {
+    //         if($type == 'positiveTest') {
+    //             unset($parser);
+    //             $this->fail($testFile . PHP_EOL . $e);
+    //         } else {
+    //         $this->assertTrue(true);
+    //         }
+    //     }
+    //     unset($parser);
+    //     $this->fail('a');
+    // }
+    
     /**
-     * @dataProvider providerTestW3CQueries
+     * @dataProvider splitPositive
      */
-    public function testW3CQueries($type, $testFile)
+    public function testW3CPositive($type, $testFile)
     {
-        //tests do not work correctly, some negative tests do NOT FAIL (they should) and are still shown as non-failing
         $parser = new ASPPisMain();
         try {
-            $parser->parseFile((string)$testFile);
-            if($type == 'negativeTest') {
-                unset($parser);
-                $this->fail($testFile . ': This Query should Fail');
-            } else {
-            $this->assertFalse($parser->root == null);
-            }
+            $parser->parseFile($testFile);
         } catch (Exception $e) {
-            if($type == 'positiveTest') {
-                unset($parser);
-                $this->fail($testFile . PHP_EOL . $e);
-            } else {
-            $this->assertTrue(true);
-            }
+            
         }
-        unset($parser);
-        $this->fail('a');
+        $this->assertFalse($parser->root == null);
+    }
+    
+    /**
+     * @dataProvider splitNegative
+     */
+    public function testW3CNegative($type, $testFile)
+    {
+        $parser = new ASPPisMain();
+        try {
+            $parser->parseFile($testFile);
+        } catch (Exception $e) {
+            unset($parser);
+        }
+        $this->assertTrue(isset($parser) == false);
     }
 
+    public function splitPositive() {
+        $allTests = $this->providerTestW3CQueries();
+        $positiveTests = array();
+        foreach ($allTests as $key => $test) {
+            if ($test['type'] =='positiveTest') {
+                $positiveTests[$key] = $test;
+            }
+        }
+        return $positiveTests;
+    }
+    
+    public function splitNegative() {
+        $allTests = $this->providerTestW3CQueries();
+        $negativeTests = array();
+        foreach ($allTests as $key => $test) {
+            if ($test['type'] =='negativeTest') {
+                $negativeTests[$key] = $test;
+            }
+        }
+        return $negativeTests;
+    }
     public function providerTestW3CQueries()
     {
         $parseArray = array();
