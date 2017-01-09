@@ -145,6 +145,12 @@ class ASPPisMainTest extends \PHPUnit_Framework_TestCase
         $parseArray[$baseName . 'delete-insert/manifest#dawg-delete-insert-07b'] = array('type' => $neg, 'file' => $path . 'delete-insert/delete-insert-07b.ru');
         $parseArray[$baseName . 'delete-insert/manifest#dawg-delete-insert-08'] = array('type' => $neg, 'file' => $path . 'delete-insert/delete-insert-08.ru');
         $parseArray[$baseName . 'delete-insert/manifest#dawg-delete-insert-09'] = array('type' => $neg, 'file' => $path . 'delete-insert/delete-insert-09.ru');
+        $parseArray[$baseName . 'grouping/manifest#'] = array('type' => $neg, 'file' => $path . 'grouping/group06.rq');
+        $parseArray[$baseName . 'grouping/manifest#'] = array('type' => $neg, 'file' => $path . 'grouping/group07.rq');
+        //self created tests
+        $parseArray['shino/bNodes1'] = array('type' => $pos, 'file' => $path . '../parser/bNodes1.query');
+        $parseArray['shino/badBNodes1'] = array('type' => $neg, 'file' => $path . '../parser/badBNodes1.query');
+        $parseArray['shino/badBNodes2'] = array('type' => $neg, 'file' => $path . '../parser/badBNodes2.query');
         return $parseArray;
     }
 

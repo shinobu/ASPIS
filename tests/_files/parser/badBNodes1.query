@@ -1,0 +1,3 @@
+#Illegal reuse of Blank Node Label
+Select *
+Where { _:a ?b ?c {} _:a ?d ?e}
