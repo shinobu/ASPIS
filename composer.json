@@ -14,6 +14,7 @@
     "require": {
         "php": ">=5.4.0",
         "phpunit/phpunit": "5.6.*",
+        "easyrdf/easyrdf": "0.9.*",
         "shinobu/jlex-php": "*",
         "shinobu/lemon-php": "*"
     },
@@ -23,5 +24,8 @@
             "( cd vendor/shinobu/jlex-php; jar cvf JLexPHP.jar JLexPHP/*.class)",
             "( cd vendor/shinobu/lemon-php; cc -o lemon lemon.c)"
         ]
+    },
+    "autoload": {
+        "psr-4": {"aSPPis\\": ""}
     }
 }

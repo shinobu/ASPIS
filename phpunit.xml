@@ -1,4 +1,4 @@
-<phpunit verbose="true">
+<phpunit verbose="true" bootstrap="vendor/autoload.php">
   <testsuites>
     <testsuite name="basicTest">
       <directory suffix="Test.php">tests/</directory>

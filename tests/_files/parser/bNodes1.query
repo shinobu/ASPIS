@@ -1,0 +1,7 @@
+#Legal reuse of Blank Node Label
+Select *
+Where { 
+        _:a ?b ?c. 
+        BIND('a' as ?a)
+        ?d ?e _:a
+      }
