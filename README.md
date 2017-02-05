@@ -2,7 +2,7 @@
 
 | CI System      |                         Status                                                                                                  | 
 | -------------- | ----------------------------------------------------------------------------------------------------------------                |
-| Travis CI      | [![Travis CI Build Status](https://travis-ci.org/shinobu/PHP-SparqlParser.svg)](https://travis-ci.org/shinobu/PHP-SparqlParser) |
+| Travis CI      | [![Travis CI Build Status](https://travis-ci.org/shinobu/aSPPis.svg)](https://travis-ci.org/shinobu/aSPPis) |
 
 Informations about Copyright are in the COPYING and License files.
 
