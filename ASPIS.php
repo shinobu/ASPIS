@@ -1,10 +1,10 @@
 <?php
-namespace aSPPis;
+namespace ASPIS;
 require_once('vendor/autoload.php');
-use aSPPis\lib\ASPPisParser;
-use aSPPis\lib\ASPPisLexer;
+use ASPIS\lib\ASPISParser;
+use ASPIS\lib\ASPISLexer;
 use \Exception;
-class ASPPisMain
+class ASPIS
 {
     //root gets set in the parser
     public $root = null;
@@ -13,10 +13,10 @@ class ASPPisMain
     private function parse($filePointer)
     {
         if (!isset($this->parser)) {
-            $this->parser = new ASPPisParser($this);
+            $this->parser = new ASPISParser($this);
         }
 
-        $scanner = new ASPPisLexer($filePointer);
+        $scanner = new ASPISLexer($filePointer);
         while ($token = $scanner->nextToken()) {
             if ($token->type != -1) {
                 $this->parser->doParse($token->type, $token);
@@ -53,6 +53,8 @@ class ASPPisMain
 
     public function resetParser()
     {
-        //TODO
+        //cheap way
+        unset($parser);
+        unset($root);
     }
 }

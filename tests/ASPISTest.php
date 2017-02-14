@@ -1,15 +1,15 @@
 <?php
-namespace aSPPis\tests;
-use aSPPis\ASPPisMain;
+namespace ASPIS\tests;
+use ASPIS\ASPIS;
 use Exception;
 
-class ASPPisMainTest extends \PHPUnit_Framework_TestCase
+class ASPISTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testBasicQueryAndPHP()
     {
         // Arrange
-        $parser = new ASPPisMain();
+        $parser = new ASPIS();
 
         // Act
         $parser->parseString('BASE <http://www.url.com/> PREFIX abc:<https://test.com/>
@@ -27,7 +27,7 @@ class ASPPisMainTest extends \PHPUnit_Framework_TestCase
     // public function testW3CQueries($type, $testFile)
     // {
     //     //tests do not work correctly, some negative tests do NOT FAIL (they should) and are still shown as non-failing
-    //     $parser = new ASPPisMain();
+    //     $parser = new ASPIS();
     //     try {
     //         $parser->parseFile((string)$testFile);
     //         if($type == 'negativeTest') {
@@ -53,7 +53,7 @@ class ASPPisMainTest extends \PHPUnit_Framework_TestCase
      */
     public function testW3CPositive($type, $testFile)
     {
-        $parser = new ASPPisMain();
+        $parser = new ASPIS();
         try {
             $parser->parseFile($testFile);
         } catch (Exception $e) {
@@ -67,7 +67,7 @@ class ASPPisMainTest extends \PHPUnit_Framework_TestCase
      */
     public function testW3CNegative($type, $testFile)
     {
-        $parser = new ASPPisMain();
+        $parser = new ASPIS();
         try {
             $parser->parseFile($testFile);
         } catch (Exception $e) {
