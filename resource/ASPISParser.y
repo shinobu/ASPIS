@@ -1,15 +1,9 @@
-/* !!!!!!!!!!!!!!!!!SCOPING NOTES !!!!!!!!!!!!!!!!!!!
- * might need to throw A->ssVars = B->ssVars; to everyting containing "expression" rules
- * need to rework catching errors (use throw error)
- *
- */
-
 /* This is a lemon grammar for the Sparql1.1 language */
-%name ASPPisParser
+%name ASPISParser
 %token_prefix TK_
 
 %include { /* this will be copied blindly */
-namespace aSPPis\lib;
+namespace ASPIS\lib;
 use \stdClass;
 use \Exception;
 class NTToken {
