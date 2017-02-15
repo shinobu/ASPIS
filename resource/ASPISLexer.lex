@@ -123,8 +123,8 @@ WS = \x20|\x09|\x0D|\x0A
 <YYINITIAL> "!=" { return $this->createToken(ASPISParser::TK_NEQUAL); }
 <YYINITIAL> "<" { return $this->createToken(ASPISParser::TK_SMALLERTHEN); }
 <YYINITIAL> ">" { return $this->createToken(ASPISParser::TK_GREATERTHEN); }
-<YYINITIAL> "=<" { return $this->createToken(ASPISParser::TK_SMALLERTHENQ); }
-<YYINITIAL> "=>" { return $this->createToken(ASPISParser::TK_GREATERTHENQ); }
+<YYINITIAL> "<=" { return $this->createToken(ASPISParser::TK_SMALLERTHENQ); }
+<YYINITIAL> ">=" { return $this->createToken(ASPISParser::TK_GREATERTHENQ); }
 <YYINITIAL> [Ii][Nn] { return $this->createToken(ASPISParser::TK_IN); }
 <YYINITIAL> [Nn][Oo][Tt] { return $this->createToken(ASPISParser::TK_NOT); }
 <YYINITIAL> [Ss][Tt][Rr] { return $this->createToken(ASPISParser::TK_STR); }

@@ -4815,12 +4815,12 @@ static $yy_default = array(
         break;
       case 138: /* limitClause ::= LIMIT INTEGER */
 #line 318 "resource/ASPISParser.y"
-{ $yygotominor = clone $this->yystack[$this->yyidx + -1]->minor; $yygotominor->type = 525; $yygotominor->query = 'LIMIT ' . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ $yygotominor = new NTToken(); $yygotominor->type = 525; $yygotominor->query = 'LIMIT ' . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 4654 "resource/ASPISParser.php"
         break;
       case 139: /* offsetClause ::= OFFSET INTEGER */
 #line 320 "resource/ASPISParser.y"
-{ $yygotominor = clone $this->yystack[$this->yyidx + 0]->minor; $yygotominor->type = 526; $yygotominor->query = 'OFFSET ' . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ $yygotominor = new NTToken(); $yygotominor->type = 526; $yygotominor->query = 'OFFSET ' . $this->yystack[$this->yyidx + 0]->minor->value; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 4659 "resource/ASPISParser.php"
         break;
       case 140: /* valuesClause ::= VALUES dataBlock */
@@ -5595,7 +5595,7 @@ static $yy_default = array(
         break;
       case 318: /* verb ::= A */
 #line 546 "resource/ASPISParser.y"
-{ if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 586; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
+{ if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 586; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
 #line 5434 "resource/ASPISParser.php"
         break;
       case 319: /* objectList ::= graphNode objectListX */
@@ -5786,7 +5786,7 @@ static $yy_default = array(
         break;
       case 357: /* pathPrimary ::= A */
 #line 595 "resource/ASPISParser.y"
-{ if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 601; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
+{ if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 601; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
 #line 5625 "resource/ASPISParser.php"
         break;
       case 358: /* pathPrimary ::= iri */
@@ -5831,12 +5831,12 @@ static $yy_default = array(
         break;
       case 366: /* pathOneInPropertySet ::= HAT A */
 #line 606 "resource/ASPISParser.y"
-{ if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 604; ; $yygotominor->query = '^rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
+{ if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 604; ; $yygotominor->query = '^rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + -1]->minor, $this->yystack[$this->yyidx + 0]->minor); }
 #line 5670 "resource/ASPISParser.php"
         break;
       case 367: /* pathOneInPropertySet ::= A */
 #line 607 "resource/ASPISParser.y"
-{ if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 604; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
+{ if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} $yygotominor = new NTToken(); $yygotominor->type = 604; $yygotominor->query = 'rdf:type'; $yygotominor->childs = array($this->yystack[$this->yyidx + 0]->minor); }
 #line 5675 "resource/ASPISParser.php"
         break;
       case 368: /* pathOneInPropertySet ::= iri */

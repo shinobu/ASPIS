@@ -315,9 +315,9 @@ limitOffsetClauses(A) ::= offsetClause(B) limitClause(C). { A = new NTToken(); A
 limitOffsetClauses(A) ::= limitClause(B). { A = clone B; A->type = 524; A->childs = array(B); }
 limitOffsetClauses(A) ::= offsetClause(B). { A = clone B; A->type = 524; A->childs = array(B); }
 
-limitClause(A) ::= LIMIT(B) INTEGER(C). { A = clone B; A->type = 525; A->query = 'LIMIT ' . C->value; A->childs = array(B, C); }
+limitClause(A) ::= LIMIT(B) INTEGER(C). { A = new NTToken(); A->type = 525; A->query = 'LIMIT ' . C->value; A->childs = array(B, C); }
 
-offsetClause(A) ::= OFFSET(B) INTEGER(C). { A = clone C; A->type = 526; A->query = 'OFFSET ' . C->value; A->childs = array(B, C); }
+offsetClause(A) ::= OFFSET(B) INTEGER(C). { A = new NTToken(); A->type = 526; A->query = 'OFFSET ' . C->value; A->childs = array(B, C); }
 
 valuesClause(A) ::= VALUES(B) dataBlock(C). { A = clone C; A->type = 527; A->query = 'VALUES ' . C->query;A->childs = array(B, C); }
 
@@ -543,7 +543,7 @@ propertyListNotEmptyX(A) ::= SEMICOLON(B) verb(C) objectList(D). { A = new NTTok
 propertyListNotEmptyX(A) ::= SEMICOLON(B). { A = new NTToken(); A->type = 585; A->query = ';'; A->childs = array(B); }
 
 verb(A) ::= varOrIri(B). { A = new NTToken(); A->type = 586; A->vars = B->vars; A->query = B->query; A->childs = array(B); }
-verb(A) ::= A(B). { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 586; A->query = 'rdf:type'; A->childs = array(B); }
+verb(A) ::= A(B). { if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 586; A->query = 'rdf:type'; A->childs = array(B); }
 
 objectList(A) ::= graphNode(B) objectListX(C). { A = new NTToken(); A->type = 587; A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; A->childs = array(B, C); }
 objectList(A) ::= graphNode(B). { A = new NTToken(); A->type = 587; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; A->childs = array(B); }
@@ -592,7 +592,7 @@ pathMod(A) ::= QUESTION(B). { A = new NTToken(); A->type = 600; A->query = '?'; 
 
 pathPrimary(A) ::= LPARENTHESE(B) pathAlternative(C) RPARENTHESE(D). { A = new NTToken(); A->type = 601; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = '( ' . C->query . ' )'; A->childs = array(B, C, D); }
 pathPrimary(A) ::= EXCLAMATION(B) pathNegatedPropertySet(C). { A = new NTToken(); A->type = 601; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = '!' . C->query; A->childs = array(B, C); }
-pathPrimary(A) ::= A(B). { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 601; A->query = 'rdf:type'; A->childs = array(B); }
+pathPrimary(A) ::= A(B). { if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 601; A->query = 'rdf:type'; A->childs = array(B); }
 pathPrimary(A) ::= iri(B). { A = new NTToken(); A->type = 601; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; A->childs = array(B); }
 
 pathNegatedPropertySet(A) ::= LPARENTHESE(B) pathOneInPropertySet(C) pathNegatedPropertySetX(D) RPARENTHESE(E). { A = new NTToken(); A->type = 602; A->copyBools(C); A->copyBools(D); A->vars = C->vars + D->vars; A->bNodes = C->bNodes + D->bNodes; A->query = C->query . ' ' . D->query; A->childs = array(B, C, D, E); }
@@ -603,8 +603,8 @@ pathNegatedPropertySetX(A) ::= pathNegatedPropertySetX(B) VBAR(C) pathOneInPrope
 pathNegatedPropertySetX(A) ::= VBAR pathOneInPropertySet(B). { A = new NTToken(); A->type = 603; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = '|' . B->query; A->childs = array(B); }
 
 pathOneInPropertySet(A) ::= HAT(B) iri(C). { A = new NTToken(); A->type = 604; A->query = '^' . C->query; A->childs = array(B, C); }
-pathOneInPropertySet(A) ::= HAT(B) A(C). { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 604; ; A->query = '^rdf:type'; A->childs = array(B, C); }
-pathOneInPropertySet(A) ::= A(B). { if(!checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 604; A->query = 'rdf:type'; A->childs = array(B); }
+pathOneInPropertySet(A) ::= HAT(B) A(C). { if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 604; ; A->query = '^rdf:type'; A->childs = array(B, C); }
+pathOneInPropertySet(A) ::= A(B). { if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 604; A->query = 'rdf:type'; A->childs = array(B); }
 pathOneInPropertySet(A) ::= iri(B). { A = new NTToken(); A->type = 604; A->query = B->query; A->childs = array(B); }
 
 triplesNode(A) ::= collection(B). { A = new NTToken(); A->type = 605; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; A->childs = array(B); }

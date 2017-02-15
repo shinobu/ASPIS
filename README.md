@@ -6,6 +6,8 @@
 
 Informations about Copyright are in the COPYING and License files.
 
+In general you need get composer and call `composer install` in the projectroot
+
 To Parse a Query just create a ASPIS Object and call
 
 aspis->parseFile($file)
@@ -15,7 +17,7 @@ aspis->parseString($string)
 you will get the root of the syntaxtree in aspis->root
 
 to re-generate the lexer and the parser you need to install the repos necessary for it
-afterwords do your changes on the files in the resource folder and call the makefile functions
+do your changes on the files in the resource folder and call the makefile functions
 
 make update_lexer
 or
