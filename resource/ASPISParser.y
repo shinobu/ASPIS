@@ -120,23 +120,30 @@ function checkNS($alias) {
         //keep : as an empty prefix is allowed
         $strippedAlias = substr($alias, 0, $pos + 1);
         if (isset($this->allNS[$strippedAlias])) {
-            return true;
+            $ns = substr($this->allNS[$strippedAlias], 0, -1);
+            $nonAlias = substr($alias, $pos+1);
+            $ns = $ns . $nonAlias . '>';
+            return $ns;
         }
     }
-    return false;
+    return null;
 }
 
-//removed the base check, its actually not necessary/queries its allowed to have <x> as iri...
+//removed the failure for a wrong base check, its actually not necessary/in queries its allowed to have <x> as iri...
 //actual iri reference transformation is rather complex ( http://www.ietf.org/rfc/rfc3986.txt )
 //unsure if that is necessary for this project though
+//doesnt handle relative uris correctly yet
 function checkBase($alias) {
     if (strcmp(substr($alias,1,7),'http://') == 0 || strcmp(substr($alias,1,8),'https://') == 0) {
-        return true;
+        return $alias;
     } else {
         if(isset($this->base)) {
-            return true;
+            $ns = substr($this->base, 0, -1);
+            $nonAlias = substr($alias, 1, -1);
+            $ns = $ns . $nonAlias . '>';
+            return $ns;
         } else {
-            return false;
+            return $alias;
         }
     }
 }
@@ -543,7 +550,7 @@ propertyListNotEmptyX(A) ::= SEMICOLON(B) verb(C) objectList(D). { A = new NTTok
 propertyListNotEmptyX(A) ::= SEMICOLON(B). { A = new NTToken(); A->type = 585; A->query = ';'; A->childs = array(B); }
 
 verb(A) ::= varOrIri(B). { A = new NTToken(); A->type = 586; A->vars = B->vars; A->query = B->query; A->childs = array(B); }
-verb(A) ::= A(B). { if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 586; A->query = 'rdf:type'; A->childs = array(B); }
+verb(A) ::= A(B). {$tmp = $this->checkNS('rdf:type'); if(!isset($tmp)){throw new Exception("Missing Prefix for rdf:type (a)");} B->value = 'rdf:type'; A = new NTToken(); A->type = 586; A->query = 'rdf:type'; A->childs = array(B); }
 
 objectList(A) ::= graphNode(B) objectListX(C). { A = new NTToken(); A->type = 587; A->copyBools(B); A->copyBools(C); A->vars = B->vars + C->vars; A->bNodes = B->bNodes + C->bNodes; A->query = B->query . ' ' . C->query; A->childs = array(B, C); }
 objectList(A) ::= graphNode(B). { A = new NTToken(); A->type = 587; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; A->childs = array(B); }
@@ -592,7 +599,7 @@ pathMod(A) ::= QUESTION(B). { A = new NTToken(); A->type = 600; A->query = '?'; 
 
 pathPrimary(A) ::= LPARENTHESE(B) pathAlternative(C) RPARENTHESE(D). { A = new NTToken(); A->type = 601; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = '( ' . C->query . ' )'; A->childs = array(B, C, D); }
 pathPrimary(A) ::= EXCLAMATION(B) pathNegatedPropertySet(C). { A = new NTToken(); A->type = 601; A->copyBools(C); A->vars = C->vars; A->bNodes = C->bNodes; A->query = '!' . C->query; A->childs = array(B, C); }
-pathPrimary(A) ::= A(B). { if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 601; A->query = 'rdf:type'; A->childs = array(B); }
+pathPrimary(A) ::= A(B). { $tmp = $this->checkNS('rdf:type'); if(!isset($tmp)){throw new Exception("Missing Prefix for rdf:type (a)");} B->value = 'rdf:type'; A = new NTToken(); A->type = 601; A->query = 'rdf:type'; A->childs = array(B); }
 pathPrimary(A) ::= iri(B). { A = new NTToken(); A->type = 601; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; A->childs = array(B); }
 
 pathNegatedPropertySet(A) ::= LPARENTHESE(B) pathOneInPropertySet(C) pathNegatedPropertySetX(D) RPARENTHESE(E). { A = new NTToken(); A->type = 602; A->copyBools(C); A->copyBools(D); A->vars = C->vars + D->vars; A->bNodes = C->bNodes + D->bNodes; A->query = C->query . ' ' . D->query; A->childs = array(B, C, D, E); }
@@ -603,8 +610,8 @@ pathNegatedPropertySetX(A) ::= pathNegatedPropertySetX(B) VBAR(C) pathOneInPrope
 pathNegatedPropertySetX(A) ::= VBAR pathOneInPropertySet(B). { A = new NTToken(); A->type = 603; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = '|' . B->query; A->childs = array(B); }
 
 pathOneInPropertySet(A) ::= HAT(B) iri(C). { A = new NTToken(); A->type = 604; A->query = '^' . C->query; A->childs = array(B, C); }
-pathOneInPropertySet(A) ::= HAT(B) A(C). { if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 604; ; A->query = '^rdf:type'; A->childs = array(B, C); }
-pathOneInPropertySet(A) ::= A(B). { if(!$this->checkNS('rdf:type')){throw new Exception("Missing Prefix for rdf:type (a)");} A = new NTToken(); A->type = 604; A->query = 'rdf:type'; A->childs = array(B); }
+pathOneInPropertySet(A) ::= HAT(B) A(C). { $tmp = $this->checkNS('rdf:type'); if(!isset($tmp)){throw new Exception("Missing Prefix for rdf:type (a)");} C->value = 'rdf:type'; A = new NTToken(); A->type = 604; ; A->query = '^rdf:type'; A->childs = array(B, C); }
+pathOneInPropertySet(A) ::= A(B). { $tmp = $this->checkNS('rdf:type'); if(!isset($tmp)){throw new Exception("Missing Prefix for rdf:type (a)");} B->value = 'rdf:type'; A->type = 604; A->query = 'rdf:type'; A->childs = array(B); }
 pathOneInPropertySet(A) ::= iri(B). { A = new NTToken(); A->type = 604; A->query = B->query; A->childs = array(B); }
 
 triplesNode(A) ::= collection(B). { A = new NTToken(); A->type = 605; A->copyBools(B); A->vars = B->vars; A->bNodes = B->bNodes; A->query = B->query; A->childs = array(B); }
@@ -820,11 +827,11 @@ string(A) ::= STRING_LITERAL2(B). { A = new NTToken(); A->type = 644; A->query =
 string(A) ::= STRING_LITERAL_LONG1(B). { A = new NTToken(); A->type = 644; A->query = B->value;A->childs = array(B); }
 string(A) ::= STRING_LITERAL_LONG2(B). { A = new NTToken(); A->type = 644; A->query = B->value;A->childs = array(B); }
 
-iri(A) ::= IRIREF(B). { A = new NTToken(); A->type = 645; A->query = B->value;A->childs = array(B); }
+iri(A) ::= IRIREF(B). {$tmp = $this->checkBase(B->value); B->value = $tmp; A = new NTToken(); A->type = 645; A->query = B->value;A->childs = array(B); }
 iri(A) ::= prefixedName(B). { A = new NTToken(); A->type = 645; A->query = B->query;A->childs = array(B); }
 
-prefixedName(A) ::= PNAME_LN(B). {if(!$this->checkNS(B->value)){throw new Exception("Missing Prefix for " . B->value);} A = new NTToken(); A->type = 646; A->query = B->value;A->childs = array(B); }
-prefixedName(A) ::= PNAME_NS(B). {if(!$this->checkNS(B->value)){throw new Exception("Missing Prefix for " . B->value);} A = new NTToken(); A->type = 646; A->query = B->value;A->childs = array(B); }
+prefixedName(A) ::= PNAME_LN(B). {$tmp = $this->checkNS(B->value); if(!isset($tmp)){throw new Exception("Missing Prefix for " . B->value);} B->value = $tmp; A = new NTToken(); A->type = 646; A->query = B->value;A->childs = array(B); }
+prefixedName(A) ::= PNAME_NS(B). {$tmp = $this->checkNS(B->value); if(!isset($tmp)){throw new Exception("Missing Prefix for " . B->value);} B->value = $tmp; A = new NTToken(); A->type = 646; A->query = B->value;A->childs = array(B); }
 
 blankNode(A) ::= BLANK_NODE_LABEL(B). {A = new NTToken(); A->type = 647; A->hasBN = true; A->bNodes[B->value] = 1;A->childs = array(B); }
 blankNode(A) ::= ANON(B). {A = new NTToken(); A->type = 647; A->hasBN = true;A->childs = array(B); }
